@@ -38,3 +38,6 @@ out/
 .idea/
 build/
 out/
+
+### application.yml ###
+src/main/resources/application.yml
