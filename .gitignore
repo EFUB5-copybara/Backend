@@ -39,5 +39,8 @@ out/
 build/
 out/
 
-### application.yml ###
+# Environment Variables
+.env
+
+# application.yml #
 src/main/resources/application.yml

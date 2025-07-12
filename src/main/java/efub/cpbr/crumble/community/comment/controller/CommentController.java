@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/community/comments")
+@RequestMapping("/community")
 public class CommentController {
 
     private final CommentService commentService;
@@ -21,13 +21,17 @@ public class CommentController {
     // 댓글 생성
     @PostMapping("/{postId}/comments")
     public ResponseEntity<CommentResponseDto> createComment(@PathVariable("postId") Long postId,
-                                                            @Valid @RequestBody CommentCreateRequestDto requestDto) {
-        CommentResponseDto responseDto = commentService.createComment(postId, requestDto);
+                                                            @Valid @RequestBody CommentCreateRequestDto requestDto,
+                                                            @RequestHeader("Authorization") String authHeader) {
+        //String token = authHeader.replace("Bearer ", "");
+        //Long userId = jwtTokenProvider.getUserId(token);
+        Long userId = 1L;
+        CommentResponseDto responseDto = commentService.createComment(postId, requestDto, userId);
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
     }
 
     // 댓글 삭제
-    @DeleteMapping
+    @DeleteMapping("/comments/{commentId}")
     public ResponseEntity<String> deleteComment(@PathVariable("commentId") Long commentId) {
         commentService.deleteComment(commentId);
         return ResponseEntity.ok("성공적으로 댓글 삭제가 완료되었습니다.");
