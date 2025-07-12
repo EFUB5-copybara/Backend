@@ -1,10 +1,14 @@
 package efub.cpbr.crumble.community.post.domain;
 
+import efub.cpbr.crumble.community.comment.domain.Comment;
 import efub.cpbr.crumble.global.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -25,6 +29,9 @@ public class Post extends BaseEntity {
     private Long likeCount = 0L;
     private Long commentCount = 0L;
     private Long bookmarkCount = 0L;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> commentList = new ArrayList<>();
     /*
     public void updateContentFromAnswer() {
         if (this.answer != null) {

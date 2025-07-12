@@ -5,11 +5,10 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Builder
 @Getter
-public class PostResponseDto {
+public class PostSummaryDto {
     private Long id;
     private String username;
     private String content;
@@ -20,10 +19,8 @@ public class PostResponseDto {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    private PostCommentDto comments;
-
-    public static PostResponseDto from(Post post, PostCommentDto comments) {
-        return PostResponseDto.builder()
+    public static PostSummaryDto from(Post post) {
+        return PostSummaryDto.builder()
                 .id(post.getId())
                 //.username(post.getAnswer().getUser().getUsername())
                 .content(post.getContent())
@@ -33,7 +30,6 @@ public class PostResponseDto {
                 .bookmarkCount(post.getBookmarkCount())
                 .createdAt(post.getCreatedAt())
                 .updatedAt(post.getUpdatedAt())
-                .comments(comments)
                 .build();
     }
 }

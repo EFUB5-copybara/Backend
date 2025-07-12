@@ -8,10 +8,10 @@ import java.util.List;
 @Builder
 @Getter
 public class PostListResponseDto {
-    private List<PostResponseDto> posts;
+    private List<PostSummaryDto> posts;
     private Long postCount;
 
-    public static PostListResponseDto from(List<PostResponseDto> posts) {
+    public static PostListResponseDto from(List<PostSummaryDto> posts) {
         return PostListResponseDto.builder()
                 .posts(posts)
                 .postCount((long) posts.size())
