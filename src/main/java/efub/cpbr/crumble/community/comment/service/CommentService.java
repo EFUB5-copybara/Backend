@@ -37,6 +37,10 @@ public class CommentService {
         post.updateCommentCount();
         postRepository.save(post);
 
+        // ⭐ 포인트 +2
+        commentator.addPoint(2L);
+        userRepository.save(commentator);
+
         return CommentResponseDto.from(newComment);
     }
 

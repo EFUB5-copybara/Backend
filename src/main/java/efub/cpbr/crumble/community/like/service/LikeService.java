@@ -45,6 +45,10 @@ public class LikeService {
         post.updateLikeCount();
         postRepository.save(post);
 
+        // ⭐ 포인트 +2
+        user.addPoint(2L);
+        userRepository.save(user);
+
         return LikeResponseDto.from(newLike);
     }
 

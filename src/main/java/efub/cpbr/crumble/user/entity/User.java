@@ -22,4 +22,13 @@ public class User {
     private List<Comment> commentList = new ArrayList<>();
 
     private String username;
+
+    private Long point;
+
+    public void addPoint(Long point) {
+        if (this.point == null) {
+            this.point = 0L;
+        }
+        this.point += point;
+    }
 }
