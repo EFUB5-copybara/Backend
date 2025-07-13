@@ -22,7 +22,7 @@ public class PostSummaryDto {
     public static PostSummaryDto from(Post post) {
         return PostSummaryDto.builder()
                 .id(post.getId())
-                //.username(post.getAnswer().getUser().getUsername())
+                .username(post.getAnswer().getUser().getUsername())
                 .content(post.getContent())
                 .viewCount(post.getViewCount())
                 .likeCount(post.getLikeCount())

@@ -8,6 +8,8 @@ import efub.cpbr.crumble.community.post.dto.Response.PostListResponseDto;
 import efub.cpbr.crumble.community.post.dto.Response.PostResponseDto;
 import efub.cpbr.crumble.community.post.dto.Response.PostSummaryDto;
 import efub.cpbr.crumble.community.post.repository.PostRepository;
+import efub.cpbr.crumble.global.exception.CustomException;
+import efub.cpbr.crumble.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,16 +49,10 @@ public class PostService {
         postRepository.updatePostViewCount(postId);
         //Post post = findByPostId(postId);
         //return PostResponseDto.from(post);
-        Post post = postRepository.findById(postId).get();
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_FOUND));
         List<Comment> comments = commentRepository.findAllByPostIdOrderByCreatedAt(postId);
         PostCommentDto postCommentDto = PostCommentDto.from(postId, comments);
         return PostResponseDto.from(post, postCommentDto);
     }
-
-    /*
-    @Transactional(readOnly = true)
-    public Post findByPostId(Long postId) {
-        return postRepository.findById(postId)
-                .orElseThrow(()-> new crumbleException(ExceptionCode.POST_NOT_FOUND));
-    }*/
 }

@@ -25,7 +25,7 @@ public class PostResponseDto {
     public static PostResponseDto from(Post post, PostCommentDto comments) {
         return PostResponseDto.builder()
                 .id(post.getId())
-                //.username(post.getAnswer().getUser().getUsername())
+                .username(post.getAnswer().getUser().getUsername())
                 .content(post.getContent())
                 .viewCount(post.getViewCount())
                 .likeCount(post.getLikeCount())

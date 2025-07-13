@@ -1,5 +1,6 @@
 package efub.cpbr.crumble.answer.entity;
 
+import efub.cpbr.crumble.community.post.domain.Post;
 import efub.cpbr.crumble.question.entity.Question;
 import efub.cpbr.crumble.user.entity.User;
 import jakarta.persistence.*;
@@ -32,9 +33,13 @@ public class Answer {
     @JoinColumn(name = "question_id", nullable = false)
     private Question question;
 
+    @OneToOne(mappedBy = "answer", fetch = FetchType.LAZY)
+    private Post post;
+
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
     @Column(nullable = false)
     private LocalDateTime updatedAt;
+
 }

@@ -6,6 +6,8 @@ import efub.cpbr.crumble.community.comment.dto.response.CommentResponseDto;
 import efub.cpbr.crumble.community.comment.repository.CommentRepository;
 import efub.cpbr.crumble.community.post.domain.Post;
 import efub.cpbr.crumble.community.post.repository.PostRepository;
+import efub.cpbr.crumble.global.exception.CustomException;
+import efub.cpbr.crumble.global.exception.ErrorCode;
 import efub.cpbr.crumble.user.entity.User;
 import efub.cpbr.crumble.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,13 +26,16 @@ public class CommentService {
     @Transactional
     public CommentResponseDto createComment(Long postId, CommentCreateRequestDto requestDto, Long  commentatorId) {
         User commentator = userRepository.findById(commentatorId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
+                .orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_FOUND));
 
         Comment newComment = requestDto.toEntity(commentator, post);
         commentRepository.save(newComment);
+
+        post.updateCommentCount();
+        postRepository.save(post);
 
         return CommentResponseDto.from(newComment);
     }
@@ -38,7 +43,15 @@ public class CommentService {
     // 댓글 삭제
     @Transactional
     public void deleteComment(Long commentId) {
-        commentRepository.deleteById(commentId);
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new CustomException(ErrorCode.COMMENT_NOT_FOUND));
+
+        Post post = comment.getPost();
+
+        commentRepository.delete(comment);
+
+        post.updateCommentCount();
+        postRepository.save(post);
     }
 
 }
