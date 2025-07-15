@@ -55,7 +55,6 @@ public class CommentService {
         commentRepository.delete(comment);
 
         post.updateCommentCount();
-        postRepository.save(post);
     }
 
 }
