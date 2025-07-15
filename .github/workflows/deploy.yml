@@ -1,0 +1,59 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches: [deploy]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_KEY }}
+
+      - name: Copy code to EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            mkdir -p ~/app
+            rm -rf ~/app/*
+          EOF
+
+          scp -o StrictHostKeyChecking=no -r . ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/app/
+
+      - name: Create application-prod.yml on EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+mkdir -p ~/app/src/main/resources
+cat > ~/app/src/main/resources/application-prod.yml <<EOL
+spring:
+  profiles:
+    active: prod
+  datasource:
+    url: "\${{ secrets.DB_URL }}"
+    username: "\${{ secrets.DB_USER }}"
+    password: "\${{ secrets.DB_PASSWORD }}"
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+EOL
+EOF
+
+
+
+      - name: Build and run on EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            cd ~/app
+            chmod +x gradlew
+            ./gradlew build
+            pkill -f 'java -jar' || true
+            nohup java -jar build/libs/*.jar --spring.profiles.active=prod > app.log 2>&1 &
+          EOF
