@@ -1,5 +1,6 @@
 package efub.cpbr.crumble.user.entity;
 
+import efub.cpbr.crumble.community.comment.domain.Comment;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
@@ -9,6 +10,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -67,7 +71,10 @@ public class User {
         this.isActive = false;
     }
 
-    public void addPoint(int amount) {
-        this.point += amount;
+    @OneToMany(mappedBy = "commentator", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> commentList = new ArrayList<>();
+
+    public void addPoint(Long point) {
+        this.point += point;
     }
 }
