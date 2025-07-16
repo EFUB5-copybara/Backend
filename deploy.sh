@@ -10,8 +10,6 @@ echo "application-prod.yml 생성 중"
 mkdir -p src/main/resources
 cat > src/main/resources/application-prod.yml <<EOL
 spring:
-  profiles:
-    active: prod
   datasource:
     url: "${DB_URL}"
     username: "${DB_USERNAME}"
