@@ -11,6 +11,8 @@ public enum ErrorCode {
 
     // Question 관련 에러
     QUESTION_NOT_FOUND(404, "해당 날짜의 질문이 존재하지 않습니다."),
+    // Answer 관련 에러
+    ANSWER_NOT_FOUND(404, "해당 답변이 존재하지 않습니다."),
 
     // community
     ALREADY_LIKED(400, "이미 좋아요를 누른 게시글입니다."),
