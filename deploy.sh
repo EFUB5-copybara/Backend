@@ -31,4 +31,4 @@ chmod +x gradlew
 pkill -f 'java -jar' || true
 
 # 애플리케이션 실행 (환경변수 주입된 상태로)
-nohup java -jar build/libs/*.jar --spring.profiles.active=prod > app.log 2>&1 &
+nohup java -jar build/libs/crumble-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod > app.log 2>&1 &
