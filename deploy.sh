@@ -24,6 +24,7 @@ spring:
 EOL
 
 # build (테스트 생략)
+chmod +x gradlew
 ./gradlew build -x test
 
 # 기존 실행 중인 프로세스 종료
