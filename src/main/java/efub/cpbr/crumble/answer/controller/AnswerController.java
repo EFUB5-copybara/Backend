@@ -38,7 +38,7 @@ public class AnswerController {
     public ResponseEntity<Void> createAnswer(//@AuthenticationPrincipal
                                              User user,
                                              @Parameter(description = "질문 날짜", example = "2024-07-17") @PathVariable LocalDate date,
-                                             @RequestBody AnswerRequest request) {
+                                             @Valid @RequestBody AnswerRequest request) {
         Long answerId = answerService.createAnswer(user, date,request);
         return ResponseEntity.created(URI.create("/question/"+date+"/answer/"+answerId)).build();
     }
