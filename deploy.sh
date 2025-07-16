@@ -5,6 +5,24 @@ cd ~/app
 # .env 파일에서 환경변수 불러오기
 export $(cat .env | xargs)
 
+# application-prod.yml 자동 생성
+echo "application-prod.yml 생성 중"
+mkdir -p src/main/resources
+cat > src/main/resources/application-prod.yml <<EOL
+spring:
+  profiles:
+    active: prod
+  datasource:
+    url: "${DB_URL}"
+    username: "${DB_USER}"
+    password: "${DB_PASSWORD}"
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+EOL
+
 # build (테스트 생략)
 ./gradlew build -x test
 
