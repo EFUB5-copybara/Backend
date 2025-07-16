@@ -14,7 +14,7 @@ spring:
     active: prod
   datasource:
     url: "${DB_URL}"
-    username: "${DB_USER}"
+    username: "${DB_USERNAME}"
     password: "${DB_PASSWORD}"
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
