@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.ChronoField;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -79,5 +81,39 @@ public class CalendarService {
 
         return streak;
     }
+
+    //쿠키 조회
+    public int getMonthlyCookieCount(int year, int month) {
+        //User user = userService.getCurrentUser();
+        //Long userId = user.getId();
+        Long userId = 1L; //임시
+
+        LocalDate start = LocalDate.of(year, month, 1);
+        LocalDate end = start.withDayOfMonth(start.lengthOfMonth());
+
+        // createdAt을 LocalDate로 뽑기
+        List<LocalDate> answerDates = calendarRepository.findAnsweredDatesInMonth(
+                        userId,
+                        start.atStartOfDay(),
+                        end.atTime(23, 59, 59)
+                ).stream()
+                .map(LocalDateTime::toLocalDate)
+                .toList();
+
+        // 주차별로 그룹핑
+        Map<Integer, Long> weekToCount = answerDates.stream()
+                .collect(Collectors.groupingBy(
+                        date -> date.get(ChronoField.ALIGNED_WEEK_OF_MONTH),
+                        Collectors.counting()
+                ));
+
+        // 각 주차에서 답변이 5개 이상인 주만 카운트
+        long cookieCount = weekToCount.values().stream()
+                .filter(count -> count >= 5)
+                .count();
+
+        return (int) cookieCount;
+    }
+
 
 }

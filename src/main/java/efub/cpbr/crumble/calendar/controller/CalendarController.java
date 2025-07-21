@@ -44,4 +44,15 @@ public class CalendarController {
         return ResponseEntity.ok(streak);
     }
 
+    //쿠키 개수 조회
+    @GetMapping("/cookies")
+    public ResponseEntity<Integer> getMonthlyCookieCount(
+            @RequestParam int year,
+            @RequestParam int month
+    ) {
+        int cookieCount = calendarService.getMonthlyCookieCount(year, month);
+        return ResponseEntity.ok(cookieCount);
+    }
+
+
 }
