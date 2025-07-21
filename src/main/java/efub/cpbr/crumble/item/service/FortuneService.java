@@ -6,6 +6,8 @@ import efub.cpbr.crumble.global.exception.ErrorCode;
 import efub.cpbr.crumble.item.dto.FortuneAnswerResponse;
 import efub.cpbr.crumble.item.dto.FortuneUseCheckResponse;
 import efub.cpbr.crumble.item.repository.FortuneRepository;
+import efub.cpbr.crumble.user.repository.UserRepository;
+import efub.cpbr.crumble.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,7 @@ import java.util.Random;
 public class FortuneService {
 
     private final FortuneRepository fortuneRepository;
+    private final UserRepository userRepository;
     private final RedisTemplate<String, String> redisTemplate;
 
     private static final Duration TTL = Duration.ofDays(1);
@@ -49,6 +52,11 @@ public class FortuneService {
                 randomAnswer.getQuestion().getContent(),
                 randomAnswer.getContent()
         );
+
+        // 사용자 포인트 증가
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+        user.addPoint(10L);
 
         // Redis에 사용 기록 저장
         redisTemplate.opsForValue().set(redisKey, "used", TTL);
