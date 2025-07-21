@@ -27,6 +27,7 @@ public class CalendarService {
     // 해당 년월에 작성한 답변 일수 목록
     public AnsweredDatesResponse getAnsweredDates(int year, int month){
         //User user = userService.getCurrentUser();
+        //Long userId = user.getId();
         Long userId = 1L; //임시
 
         LocalDate start = LocalDate.of(year, month, 1);
