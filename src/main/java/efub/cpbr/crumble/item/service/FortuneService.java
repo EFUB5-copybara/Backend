@@ -1,6 +1,8 @@
 package efub.cpbr.crumble.item.service;
 
 import efub.cpbr.crumble.answer.entity.Answer;
+import efub.cpbr.crumble.global.exception.CustomException;
+import efub.cpbr.crumble.global.exception.ErrorCode;
 import efub.cpbr.crumble.item.dto.FortuneAnswerResponse;
 import efub.cpbr.crumble.item.dto.FortuneUseCheckResponse;
 import efub.cpbr.crumble.item.repository.FortuneRepository;
@@ -32,12 +34,12 @@ public class FortuneService {
         boolean alreadyUsed = Boolean.TRUE.equals(redisTemplate.hasKey(redisKey));
 
         if (alreadyUsed) {
-            return new FortuneAnswerResponse(true, null, 0);
+            throw new CustomException(ErrorCode.FORTUNE_ALREADY_USED);
         }
 
         List<Answer> answers = fortuneRepository.findByUserId(userId);
         if (answers.isEmpty()) {
-            throw new RuntimeException("해당 사용자의 답변이 없습니다.");
+            throw new CustomException(ErrorCode.FORTUNE_NO_PREVIOUS_ANSWER);
         }
 
         Answer randomAnswer = answers.get(new Random().nextInt(answers.size()));
