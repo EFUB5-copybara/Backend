@@ -1,6 +1,9 @@
 package efub.cpbr.crumble.user.entity;
 
 import efub.cpbr.crumble.community.comment.domain.Comment;
+import efub.cpbr.crumble.shop.font.entity.UserFont;
+import efub.cpbr.crumble.shop.item.entity.UserItem;
+import efub.cpbr.crumble.shop.paper.entity.UserPaper;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
@@ -77,4 +80,16 @@ public class User {
     public void addPoint(Long point) {
         this.point += point;
     }
+
+    // 보유 폰트
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserFont> userFonts = new ArrayList<>();
+
+    // 보유 아이템
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserItem> userItems = new ArrayList<>();
+
+    // 보유 종이 테마
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserPaper> userPapers = new ArrayList<>();
 }
