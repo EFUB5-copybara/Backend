@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,9 +43,10 @@ public class CalendarService {
         return new AnsweredDatesResponse(answeredDates);
     }
 
+    // 월별 답변 목록
     public List<AnswerDto> getMonthlyAnswers(int year, int month) {
-        //User currentUser = userService.getCurrentUser();
-        //Long userId = currentUser.getId();
+        //User user = userService.getCurrentUser();
+        //Long userId = user.getId();
         Long userId = 1L; //임시
 
         // 1일 00:00:00
@@ -54,4 +57,27 @@ public class CalendarService {
 
         return calendarRepository.findMonthlyAnswers(userId, start, end);
     }
+
+    // 연속 일수
+    public int getStreak() {
+        //User user = userService.getCurrentUser();
+        //Long userId = user.getId();
+        Long userId = 1L; //임시
+
+        // 모든 답변 날짜 조회
+        Set<LocalDate> dateSet = calendarRepository.findAllAnswerDates(userId).stream()
+                .map(LocalDateTime::toLocalDate)
+                .collect(Collectors.toSet());
+
+        int streak = 0;
+        LocalDate pointer = LocalDate.now();
+
+        while (dateSet.contains(pointer)) { //일수 카운트
+            streak++;
+            pointer = pointer.minusDays(1);
+        }
+
+        return streak;
+    }
+
 }

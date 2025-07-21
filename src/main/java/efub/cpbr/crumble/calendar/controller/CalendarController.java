@@ -36,4 +36,12 @@ public class CalendarController {
         List<AnswerDto> answerList = calendarService.getMonthlyAnswers(year, month);
         return ResponseEntity.ok(answerList);
     }
+
+    // 연속 일수 조회
+    @GetMapping("/answers/streak")
+    public ResponseEntity<Integer> getStreak() {
+        int streak = calendarService.getStreak();
+        return ResponseEntity.ok(streak);
+    }
+
 }

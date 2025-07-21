@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -35,4 +36,10 @@ public interface CalendarRepository extends JpaRepository<Answer, Long> {
             @Param("start") LocalDateTime start,
             @Param("end") LocalDateTime end
     );
+
+    // 연속 답변 일수 조회 쿼리
+    @Query("SELECT DISTINCT a.createdAt FROM Answer a WHERE a.user.id = :userId")
+    List<LocalDateTime> findAllAnswerDates(@Param("userId") Long userId);
+
+
 }
