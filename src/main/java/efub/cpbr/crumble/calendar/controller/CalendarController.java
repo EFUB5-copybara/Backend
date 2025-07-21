@@ -1,5 +1,6 @@
 package efub.cpbr.crumble.calendar.controller;
 
+import efub.cpbr.crumble.calendar.dto.AnswerDto;
 import efub.cpbr.crumble.calendar.dto.AnsweredDatesResponse;
 import efub.cpbr.crumble.calendar.service.CalendarService;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +20,20 @@ public class CalendarController {
 
     private final CalendarService calendarService;
 
+    // 캘린더에서 월별로 답변한 날짜를 조회
     @GetMapping("/calendar/answers")
     public ResponseEntity<AnsweredDatesResponse> getAnsweredDates(@RequestParam int year,
                                                                   @RequestParam int month){
         return ResponseEntity.ok(calendarService.getAnsweredDates(year, month));
+    }
+
+    // 월별 답변 목록을 조회
+    @GetMapping("/answers/me")
+    public ResponseEntity<List<AnswerDto>> getMonthlyAnswers(
+            @RequestParam int year,
+            @RequestParam int month
+    ) {
+        List<AnswerDto> answerList = calendarService.getMonthlyAnswers(year, month);
+        return ResponseEntity.ok(answerList);
     }
 }

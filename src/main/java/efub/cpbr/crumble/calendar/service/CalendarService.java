@@ -1,5 +1,6 @@
 package efub.cpbr.crumble.calendar.service;
 
+import efub.cpbr.crumble.calendar.dto.AnswerDto;
 import efub.cpbr.crumble.calendar.dto.AnsweredDatesResponse;
 import efub.cpbr.crumble.calendar.repository.CalendarRepository;
 import efub.cpbr.crumble.user.entity.User;
@@ -38,5 +39,19 @@ public class CalendarService {
                 .collect(Collectors.toList());
 
         return new AnsweredDatesResponse(answeredDates);
+    }
+
+    public List<AnswerDto> getMonthlyAnswers(int year, int month) {
+        //User currentUser = userService.getCurrentUser();
+        //Long userId = currentUser.getId();
+        Long userId = 1L; //임시
+
+        // 1일 00:00:00
+        LocalDateTime start = LocalDate.of(year, month, 1).atStartOfDay();
+
+        // 해당 월 마지막날 23:59:59
+        LocalDateTime end = start.withDayOfMonth(start.toLocalDate().lengthOfMonth()).withHour(23).withMinute(59).withSecond(59);
+
+        return calendarRepository.findMonthlyAnswers(userId, start, end);
     }
 }
