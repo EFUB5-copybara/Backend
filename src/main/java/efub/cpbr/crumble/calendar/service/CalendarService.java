@@ -34,13 +34,8 @@ public class CalendarService {
         //Long userId = user.getId();
         Long userId = 1L; //임시
 
-        LocalDate start = LocalDate.of(year, month, 1);
-        LocalDate end = start.withDayOfMonth(start.lengthOfMonth());
-        LocalDateTime startDateTime = start.atStartOfDay();
-        LocalDateTime endDateTime = end.atTime(LocalTime.MAX);
-
-        List<LocalDateTime> answerTimes = calendarRepository.findAnsweredDatesInMonth(userId, startDateTime, endDateTime);
-        //userId 대신 user.getId()
+        LocalDateTime[] range = getMonthDateTimeRange(year, month); //월의 시작 시간, 끝 시간
+        List<LocalDateTime> answerTimes = calendarRepository.findAnsweredDatesInMonth(userId, range[0], range[1]);
 
         List<LocalDate> answeredDates =  answerTimes.stream()
                 .map(LocalDateTime::toLocalDate)
@@ -58,13 +53,8 @@ public class CalendarService {
         //Long userId = user.getId();
         Long userId = 1L; //임시
 
-        // 1일 00:00:00
-        LocalDateTime start = LocalDate.of(year, month, 1).atStartOfDay();
-
-        // 해당 월 마지막날 23:59:59
-        LocalDateTime end = start.withDayOfMonth(start.toLocalDate().lengthOfMonth()).withHour(23).withMinute(59).withSecond(59);
-
-        return calendarRepository.findMonthlyAnswers(userId, start, end);
+        LocalDateTime[] range = getMonthDateTimeRange(year, month);
+        return calendarRepository.findMonthlyAnswers(userId, range[0], range[1]);
     }
 
     // 연속 일수
@@ -99,14 +89,13 @@ public class CalendarService {
         //Long userId = user.getId();
         Long userId = 1L; //임시
 
-        LocalDate start = LocalDate.of(year, month, 1);
-        LocalDate end = start.withDayOfMonth(start.lengthOfMonth());
+        LocalDateTime[] range = getMonthDateTimeRange(year, month);
 
         // createdAt을 LocalDate로 뽑기
         List<LocalDate> answerDates = calendarRepository.findAnsweredDatesInMonth(
                         userId,
-                        start.atStartOfDay(),
-                        end.atTime(23, 59, 59)
+                        range[0],
+                        range[1]
                 ).stream()
                 .map(LocalDateTime::toLocalDate)
                 .toList();
@@ -125,6 +114,17 @@ public class CalendarService {
 
         return (int) cookieCount;
     }
+
+    //월의 1일, 말일 구하는 메서드
+    private LocalDateTime[] getMonthDateTimeRange(int year, int month) {
+        LocalDate start = LocalDate.of(year, month, 1);
+        LocalDate end = start.withDayOfMonth(start.lengthOfMonth());
+        return new LocalDateTime[] {
+                start.atStartOfDay(),
+                end.atTime(LocalTime.MAX)
+        };
+    }
+
 
 
 }
