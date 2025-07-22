@@ -8,17 +8,22 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDateTime;
-
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails; // import 추가
+
 
 @Entity
 @Getter
 @Table(name = "users")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="user_id")
@@ -76,5 +81,45 @@ public class User {
 
     public void addPoint(Long point) {
         this.point += point;
+    }
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private RoleType role;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // role 필드의 값을 사용해 권한 동적으로 생성
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + this.role.name()));
+    }
+
+    @Override
+    public String getPassword() {
+        return password; // User 엔티티의 password 필드 반환
+    }
+
+    @Override
+    public String getUsername() {
+        return username; // User 엔티티의 username 필드 반환 (로그인 ID)
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true; // 계정 만료 여부 (항상 true로 설정하여 만료되지 않음으로 처리)
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true; // 계정 잠금 여부 (항상 true로 설정하여 잠겨있지 않음으로 처리)
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true; // 자격 증명(비밀번호) 만료 여부 (항상 true로 설정하여 만료되지 않음으로 처리)
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return isActive; // User 엔티티의 isActive 필드 반환 (계정 활성화 여부)
     }
 }
