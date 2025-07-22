@@ -3,6 +3,8 @@ package efub.cpbr.crumble.calendar.service;
 import efub.cpbr.crumble.calendar.dto.AnswerDto;
 import efub.cpbr.crumble.calendar.dto.AnsweredDatesResponse;
 import efub.cpbr.crumble.calendar.repository.CalendarRepository;
+import efub.cpbr.crumble.global.exception.CustomException;
+import efub.cpbr.crumble.global.exception.ErrorCode;
 import efub.cpbr.crumble.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,8 +27,10 @@ public class CalendarService {
     //private final UserService userService;
 
     // 해당 년월에 작성한 답변 일수 목록
-    public AnsweredDatesResponse getAnsweredDates(int year, int month){
-        //User user = userService.getCurrentUser();
+    public AnsweredDatesResponse getAnsweredDates(User user, int year, int month){
+        if (user == null) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
         //Long userId = user.getId();
         Long userId = 1L; //임시
 
@@ -47,8 +51,10 @@ public class CalendarService {
     }
 
     // 월별 답변 목록
-    public List<AnswerDto> getMonthlyAnswers(int year, int month) {
-        //User user = userService.getCurrentUser();
+    public List<AnswerDto> getMonthlyAnswers(User user, int year, int month) {
+        if (user == null) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
         //Long userId = user.getId();
         Long userId = 1L; //임시
 
@@ -62,8 +68,10 @@ public class CalendarService {
     }
 
     // 연속 일수
-    public int getStreak() {
-        //User user = userService.getCurrentUser();
+    public int getStreak(User user) {
+        if (user == null) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
         //Long userId = user.getId();
         Long userId = 1L; //임시
 
@@ -84,8 +92,10 @@ public class CalendarService {
     }
 
     //쿠키 조회
-    public int getMonthlyCookieCount(int year, int month) {
-        //User user = userService.getCurrentUser();
+    public int getMonthlyCookieCount(User user, int year, int month) {
+        if (user == null) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
         //Long userId = user.getId();
         Long userId = 1L; //임시
 
