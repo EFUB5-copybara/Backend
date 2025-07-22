@@ -24,6 +24,9 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build -x test --no-daemon
 
+      - name: Show built JARs
+        run: ls -lh build/libs
+
       - name: Copy code to EC2
         run: |
           scp -o StrictHostKeyChecking=no \
