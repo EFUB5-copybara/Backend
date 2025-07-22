@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 로그 유지용 heartbeat
-(while true; do echo "🔄 building..."; sleep 10; done) &
+(while true; do echo "building..."; sleep 10; done) &
 HEARTBEAT_PID=$!
 
 cd ~/app
@@ -30,7 +30,9 @@ spring:
     show-sql: true
 EOL
 
-chmod +x gradlew
+echo "Docker Compose 빌드 및 실행"
+docker-compose down
+docker-compose up -d --build
 
 kill $HEARTBEAT_PID
 
