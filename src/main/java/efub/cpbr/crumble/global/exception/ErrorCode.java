@@ -10,6 +10,7 @@ public enum ErrorCode {
     UNAUTHORIZED_ACCESS(401, "인증되지 않은 사용자입니다."),
 
     // Question 관련 에러
+    AI_GENERATION_FAILED(500, "AI 질문 생성 중 오류가 발생했습니다."),
     QUESTION_NOT_FOUND(404, "해당 날짜의 질문이 존재하지 않습니다.");
 
     private final int status;

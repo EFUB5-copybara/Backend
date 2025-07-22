@@ -21,3 +21,6 @@ cors:
   allow-origins:
     - http://localhost:3000
     - http://localhost:5173
+
+openai:
+  api-key: ${API_KEY}
