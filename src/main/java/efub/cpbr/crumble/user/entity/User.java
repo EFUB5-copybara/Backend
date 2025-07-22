@@ -63,11 +63,11 @@ public class User {
         this.isActive = true;
     }
 
-    public void deactivate() {
+    /*public void deactivate() { // 사용자 탈퇴
         this.isActive = false;
-    }
+    }*/
 
-    public void addPoint(int amount) {
+    public void addPoint(int amount) { // 포인트 추가
         this.point += amount;
     }
 }
