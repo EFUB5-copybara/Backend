@@ -25,9 +25,7 @@ spring:
     show-sql: true
 EOL
 
-# build (테스트 생략)
 chmod +x gradlew
-./gradlew build -x test
 
 kill $HEARTBEAT_PID
 
