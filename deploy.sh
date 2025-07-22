@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# 로그 유지용 heartbeat
+(while true; do echo "🔄 building..."; sleep 10; done) &
+HEARTBEAT_PID=$!
+
 cd ~/app
 
 # .env 파일에서 환경변수 불러오기
@@ -24,6 +28,8 @@ EOL
 # build (테스트 생략)
 chmod +x gradlew
 ./gradlew build -x test
+
+kill $HEARTBEAT_PID
 
 # 기존 실행 중인 프로세스 종료
 pkill -f 'java -jar' || true
