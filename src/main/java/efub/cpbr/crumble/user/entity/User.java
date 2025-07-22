@@ -67,9 +67,9 @@ public class User {
         this.isActive = true;
     }
 
-    public void deactivate() {
+    /*public void deactivate() { // 사용자 탈퇴
         this.isActive = false;
-    }
+    }*/
 
     @OneToMany(mappedBy = "commentator", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> commentList = new ArrayList<>();
