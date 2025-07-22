@@ -1,5 +1,7 @@
 package efub.cpbr.crumble.answer.entity;
 
+import efub.cpbr.crumble.community.post.domain.Post;
+import efub.cpbr.crumble.global.domain.BaseEntity;
 import efub.cpbr.crumble.question.entity.Question;
 import efub.cpbr.crumble.user.entity.User;
 import jakarta.persistence.*;
@@ -12,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder(toBuilder = true)
-public class Answer {
+public class Answer extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="answer_id")
@@ -32,9 +34,7 @@ public class Answer {
     @JoinColumn(name = "question_id", nullable = false)
     private Question question;
 
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
+    @OneToOne(mappedBy = "answer", fetch = FetchType.LAZY)
+    private Post post;
 
-    @Column(nullable = false)
-    private LocalDateTime updatedAt;
 }

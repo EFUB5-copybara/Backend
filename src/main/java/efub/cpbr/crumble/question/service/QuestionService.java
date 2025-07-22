@@ -20,9 +20,13 @@ public class QuestionService {
 
     @Transactional(readOnly = true)
     public QuestionResponse getQuestion(LocalDate date) {
-        Question question = questionRepository.findByDate(date).
+        return QuestionResponse.from(findQuestionByIdOrThrow(date));
+    }
+
+    @Transactional(readOnly = true)
+    public Question findQuestionByIdOrThrow(LocalDate date) {
+        return questionRepository.findByDate(date).
                 orElseThrow(() -> new CustomException(ErrorCode.QUESTION_NOT_FOUND));
-        return QuestionResponse.from(question);
     }
 
     public boolean isSimilarTextExist(String questionContent) {/*
