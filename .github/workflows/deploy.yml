@@ -18,18 +18,19 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.DEPLOY_KEY }}
 
+      - name: Build with Gradle
+        run: ./gradlew build --no-daemon
+
       - name: Copy code to EC2
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-            mkdir -p ~/app
-          EOF
+          scp -o StrictHostKeyChecking=no \
+            build/libs/*.jar \
+            ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/app/app.jar
 
-          rsync -avz --exclude='.git' -e "ssh -o StrictHostKeyChecking=no" ./ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/app/
-
-      - name: Run deploy.sh on EC2
+      - name: Run JAR on EC2
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-            cd ~/app
+            pkill -f 'java -jar' || true
             chmod +x deploy.sh
-            ./deploy.sh
+            nohup java -jar ~/app/app.jar > ~/app/app.log 2>&1 &
           EOF
