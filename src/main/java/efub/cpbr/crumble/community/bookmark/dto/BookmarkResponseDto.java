@@ -17,7 +17,7 @@ public class BookmarkResponseDto {
     public static BookmarkResponseDto from(Bookmark bookmark) {
         return BookmarkResponseDto.builder()
                 .bookmarkId(bookmark.getId())
-                .bookmarkerId(bookmark.getBookmarker().getId())
+                .bookmarkerId(bookmark.getBookmarker().getUserId())
                 .postId(bookmark.getPost().getId())
                 .createdAt(bookmark.getCreatedAt())
                 .build();

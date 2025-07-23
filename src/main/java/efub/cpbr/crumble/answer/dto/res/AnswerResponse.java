@@ -21,7 +21,7 @@ public class AnswerResponse {
         return AnswerResponse.builder()
                 .answerId(answer.getId())
                 .questionId(answer.getQuestion().getId())
-                .userId(answer.getUser().getId())
+                .userId(answer.getUser().getUserId())
                 .content(answer.getContent())
                 .isPublic(answer.getIsPublic())
                 .createdAt(answer.getCreatedAt())

@@ -25,6 +25,14 @@ public class JwtTokenProvider {
 
     private final SecretKey key; // JWT 서명에 사용될 비밀 키
 
+    // Access Token 만료 시간 (밀리초)
+    @Value("${jwt.access-token-expiration-millis}")
+    private long accessTokenExpirationMillis;
+
+    // Refresh Token 만료 시간 (밀리초)
+    @Value("${jwt.refresh-token-expiration-millis}")
+    private long refreshTokenExpirationMillis;
+
     public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey); // Base64로 인코딩된 secretKey 디코딩
         this.key = Keys.hmacShaKeyFor(keyBytes); // HMAC SHA 키 생성
@@ -39,7 +47,7 @@ public class JwtTokenProvider {
         long now = (new Date()).getTime(); // 현재 시간
         // Access Token 생성
         // 만료 시간: 30분
-        Date accessTokenExpiresIn = new Date(now + 1000 * 60 * 30);
+        Date accessTokenExpiresIn = new Date(now + accessTokenExpirationMillis);
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim("auth", authorities)
@@ -50,7 +58,7 @@ public class JwtTokenProvider {
         // Refresh Token 생성
         // 만료 시간: 7일
         String refreshToken = Jwts.builder()
-                .setExpiration(new Date(now + 1000 * 60 * 60 * 24 * 7))
+                .setExpiration(new Date(now + refreshTokenExpirationMillis))
                 .signWith(key, SignatureAlgorithm.HS256) // Refresh Token 서명 추가
                 .compact();
 
@@ -118,5 +126,9 @@ public class JwtTokenProvider {
             // 토큰이 만료되었더라도 클레임은 가져올 수 있도록
             return e.getClaims(); // 만료된 토큰의 경우 .getClaims() 사용
         }
+    }
+
+    public long getRefreshTokenExpirationMillis() {
+        return refreshTokenExpirationMillis;
     }
 }

@@ -25,7 +25,14 @@ public enum ErrorCode {
 
     // Fortune Cookie 관련
     FORTUNE_ALREADY_USED(403, "오늘은 이미 포춘쿠키를 사용했습니다."),
-    FORTUNE_NO_PREVIOUS_ANSWER(404, "조회할 수 있는 과거 답변이 없습니다.");
+    FORTUNE_NO_PREVIOUS_ANSWER(404, "조회할 수 있는 과거 답변이 없습니다."),
+
+    // 인증/인가 관련 예외 (SecurityConfig 및 로그인 관련)
+    UNAUTHORIZED(403,  "인증 정보가 유효하지 않습니다."),
+    BAD_CREDENTIALS(403,  "아이디 또는 비밀번호가 올바르지 않습니다."),
+    TOKEN_EXPIRED(403,  "토큰이 만료되었습니다."),
+    INVALID_TOKEN(403,  "유효하지 않은 토큰입니다."),
+    INVALID_INPUT_VALUE(401,  "잘못된 입력 값입니다.");
 
     private final int status;
     private final String message;
