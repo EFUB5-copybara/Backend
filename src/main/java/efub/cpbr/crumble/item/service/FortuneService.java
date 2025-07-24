@@ -27,8 +27,10 @@ public class FortuneService {
     private static final Duration TTL = Duration.ofDays(1);
 
     //포춘쿠키로 랜덤 답변 조회
-    public FortuneAnswerResponse getFortune() {
-        //User user = userService.getCurrentUser();
+    public FortuneAnswerResponse getFortune(User user) {
+        if (user == null) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
         //Long userId = user.getId();
         Long userId = 1L; //임시
 
@@ -54,8 +56,6 @@ public class FortuneService {
         );
 
         // 사용자 포인트 증가
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
         user.addPoint(10L);
 
         // Redis에 사용 기록 저장
@@ -65,8 +65,10 @@ public class FortuneService {
     }
 
     //오늘의 포춘쿠키 사용 여부 조회
-    public FortuneUseCheckResponse checkTodayUse() {
-        //User user = userService.getCurrentUser();
+    public FortuneUseCheckResponse checkTodayUse(User user) {
+        if (user == null) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
         //Long userId = user.getId();
         Long userId = 1L; //임시
 
