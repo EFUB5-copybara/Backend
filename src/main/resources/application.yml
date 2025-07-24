@@ -17,6 +17,17 @@ spring:
       hibernate:
         format_sql: true
 
+  jwt:
+    secret: ${JWT_KEY}
+    access-token-expiration-millis: 3600000 # 1시간
+    refresh-token-expiration-millis: 604800000 # 7일
+
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      database: 1
+
 cors:
   allow-origins:
     - http://localhost:3000
