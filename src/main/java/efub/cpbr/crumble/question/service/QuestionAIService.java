@@ -38,7 +38,7 @@ public class QuestionAIService {
             String questionContent = openAiChatModel.chat(prompt);
             return questionContent.trim();
         } catch (Exception e) {
-            throw new CustomException(ErrorCode.AI_GENERATION_FAILED);
+            throw new CustomException(ErrorCode.AI_QUESTION_GENERATION_FAILED);
         }
     }
 }

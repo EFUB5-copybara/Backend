@@ -40,12 +40,13 @@ public class QuestionService {
         return false;
     }
 
-    public void saveQuestion(QuestionCategory category, String questionContent) {
+    public Question saveQuestion(QuestionCategory category, String questionContent) {
         Question question = Question.builder()
                         .category(category)
                         .content(questionContent)
                         .date(LocalDate.now())
                         .build();
         questionRepository.save(question);
+        return question;
     }
 }

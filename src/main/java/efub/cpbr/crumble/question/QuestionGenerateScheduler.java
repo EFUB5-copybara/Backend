@@ -1,5 +1,8 @@
 package efub.cpbr.crumble.question;
 
+import efub.cpbr.crumble.hint.service.HintAIService;
+import efub.cpbr.crumble.hint.service.HintService;
+import efub.cpbr.crumble.question.entity.Question;
 import efub.cpbr.crumble.question.service.QuestionAIService;
 import efub.cpbr.crumble.question.entity.QuestionCategory;
 import efub.cpbr.crumble.question.service.QuestionService;
@@ -8,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Random;
 
 @Slf4j
@@ -16,24 +20,32 @@ import java.util.Random;
 public class QuestionGenerateScheduler {
     private final QuestionAIService questionAIService;
     private final QuestionService questionService;
+    private final HintService hintService;
+    private final HintAIService hintAIService;
 
     //@Scheduled(cron = "0 00 23 * * ?", zone = "Asia/Seoul")
-    //@Scheduled(cron = "0 * * * * ?", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 * * * * ?", zone = "Asia/Seoul")
     public void createRandomCategoryQuestion(){
         log.info("질문 생성 스케줄 시작");
         int maxRetries = 3;// 최대 재시도 수
 
-        for(int attempt = 1; attempt < maxRetries; attempt++){
+        for(int attempt = 1; attempt <= maxRetries; attempt++){
             try {
                 QuestionCategory[] categories = QuestionCategory.values();
                 QuestionCategory randomCategory = categories[new Random().nextInt(categories.length)];
 
+                // 질문 생성
                 String questionContent = questionAIService.generateQuestionForCategory(randomCategory);
 
-                // 유사도 검사
-                if (!questionService.isSimilarTextExist(questionContent)) {
-                    questionService.saveQuestion(randomCategory, questionContent);
+                if (!questionService.isSimilarTextExist(questionContent)) {// 유사도 검사
+                    // 질문 저장
+                    Question savedQuestion = questionService.saveQuestion(randomCategory, questionContent);
                     log.info("질문 저장 완료: [{}] {}", randomCategory.name(), questionContent);
+
+                    // 힌트 생성 및 저장
+                    List<String> hints = hintAIService.generateHints(savedQuestion.getContent(), 3);
+                    hintService.saveHints(savedQuestion, hints);
+                    log.info("힌트 3개 저장 완료: 질문ID {}", savedQuestion.getId());
                 } else {
                     log.info("유사 질문 이미 존재: [{}] {}", randomCategory.name(), questionContent);
                 }

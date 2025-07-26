@@ -10,8 +10,10 @@ public enum ErrorCode {
     UNAUTHORIZED_ACCESS(401, "인증되지 않은 사용자입니다."),
 
     // Question 관련 에러
-    AI_GENERATION_FAILED(500, "AI 질문 생성 중 오류가 발생했습니다."),
+    AI_QUESTION_GENERATION_FAILED(500, "AI 질문 생성 중 오류가 발생했습니다."),
     QUESTION_NOT_FOUND(404, "해당 날짜의 질문이 존재하지 않습니다."),
+    // Hint 관련 에러
+    AI_HINT_GENERATION_FAILED(500,"AI 힌트 생성 중 오류가 발생했습니다."),
     // Answer 관련 에러
     ANSWER_NOT_FOUND(404, "해당 답변이 존재하지 않습니다."),
 
