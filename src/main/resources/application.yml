@@ -19,17 +19,23 @@ spring:
 
   data:
     redis:
-      host: localhost # Redis 서버 IP 또는 호스트명 (기본값)
-      port: 6379      # Redis 서버 포트 (기본값)
-      # password: your_redis_password # Redis에 비밀번호가 설정되어 있다면 여기에 입력
-      database: 0 # 사용할 Redis 데이터베이스 번호 (기본 0)
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      database: ${REDIS_DATABASE:0}
 
 jwt:
-  secret: ZXhhbXBsZV9hX3NlY3JldF9rZXlfdGhhdF9pcyBhdF9sZWFzdF8zMl9jaGFyYWN0ZXJzX2xvbmc=
-  access-token-expiration-millis: 3600000 # 1시간 (60분 * 60초 * 1000밀리초)
-  refresh-token-expiration-millis: 604800000 # 7일 (7일 * 24시간 * 60분 * 60초 * 1000밀리초)
+  secret: ${JWT_SECRET_KEY}
+  access-token-expiration-millis: 3600000
+  refresh-token-expiration-millis: 604800000
 
 cors:
   allow-origins:
-    - http://localhost:3000
-    - http://localhost:5173
+    - ${CORS_ALLOWED_ORIGIN_1:http://localhost:3000}
+    - ${CORS_ALLOWED_ORIGIN_2:http://localhost:5173}
+
+logging:
+  level:
+    root: INFO
+    org.springframework: DEBUG
+    efub.cpbr.crumble: DEBUG

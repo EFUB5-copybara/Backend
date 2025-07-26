@@ -2,6 +2,8 @@ package efub.cpbr.crumble.auth.service;
 
 import efub.cpbr.crumble.auth.dto.LoginRequestDto;
 import efub.cpbr.crumble.auth.dto.SignUpRequestDto;
+import efub.cpbr.crumble.global.exception.CustomException;
+import efub.cpbr.crumble.global.exception.ErrorCode;
 import efub.cpbr.crumble.jwt.JwtTokenProvider;
 import efub.cpbr.crumble.jwt.TokenInfo;
 import efub.cpbr.crumble.user.entity.RoleType;
@@ -33,15 +35,15 @@ public class AuthService {
     // 회원가입 로직
     public User signup(SignUpRequestDto signUpRequestDto) {
         if(!signUpRequestDto.isPasswordConfirmed()) {
-            throw new IllegalArgumentException("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+            throw new CustomException(ErrorCode.PASSWORD_NOT_MATCH);
         }
 
         if(userRepository.existsByUsername(signUpRequestDto.getUsername())) {
-            throw new IllegalArgumentException("이미 존재하는 아이디입니다.");
+            throw new CustomException(ErrorCode.USERNAME_ALREADY_EXISTS);
         }
 
         if(userRepository.existsByEmail(signUpRequestDto.getEmail())) {
-            throw new IllegalArgumentException("이미 사용 중인 이메일입니다.");
+            throw new CustomException(ErrorCode.EMAIL_ALREADY_EXISTS);
         }
 
         // 비밀번호 인코딩
