@@ -26,7 +26,7 @@ spring:
     redis:
       host: ${REDIS_HOST}
       port: ${REDIS_PORT}
-      database: 1
+      database: ${REDIS_DATABASE}
 
 cors:
   allow-origins:
@@ -35,3 +35,9 @@ cors:
 
 openai:
   api-key: ${API_KEY}
+
+logging:
+  level:
+    root: INFO
+    org.springframework: DEBUG
+    efub.cpbr.crumble: DEBUG

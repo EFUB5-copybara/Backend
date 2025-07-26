@@ -8,11 +8,16 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDateTime;
-
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails; // import 추가
+
 
 @Entity
 @Getter
@@ -22,7 +27,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="user_id")
-    private Long id;
+    private Long userId;
 
     @Column(nullable = false, unique = true)
     private String username; // 로그인 아이디
@@ -34,6 +39,9 @@ public class User {
     @Email
     @Column(nullable = false)
     private String email;
+
+    @Column(nullable = false)
+    private String nickname;
 
     @Column(nullable = false)
     private int point = 0;
@@ -59,12 +67,18 @@ public class User {
     }
 
     @Builder
-    public User(String username, String password, String email) {
+    public User(Long userId, String username, String password, String email, String nickname,
+                int point, boolean isActive, LocalDateTime createdAt, LocalDateTime updatedAt, RoleType role) {
+        this.userId = userId;
         this.username = username;
         this.password = password;
         this.email = email;
-        this.point = 0;
-        this.isActive = true;
+        this.nickname = nickname;
+        this.point = (point == 0) ? 0 : point; // 기본값 처리
+        this.isActive = isActive;
+        this.createdAt = (createdAt == null) ? LocalDateTime.now() : createdAt; // 기본값 처리
+        this.updatedAt = (updatedAt == null) ? LocalDateTime.now() : updatedAt; // 기본값 처리
+        this.role = (role == null) ? RoleType.USER : role; // 기본 역할 처리
     }
 
     /*public void deactivate() { // 사용자 탈퇴
@@ -76,5 +90,21 @@ public class User {
 
     public void addPoint(Long point) {
         this.point += point;
+    }
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private RoleType role;
+
+    public String getPassword() {
+        return password; // User 엔티티의 password 필드 반환
+    }
+
+    public String getUsername() {
+        return username; // User 엔티티의 username 필드 반환 (로그인 ID)
+    }
+
+    public boolean isEnabled() {
+        return isActive; // User 엔티티의 isActive 필드 반환 (계정 활성화 여부)
     }
 }
