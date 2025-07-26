@@ -14,6 +14,7 @@ public enum ErrorCode {
     QUESTION_NOT_FOUND(404, "해당 날짜의 질문이 존재하지 않습니다."),
     // Hint 관련 에러
     AI_HINT_GENERATION_FAILED(500,"AI 힌트 생성 중 오류가 발생했습니다."),
+    HINT_NOT_FOUND(404, "해당 날짜의 질문에 대한 힌트가 존재하지 않습니다."),
     // Answer 관련 에러
     ANSWER_NOT_FOUND(404, "해당 답변이 존재하지 않습니다."),
 

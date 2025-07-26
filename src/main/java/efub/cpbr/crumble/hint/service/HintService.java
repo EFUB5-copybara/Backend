@@ -1,5 +1,7 @@
 package efub.cpbr.crumble.hint.service;
 
+import efub.cpbr.crumble.global.exception.CustomException;
+import efub.cpbr.crumble.global.exception.ErrorCode;
 import efub.cpbr.crumble.hint.dto.res.HintListResponse;
 import efub.cpbr.crumble.hint.entity.Hint;
 import efub.cpbr.crumble.hint.repository.HintRepository;
@@ -35,7 +37,9 @@ public class HintService {
     public HintListResponse getHints(LocalDate date) {
         Question question = questionService.findQuestionByIdOrThrow(date);
         List<Hint> hints = hintRepository.findAllByQuestion(question);
-
+        if (hints.isEmpty()) {
+            throw new CustomException(ErrorCode.HINT_NOT_FOUND);
+        }
         return HintListResponse.from(question.getId(),hints);
     }
 }
