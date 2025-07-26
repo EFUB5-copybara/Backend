@@ -40,6 +40,7 @@ public class QuestionService {
         return false;
     }
 
+    @Transactional
     public Question saveQuestion(QuestionCategory category, String questionContent) {
         Question question = Question.builder()
                         .category(category)
