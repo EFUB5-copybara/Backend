@@ -19,7 +19,7 @@ public class CommentResponseDto {
         return CommentResponseDto.builder()
                 .commentId(comment.getId())
                 .commentator(comment.getCommentator().getUsername())
-                .commentatorId(comment.getCommentator().getId())
+                .commentatorId(comment.getCommentator().getUserId())
                 .content(comment.getContent())
                 .createdAt(comment.getCreatedAt())
                 .build();
