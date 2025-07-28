@@ -5,6 +5,7 @@ import efub.cpbr.crumble.answer.repository.AnswerRepository;
 import efub.cpbr.crumble.calendar.repository.CalendarRepository;
 import efub.cpbr.crumble.global.exception.CustomException;
 import efub.cpbr.crumble.global.exception.ErrorCode;
+import efub.cpbr.crumble.item.dto.ItemCountResponse;
 import efub.cpbr.crumble.item.entity.Item;
 import efub.cpbr.crumble.item.entity.ItemType;
 import efub.cpbr.crumble.item.entity.UserItem;
@@ -18,8 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static efub.cpbr.crumble.global.exception.ErrorCode.ITEM_NOT_FOUND;
@@ -33,6 +33,7 @@ public class ItemService {
     private final UserItemRepository userItemRepository;
     private final ShieldService shieldService;
 
+    // 아이템 사용
     public void useItem(User user, ItemType type) {
         // 유저가 해당 타입의 아이템을 보유 중인지 확인
         UserItem userItem = userItemRepository.findByUserAndItemType(user, type)
@@ -59,6 +60,28 @@ public class ItemService {
             userItemRepository.save(userItem);
         }
     }
+
+    // 보유 아이템 개수 조회
+    public List<ItemCountResponse> getUserItemCounts(User user) {
+        // 유저가 가진 UserItem들 조회
+        List<UserItem> userItems = userItemRepository.findByUser(user);
+
+        // Map<ItemType, Integer> 으로 매핑
+        Map<ItemType, Integer> ownedMap = userItems.stream()
+                .collect(Collectors.toMap(
+                        ui -> ui.getItem().getType(),
+                        UserItem::getQuantity
+                ));
+
+        // 모든 ItemType에 대해 결과 만들기 (없으면 0으로)
+        return Arrays.stream(ItemType.values())
+                .map(type -> new ItemCountResponse(
+                        type,
+                        ownedMap.getOrDefault(type, 0)
+                ))
+                .toList();
+    }
+
 
     private void useEraser(User user) {
         // 답변 수정 가능
