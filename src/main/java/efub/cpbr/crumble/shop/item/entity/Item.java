@@ -18,9 +18,9 @@ public class Item extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long price;
     private String name;
     private String description;
+    private Long price;
 
     @OneToMany(mappedBy = "item")
     private List<UserItem> userItems = new ArrayList<>();

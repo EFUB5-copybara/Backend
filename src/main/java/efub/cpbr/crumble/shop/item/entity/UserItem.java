@@ -24,5 +24,9 @@ public class UserItem extends BaseEntity {
     @JoinColumn(name = "item_id")
     private Item item;
 
-    private Long amount;
+    public UserItem(User user, Item item) {
+        this.user = user;
+        this.item = item;
+    }
+
 }
