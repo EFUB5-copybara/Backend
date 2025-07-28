@@ -14,6 +14,9 @@ echo "application-prod.yml 생성 중"
 mkdir -p src/main/resources
 cat > src/main/resources/application-prod.yml <<EOL
 spring:
+  application:
+    name: crumble
+    
   datasource:
     url: "${DB_URL}"
     username: "${DB_USERNAME}"
@@ -25,9 +28,29 @@ spring:
     port: "${REDIS_PORT}"
     
   jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
       ddl-auto: update
     show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+jwt:
+  secret: ${JWT_SECRET_KEY}
+  access-token-expiration-millis: 3600000
+  refresh-token-expiration-millis: 604800000
+
+cors:
+  allow-origins:
+    - ${CORS_ALLOWED_ORIGIN_1}
+    - ${CORS_ALLOWED_ORIGIN_2}
+
+logging:
+  level:
+    root: INFO
+    org.springframework: DEBUG
+    efub.cpbr.crumble: DEBUG
 EOL
 
 echo "Docker Compose 빌드 및 실행"
