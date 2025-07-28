@@ -1,14 +1,18 @@
 package efub.cpbr.crumble.item.entity;
 
+import efub.cpbr.crumble.global.exception.CustomException;
+import efub.cpbr.crumble.global.exception.ErrorCode;
 import efub.cpbr.crumble.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Table(name = "user_item")
+@NoArgsConstructor
 public class UserItem {
 
     @Id
@@ -26,6 +30,24 @@ public class UserItem {
     private LocalDateTime createdAt;
 
     private int quantity;      // 보유 수량
+
+    // 수량 setter
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    // 수량 감소
+    public void decreaseQuantity() {
+        if (quantity <= 0) {
+            throw new CustomException(ErrorCode.ITEM_QUANTITY_ZERO);
+        }
+        this.quantity -= 1;
+    }
+
+    // 수량 증가
+    public void increaseQuantity() {
+        this.quantity += 1;
+    }
 
 }
 
