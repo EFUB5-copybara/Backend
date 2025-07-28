@@ -1,6 +1,6 @@
-package efub.cpbr.crumble.shop.font.controller;
+package efub.cpbr.crumble.shop.paper.controller;
 
-import efub.cpbr.crumble.shop.font.service.FontService;
+import efub.cpbr.crumble.shop.paper.service.PaperService;
 import efub.cpbr.crumble.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/use/fonts")
+@RequestMapping("/use/papers")
 @RequiredArgsConstructor
-public class FontUseController {
+public class PaperUseController {
 
-    private final FontService fontService;
+    private final PaperService paperService;
 
-    @PostMapping("/{fontId}")
+    @PostMapping("/{paperId}")
     public void applyFont(@AuthenticationPrincipal User user,
-                          @PathVariable Long fontId) {
-        fontService.applyFont(user, fontId);
+                          @PathVariable Long paperId) {
+        paperService.applyPaper(user, paperId);
     }
 }

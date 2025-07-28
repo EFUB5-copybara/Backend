@@ -1,6 +1,7 @@
 package efub.cpbr.crumble.shop.paper.entity;
 
 import efub.cpbr.crumble.global.domain.BaseEntity;
+import efub.cpbr.crumble.shop.font.entity.Font;
 import efub.cpbr.crumble.shop.item.entity.Item;
 import efub.cpbr.crumble.user.entity.User;
 import jakarta.persistence.*;
@@ -26,4 +27,14 @@ public class UserPaper extends BaseEntity {
     private Paper paper;
 
     private boolean isSelected;
+
+    public void setSelected(boolean selected) {
+        this.isSelected = selected;
+    }
+
+    public UserPaper(User user, Paper paper, boolean isSelected) {
+        this.user = user;
+        this.paper = paper;
+        this.isSelected = isSelected;
+    }
 }

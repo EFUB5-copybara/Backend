@@ -19,21 +19,21 @@ public class FontController {
     // 폰트 리스트 조회
     @GetMapping
     public ResponseEntity<List<FontResponseDto>> getFonts(@AuthenticationPrincipal User user) {
-        return ResponseEntity.ok(fontService.getFonts(user.getUserId()));
+        return ResponseEntity.ok(fontService.getFonts(user));
     }
 
     // 폰트 상세 조회
     @GetMapping("/{fontId}/details")
     public ResponseEntity<FontResponseDto> getFontDetail(@AuthenticationPrincipal User user,
                                          @PathVariable Long fontId) {
-        return ResponseEntity.ok(fontService.getFontDetail(user.getUserId(), fontId));
+        return ResponseEntity.ok(fontService.getFontDetail(user, fontId));
     }
 
     // 폰트 구매
     @PostMapping("/{fontId}/purchasing")
     public ResponseEntity<String> purchaseFont(@AuthenticationPrincipal User user,
                              @PathVariable Long fontId) {
-        fontService.purchaseFont(user.getUserId(), fontId);
+        fontService.purchaseFont(user, fontId);
         return ResponseEntity.ok("폰트 구매가 완료되었습니다.");
     }
 

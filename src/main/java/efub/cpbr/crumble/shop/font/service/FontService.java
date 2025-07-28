@@ -27,9 +27,7 @@ public class FontService {
 
     // 폰트 리스트 조회
     @Transactional(readOnly = true)
-    public List<FontResponseDto> getFonts(Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+    public List<FontResponseDto> getFonts(User user) {
         List<Font> fonts = fontRepository.findAll();
         List<UserFont> userFonts = userFontRepository.findAllByUser(user);
 
@@ -53,11 +51,9 @@ public class FontService {
 
     // 폰트 상세 조회
     @Transactional(readOnly = true)
-    public FontResponseDto getFontDetail(Long userId, Long fontId) {
+    public FontResponseDto getFontDetail(User user, Long fontId) {
         Font font = fontRepository.findById(fontId)
                 .orElseThrow(() -> new CustomException(ErrorCode.FONT_NOT_FOUND));
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         Optional<UserFont> userFontOpt = userFontRepository.findByUserAndFont(user, font);
         boolean isOwned = userFontOpt.isPresent();
@@ -68,9 +64,7 @@ public class FontService {
 
     // 폰트 구매
     @Transactional
-    public void purchaseFont(Long userId, Long fontId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+    public void purchaseFont(User user, Long fontId) {
         Font font = fontRepository.findById(fontId)
                 .orElseThrow(() -> new CustomException(ErrorCode.FONT_NOT_FOUND));
 
@@ -88,9 +82,7 @@ public class FontService {
 
     // 폰트 적용
     @Transactional
-    public void applyFont(Long userId, Long fontId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+    public void applyFont(User user, Long fontId) {
         Font font = fontRepository.findById(fontId)
                 .orElseThrow(() -> new CustomException(ErrorCode.FONT_NOT_FOUND));
 
