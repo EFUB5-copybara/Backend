@@ -26,6 +26,9 @@ public enum ErrorCode {
     // shop 관련
     ITEM_NOT_FOUND(404, "존재하지 않는 아이템입니다."),
     INSUFFICIENT_POINTS(400, "보유 포인트가 부족합니다."),
+    FONT_NOT_FOUND(404, "존재하지 않는 폰트입니다."),
+    ALREADY_PURCHASED(400, "이미 구매하였습니다."),
+    FONT_NOT_OWNED(400, "보유하지 않은 폰트입니다."),
 
     // Fortune Cookie 관련
     FORTUNE_ALREADY_USED(403, "오늘은 이미 포춘쿠키를 사용했습니다."),

@@ -29,4 +29,14 @@ public class UserFont extends BaseEntity {
     private User user;
 
     private boolean isSelected;
+
+    public void setSelected(boolean selected) {
+        this.isSelected = selected;
+    }
+
+    public UserFont(User user, Font font, boolean isSelected) {
+        this.user = user;
+        this.font = font;
+        this.isSelected = isSelected;
+    }
 }

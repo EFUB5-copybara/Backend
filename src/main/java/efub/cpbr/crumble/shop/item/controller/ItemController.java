@@ -3,8 +3,10 @@ package efub.cpbr.crumble.shop.item.controller;
 import efub.cpbr.crumble.shop.item.dto.response.ItemDetailResponseDto;
 import efub.cpbr.crumble.shop.item.dto.response.ItemResponseDto;
 import efub.cpbr.crumble.shop.item.service.ItemService;
+import efub.cpbr.crumble.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,9 +31,10 @@ public class ItemController {
 
     // 아이템 구매
     @PostMapping("/{itemId}/purchasing")
-    public ResponseEntity<String> purchaseItem(@PathVariable Long itemId,
+    public ResponseEntity<String> purchaseItem(@AuthenticationPrincipal User user,
+                                               @PathVariable Long itemId,
                                                @RequestParam Long userId) {
-        itemService.purchaseItem(userId, itemId);
-        return ResponseEntity.ok("구매가 완료되었습니다.");
+        itemService.purchaseItem(user.getUserId(), itemId);
+        return ResponseEntity.ok("아이템 구매가 완료되었습니다.");
     }
 }
