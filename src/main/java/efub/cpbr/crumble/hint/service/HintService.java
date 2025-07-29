@@ -35,7 +35,7 @@ public class HintService {
 
     @Transactional(readOnly = true)
     public HintListResponse getHints(LocalDate date) {
-        Question question = questionService.findQuestionByIdOrThrow(date);
+        Question question = questionService.findQuestionByDateOrThrow(date);
         List<Hint> hints = hintRepository.findAllByQuestion(question);
         if (hints.isEmpty()) {
             throw new CustomException(ErrorCode.HINT_NOT_FOUND);

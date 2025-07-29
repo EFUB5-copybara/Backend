@@ -20,11 +20,11 @@ public class QuestionService {
 
     @Transactional(readOnly = true)
     public QuestionResponse getQuestion(LocalDate date) {
-        return QuestionResponse.from(findQuestionByIdOrThrow(date));
+        return QuestionResponse.from(findQuestionByDateOrThrow(date));
     }
 
     @Transactional(readOnly = true)
-    public Question findQuestionByIdOrThrow(LocalDate date) {
+    public Question findQuestionByDateOrThrow(LocalDate date) {
         return questionRepository.findByDate(date).
                 orElseThrow(() -> new CustomException(ErrorCode.QUESTION_NOT_FOUND));
     }

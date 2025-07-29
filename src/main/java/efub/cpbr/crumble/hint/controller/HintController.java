@@ -19,8 +19,8 @@ import java.time.LocalDate;
 @Tag(name = "Hint", description = "힌트 관련 API")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/question/{date}/hints")
-class HintController {
+@RequestMapping("/questions/{date}/hints")
+public class HintController {
     private final HintService hintService;
 
     @Operation(
