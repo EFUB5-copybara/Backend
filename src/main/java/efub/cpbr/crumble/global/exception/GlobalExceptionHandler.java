@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler{
@@ -17,7 +18,7 @@ public class GlobalExceptionHandler{
     protected ResponseEntity<ErrorDto> handleCustomException(CustomException e, HttpServletRequest request) {
         ErrorDto errorDto = new ErrorDto(
                 e.getErrorCode().name(),
-                LocalDateTime.now().toString(),
+                LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME),
                 e.getErrorCode().getMessage(),
                 e.getErrorCode().getStatus(),
                 request.getRequestURI()
@@ -33,12 +34,11 @@ public class GlobalExceptionHandler{
                 .orElse("입력값이 올바르지 않습니다.");
         ErrorDto errorDto = new ErrorDto(
                 "VALIDATION_FAILED",
-                LocalDateTime.now().toString(),
+                LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME),
                 errorMessage,
                 HttpStatus.BAD_REQUEST.value(),
                 request.getRequestURI()
         );
-        return new ResponseEntity<>(errorDto, HttpStatusCode.valueOf(HttpStatus.BAD_REQUEST.value()));
-
+        return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
     }
 }
