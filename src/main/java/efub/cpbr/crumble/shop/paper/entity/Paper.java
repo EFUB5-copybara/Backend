@@ -21,6 +21,7 @@ public class Paper extends BaseEntity {
     private Long price;
     private String name;
     private String description;
+    private String imgUrl;
 
     @OneToMany(mappedBy = "paper")
     private List<UserPaper> userPapers = new ArrayList<>();

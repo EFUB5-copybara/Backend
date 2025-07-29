@@ -13,12 +13,14 @@ public class ItemResponseDto {
     private Long id;
     private String name;
     private int price;
+    private String imgUrl;
 
     public static ItemResponseDto from(Item item) {
         return ItemResponseDto.builder()
                 .id(item.getItemId())
                 .name(item.getName())
                 .price(Math.toIntExact(item.getPrice()))
+                .imgUrl(item.getImgUrl())
                 .build();
     }
 }

@@ -16,6 +16,7 @@ public class PaperResponseDto {
     private String name;
     private String description;
     private Long price;
+    private String imgUrl;
     private boolean isOwned;
     private boolean isSelected;
 
@@ -25,6 +26,7 @@ public class PaperResponseDto {
                 .name(paper.getName())
                 .description(paper.getDescription())
                 .price(paper.getPrice())
+                .imgUrl(paper.getImgUrl())
                 .isOwned(isOwned)
                 .isSelected(isSelected)
                 .build();

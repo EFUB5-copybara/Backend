@@ -16,6 +16,7 @@ public class FontResponseDto {
     private String name;
     private String description;
     private Long price;
+    private String imgUrl;
     private boolean isOwned;
     private boolean isSelected;
 
@@ -25,6 +26,7 @@ public class FontResponseDto {
                 .name(font.getName())
                 .description(font.getDescription())
                 .price(font.getPrice())
+                .imgUrl(font.getImgUrl())
                 .isOwned(isOwned)
                 .isSelected(isSelected)
                 .build();

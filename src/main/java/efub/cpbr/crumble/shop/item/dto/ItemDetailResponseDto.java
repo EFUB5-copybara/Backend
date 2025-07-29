@@ -15,6 +15,7 @@ public class ItemDetailResponseDto {
     private String description;
     private long price;
     private long quantity;
+    private String imgUrl;
 
     public static ItemDetailResponseDto from(Item item) {
         long quantity = item.getUserItems().stream()
@@ -27,6 +28,7 @@ public class ItemDetailResponseDto {
                 .description(item.getDescription())
                 .price(Math.toIntExact(item.getPrice()))
                 .quantity(quantity)
+                .imgUrl(item.getImgUrl())
                 .build();
     }
 }

@@ -21,6 +21,7 @@ public class Font extends BaseEntity {
     private Long price;
     private String name;
     private String description;
+    private String imgUrl;
 
     @OneToMany(mappedBy = "font")
     private List<UserFont> userFonts = new ArrayList<>();
