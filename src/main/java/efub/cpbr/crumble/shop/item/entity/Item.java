@@ -1,27 +1,29 @@
 package efub.cpbr.crumble.shop.item.entity;
 
-import efub.cpbr.crumble.global.domain.BaseEntity;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Item extends BaseEntity {
+@Table(name = "item")
+public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long itemId;
 
     private String name;
+    private long price;
+    private String imgUrl;
     private String description;
-    private Long price;
+
+    @Enumerated(EnumType.STRING)
+    private ItemType type; // ERASER, SHIELD, KEY
 
     @OneToMany(mappedBy = "item")
     private List<UserItem> userItems = new ArrayList<>();
+
 }

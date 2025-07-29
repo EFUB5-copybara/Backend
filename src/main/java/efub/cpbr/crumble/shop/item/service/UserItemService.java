@@ -1,11 +1,11 @@
-package efub.cpbr.crumble.item.service;
+package efub.cpbr.crumble.shop.item.service;
 
 import efub.cpbr.crumble.global.exception.CustomException;
 import efub.cpbr.crumble.global.exception.ErrorCode;
-import efub.cpbr.crumble.item.dto.ItemCountResponse;
-import efub.cpbr.crumble.item.entity.ItemType;
-import efub.cpbr.crumble.item.entity.UserItem;
-import efub.cpbr.crumble.item.repository.UserItemRepository;
+import efub.cpbr.crumble.shop.item.dto.ItemCountResponse;
+import efub.cpbr.crumble.shop.item.entity.ItemType;
+import efub.cpbr.crumble.shop.item.entity.UserItem;
+import efub.cpbr.crumble.shop.item.repository.UserItemRepository;
 import efub.cpbr.crumble.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,8 +1,8 @@
-package efub.cpbr.crumble.item.controller;
+package efub.cpbr.crumble.shop.item.controller;
 
-import efub.cpbr.crumble.item.dto.ItemCountResponse;
-import efub.cpbr.crumble.item.entity.ItemType;
-import efub.cpbr.crumble.item.service.UserItemService;
+import efub.cpbr.crumble.shop.item.dto.ItemCountResponse;
+import efub.cpbr.crumble.shop.item.entity.ItemType;
+import efub.cpbr.crumble.shop.item.service.UserItemService;
 import efub.cpbr.crumble.user.entity.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

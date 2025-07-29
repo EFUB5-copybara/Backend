@@ -2,8 +2,8 @@ package efub.cpbr.crumble.shop.item.service;
 
 import efub.cpbr.crumble.global.exception.CustomException;
 import efub.cpbr.crumble.global.exception.ErrorCode;
-import efub.cpbr.crumble.shop.item.dto.response.ItemDetailResponseDto;
-import efub.cpbr.crumble.shop.item.dto.response.ItemResponseDto;
+import efub.cpbr.crumble.shop.item.dto.ItemDetailResponseDto;
+import efub.cpbr.crumble.shop.item.dto.ItemResponseDto;
 import efub.cpbr.crumble.shop.item.entity.Item;
 import efub.cpbr.crumble.shop.item.entity.UserItem;
 import efub.cpbr.crumble.shop.item.repository.ItemRepository;
@@ -14,7 +14,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -39,20 +41,29 @@ public class ItemService {
         return ItemDetailResponseDto.from(item);
     }
 
+    // 아이템 구매
     @Transactional
     public void purchaseItem(Long userId, Long itemId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+
         Item item = itemRepository.findById(itemId)
                 .orElseThrow(() -> new CustomException(ErrorCode.ITEM_NOT_FOUND));
 
-        if (user.getPoint() < item.getPrice()) {
-            throw new CustomException(ErrorCode.INSUFFICIENT_POINTS);
+        // 해당 유저가 이미 아이템을 갖고 있으면 수량 +1
+        Optional<UserItem> optionalUserItem = userItemRepository.findByUserAndItem(user, item);
+
+        if (optionalUserItem.isPresent()) {
+            UserItem userItem = optionalUserItem.get();
+            userItem.increaseQuantity(); // 수량 +1
+        } else { // 갖고 있지 않으면 수량 1로 구매 생성
+            UserItem userItem = new UserItem(user, item);
+            userItem.setQuantity(1);
+            userItem.setCreatedAt(LocalDateTime.now());
+            userItemRepository.save(userItem);
         }
 
-        // 포인트 차감 및 아이템 추가
         user.addPoint(-item.getPrice());
-        userItemRepository.save(new UserItem(user, item));
     }
 }
 

@@ -1,4 +1,4 @@
-package efub.cpbr.crumble.shop.item.dto.response;
+package efub.cpbr.crumble.shop.item.dto;
 
 import efub.cpbr.crumble.shop.item.entity.Item;
 import lombok.AccessLevel;
@@ -16,7 +16,7 @@ public class ItemResponseDto {
 
     public static ItemResponseDto from(Item item) {
         return ItemResponseDto.builder()
-                .id(item.getId())
+                .id(item.getItemId())
                 .name(item.getName())
                 .price(Math.toIntExact(item.getPrice()))
                 .build();

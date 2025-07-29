@@ -1,4 +1,4 @@
-package efub.cpbr.crumble.item.repository;
+package efub.cpbr.crumble.shop.item.repository;
 
 import efub.cpbr.crumble.answer.entity.Answer;
 import org.springframework.data.jpa.repository.JpaRepository;

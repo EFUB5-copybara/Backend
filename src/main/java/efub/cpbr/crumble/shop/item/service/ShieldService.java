@@ -1,4 +1,4 @@
-package efub.cpbr.crumble.item.service;
+package efub.cpbr.crumble.shop.item.service;
 
 import efub.cpbr.crumble.answer.entity.Answer;
 import efub.cpbr.crumble.answer.repository.AnswerRepository;

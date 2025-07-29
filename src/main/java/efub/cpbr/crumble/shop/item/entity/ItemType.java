@@ -1,4 +1,4 @@
-package efub.cpbr.crumble.item.entity;
+package efub.cpbr.crumble.shop.item.entity;
 
 public enum ItemType {
     ERASER,

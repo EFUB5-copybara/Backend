@@ -1,7 +1,7 @@
 package efub.cpbr.crumble.shop.item.controller;
 
-import efub.cpbr.crumble.shop.item.dto.response.ItemDetailResponseDto;
-import efub.cpbr.crumble.shop.item.dto.response.ItemResponseDto;
+import efub.cpbr.crumble.shop.item.dto.ItemDetailResponseDto;
+import efub.cpbr.crumble.shop.item.dto.ItemResponseDto;
 import efub.cpbr.crumble.shop.item.service.ItemService;
 import efub.cpbr.crumble.user.entity.User;
 import lombok.RequiredArgsConstructor;

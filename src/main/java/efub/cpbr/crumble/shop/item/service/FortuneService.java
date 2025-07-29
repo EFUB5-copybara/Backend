@@ -1,11 +1,11 @@
-package efub.cpbr.crumble.item.service;
+package efub.cpbr.crumble.shop.item.service;
 
 import efub.cpbr.crumble.answer.entity.Answer;
 import efub.cpbr.crumble.global.exception.CustomException;
 import efub.cpbr.crumble.global.exception.ErrorCode;
-import efub.cpbr.crumble.item.dto.FortuneAnswerResponse;
-import efub.cpbr.crumble.item.dto.FortuneUseCheckResponse;
-import efub.cpbr.crumble.item.repository.FortuneRepository;
+import efub.cpbr.crumble.shop.item.dto.FortuneAnswerResponse;
+import efub.cpbr.crumble.shop.item.dto.FortuneUseCheckResponse;
+import efub.cpbr.crumble.shop.item.repository.FortuneRepository;
 import efub.cpbr.crumble.user.repository.UserRepository;
 import efub.cpbr.crumble.user.entity.User;
 import lombok.RequiredArgsConstructor;
