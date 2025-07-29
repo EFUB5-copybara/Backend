@@ -15,9 +15,10 @@ import java.util.List;
 public class HintAIService {
 
     private final OpenAiChatModel openAiChatModel;
+    private final ObjectMapper objectMapper;
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
-    public HintAIService(@Value("${openai.api-key}") String apiKey) {
+    public HintAIService(@Value("${openai.api-key}") String apiKey,ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
         this.openAiChatModel = OpenAiChatModel.builder()
                 .apiKey(apiKey)
                 .modelName("gpt-4o-mini")
