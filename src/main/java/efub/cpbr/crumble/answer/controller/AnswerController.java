@@ -20,7 +20,7 @@ import java.time.LocalDate;
 @Tag(name = "Answer", description = "답변 관련 API")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/question/{date}/answer")
+@RequestMapping("/questions/{date}/answer")
 public class AnswerController {
 
     private final AnswerService answerService;
