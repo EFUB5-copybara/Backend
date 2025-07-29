@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDate;
 import java.util.List;
 
+@Tag(name = "Calendar", description = "캘린더 관련 API")
 @RestController
 @RequiredArgsConstructor
 public class CalendarController {
@@ -26,8 +28,8 @@ public class CalendarController {
 
     // 캘린더에서 월별로 답변한 날짜 조회 컨트롤러
     @Operation(
-            summary = "포춘 쿠키 열기",
-            description = "하루에 1번 과거의 랜덤 답변을 조회합니다.."
+            summary = "월별 답변 날짜 조회",
+            description = "캘린더에서 월별로 답변한 날짜 목록을 조회합니다."
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "조회 성공"),
@@ -45,8 +47,8 @@ public class CalendarController {
 
     // 월별 답변 목록을 조회
     @Operation(
-            summary = "포춘 쿠키 열기",
-            description = "하루에 1번 과거의 랜덤 답변을 조회합니다.."
+            summary = "월별 답변 목록",
+            description = "월별로 답변 목록을 조회합니다."
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "조회 성공"),
@@ -66,8 +68,8 @@ public class CalendarController {
 
     // 연속 일수 조회
     @Operation(
-            summary = "포춘 쿠키 열기",
-            description = "하루에 1번 과거의 랜덤 답변을 조회합니다.."
+            summary = "연속 일수",
+            description = "오늘을 기준으로 연속 답변 일수를 조회합니다."
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "조회 성공"),
@@ -80,15 +82,15 @@ public class CalendarController {
         return ResponseEntity.ok(streak);
     }
 
+    //쿠키 개수 조회
     @Operation(
-            summary = "포춘 쿠키 열기",
-            description = "하루에 1번 과거의 랜덤 답변을 조회합니다.."
+            summary = "쿠키 개수 조회",
+            description = "캘린더의 쿠키병에 담긴 쿠키 수를 조회합니다."
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "조회 성공"),
             @ApiResponse(responseCode = "401", description = "인증 정보 없음")
     })
-    //쿠키 개수 조회
     @GetMapping("/cookies")
     public ResponseEntity<Integer> getMonthlyCookieCount(//@AuthenticationPrincipal
                                                          User user,
