@@ -2,7 +2,7 @@ package efub.cpbr.crumble.item.controller;
 
 import efub.cpbr.crumble.item.dto.ItemCountResponse;
 import efub.cpbr.crumble.item.entity.ItemType;
-import efub.cpbr.crumble.item.service.ItemService;
+import efub.cpbr.crumble.item.service.UserItemService;
 import efub.cpbr.crumble.user.entity.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -19,9 +19,9 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/items")
-public class ItemController {
+public class UserItemController {
 
-    private final ItemService itemService;
+    private final UserItemService itemService;
 
     // 아이템 사용 컨트롤러
     @Operation(

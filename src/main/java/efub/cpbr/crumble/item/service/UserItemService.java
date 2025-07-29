@@ -1,34 +1,23 @@
 package efub.cpbr.crumble.item.service;
 
-import efub.cpbr.crumble.answer.entity.Answer;
-import efub.cpbr.crumble.answer.repository.AnswerRepository;
-import efub.cpbr.crumble.calendar.repository.CalendarRepository;
 import efub.cpbr.crumble.global.exception.CustomException;
 import efub.cpbr.crumble.global.exception.ErrorCode;
 import efub.cpbr.crumble.item.dto.ItemCountResponse;
-import efub.cpbr.crumble.item.entity.Item;
 import efub.cpbr.crumble.item.entity.ItemType;
 import efub.cpbr.crumble.item.entity.UserItem;
-import efub.cpbr.crumble.item.repository.ItemRepository;
 import efub.cpbr.crumble.item.repository.UserItemRepository;
 import efub.cpbr.crumble.user.entity.User;
-import efub.cpbr.crumble.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
-
-import static efub.cpbr.crumble.global.exception.ErrorCode.ITEM_NOT_FOUND;
-import static efub.cpbr.crumble.global.exception.ErrorCode.USER_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class ItemService {
+public class UserItemService {
 
     private final UserItemRepository userItemRepository;
     private final ShieldService shieldService;
