@@ -29,7 +29,7 @@ public class QuestionController {
             @ApiResponse(responseCode = "200", description = "조회 성공"),
             @ApiResponse(responseCode = "404", description = "질문 없음")
     })
-    @GetMapping("/question/{date}")
+    @GetMapping("/questions/{date}")
     public ResponseEntity<QuestionResponse> getQuestion(
             @Parameter(description = "조회할 날짜 (yyyy-MM-dd)", example = "2025-07-08") @PathVariable LocalDate date) {
         return ResponseEntity.ok(questionService.getQuestion(date));
