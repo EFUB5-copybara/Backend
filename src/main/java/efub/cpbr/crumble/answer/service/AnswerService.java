@@ -23,7 +23,7 @@ public class AnswerService {
 
     @Transactional
     public Long createAnswer(User user, LocalDate date, AnswerRequest request){
-        Question question = questionService.findQuestionByIdOrThrow(date);
+        Question question = questionService.findQuestionByDateOrThrow(date);
 
         Answer answer = request.toEntity(question,user);
         return answerRepository.save(answer).getId();
