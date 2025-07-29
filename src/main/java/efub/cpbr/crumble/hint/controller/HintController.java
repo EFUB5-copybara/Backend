@@ -20,7 +20,7 @@ import java.time.LocalDate;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/questions/{date}/hints")
-class HintController {
+public class HintController {
     private final HintService hintService;
 
     @Operation(
