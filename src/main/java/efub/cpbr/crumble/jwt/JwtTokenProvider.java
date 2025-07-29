@@ -1,5 +1,9 @@
 package efub.cpbr.crumble.jwt;
 
+import efub.cpbr.crumble.global.exception.CustomException;
+import efub.cpbr.crumble.global.exception.ErrorCode;
+import efub.cpbr.crumble.user.entity.User;
+import efub.cpbr.crumble.user.repository.UserRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -9,8 +13,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
 public class JwtTokenProvider {
 
     private final SecretKey key; // JWT 서명에 사용될 비밀 키
+    private final UserRepository userRepository;
 
     // Access Token 만료 시간 (밀리초)
     @Value("${jwt.access-token-expiration-millis}")
@@ -33,7 +36,8 @@ public class JwtTokenProvider {
     @Value("${jwt.refresh-token-expiration-millis}")
     private long refreshTokenExpirationMillis;
 
-    public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
+    public JwtTokenProvider(@Value("${jwt.secret}") String secretKey, UserRepository userRepository) {
+        this.userRepository = userRepository;
         byte[] keyBytes = Decoders.BASE64.decode(secretKey); // Base64로 인코딩된 secretKey 디코딩
         this.key = Keys.hmacShaKeyFor(keyBytes); // HMAC SHA 키 생성
     }
@@ -87,10 +91,12 @@ public class JwtTokenProvider {
 
 
         // 스프링 시큐리티 User 생성 시 비밀번호는 "" (빈 문자열)로 설정
-        UserDetails principal = new User(claims.getSubject(), "", authorities);
+        //UserDetails principal = new User(claims.getSubject(), "", authorities);
+        User user = userRepository.findByUsername(claims.getSubject())
+                .orElseThrow(()->new CustomException(ErrorCode.USER_NOT_FOUND));
 
         // Authentication return
-        return new UsernamePasswordAuthenticationToken(principal, "", authorities);
+        return new UsernamePasswordAuthenticationToken(user, "", authorities);
     }
 
     // 토큰 유효성 검증

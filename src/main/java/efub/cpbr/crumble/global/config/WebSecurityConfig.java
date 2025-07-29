@@ -22,7 +22,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig {
 
     //private final UserDetailsServiceImpl userDetailsService;
-    //private final JwtTokenProvider jwtTokenProvider; // JWT 필터에 필요 (지금은 주석)
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -52,9 +52,7 @@ public class WebSecurityConfig {
                         .anyRequest().authenticated() // 그 외 모든 요청은 인증 필요
                 )
 
-        // 로그인 테스트가 성공하면 그때 활성화하여 테스트
-        // .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
-        ;
+        .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 }
