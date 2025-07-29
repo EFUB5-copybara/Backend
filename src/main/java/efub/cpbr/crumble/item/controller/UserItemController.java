@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,8 +36,7 @@ public class UserItemController {
     })
     @PostMapping("/use")
     public ResponseEntity<Void> useItem(
-            //@AuthenticationPrincipal
-            User user,
+            @AuthenticationPrincipal User user,
             @Parameter(description = "아이템 타입", example = "SHIELD")
                 @RequestParam ItemType type
     ) {
@@ -54,9 +54,7 @@ public class UserItemController {
             @ApiResponse(responseCode = "401", description = "인증 정보 없음"),
     })
     @GetMapping("/count")
-    public ResponseEntity<List<ItemCountResponse>> getMyItems(
-            //@AuthenticationPrincipal
-            User user
+    public ResponseEntity<List<ItemCountResponse>> getMyItems(@AuthenticationPrincipal User user
     ) {
         List<ItemCountResponse> items = itemService.getUserItemCounts(user);
         return ResponseEntity.ok(items);
