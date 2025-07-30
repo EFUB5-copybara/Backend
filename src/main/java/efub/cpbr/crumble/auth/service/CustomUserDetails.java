@@ -52,7 +52,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return user.isEnabled(); // User 엔티티의 isActive 필드 사용
+        return user.isActive();
     }
 
     @Override
