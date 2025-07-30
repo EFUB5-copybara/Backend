@@ -67,38 +67,38 @@ public class AuthService {
 
 
     // 로그인 로직
-//    public TokenInfo login(LoginRequestDto loginRequestDto) {
-//        log.info("로그인 시도: 사용자명 = {}", loginRequestDto.getUsername());
-//
-//        // 1. 인증 토큰 생성
-//        UsernamePasswordAuthenticationToken authenticationToken =
-//                new UsernamePasswordAuthenticationToken(loginRequestDto.getUsername(), loginRequestDto.getPassword());
-//
-//        try {
-//            // 2. AuthenticationManager를 통해 인증 수행
-//            // 이 시점에서 UserDetailsService.loadUserByUsername()과 PasswordEncoder.matches()가 내부적으로 호출됩니다.
-//            Authentication authentication = authenticationManager.authenticate(authenticationToken);
-//            log.info("인증 성공: 사용자명 = {}", authentication.getName());
-//
-//            // 3. 인증 정보로 JWT 토큰 생성
-//            TokenInfo tokenInfo = jwtTokenProvider.generateToken(authentication);
-//            log.info("JWT 토큰 생성 완료");
-//
-//            // 4. 리프레시 토큰 레디스에 저장 (선택 사항, Redis 설정이 올바른지 확인 필요)
-//            redisTemplate.opsForValue().set("RT:" + authentication.getName(),
-//                    tokenInfo.getRefreshToken(),
-//                    jwtTokenProvider.getRefreshTokenExpirationMillis(),
-//                    TimeUnit.MILLISECONDS);
-//            log.info("리프레시 토큰 Redis에 저장 완료");
-//
-//            return tokenInfo;
-//
-//        } catch (Exception e) {
-//            // BadCredentialsException, UsernameNotFoundException 등 AuthenticationManager.authenticate()에서
-//            // 발생할 수 있는 예외를 여기서 잡아서 로그를 남깁니다.
-//            // 이 예외는 GlobalExceptionHandler에서 처리될 것입니다.
-//            log.error("로그인 인증 실패: {}", e.getMessage());
-//            throw e; // 예외를 다시 던져 GlobalExceptionHandler가 잡도록 합니다.
-//        }
-//    }
+    public TokenInfo login(LoginRequestDto loginRequestDto) {
+        log.info("로그인 시도: 사용자명 = {}", loginRequestDto.getUsername());
+
+        // 1. 인증 토큰 생성
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(loginRequestDto.getUsername(), loginRequestDto.getPassword());
+
+        try {
+            // 2. AuthenticationManager를 통해 인증 수행
+            // 이 시점에서 UserDetailsService.loadUserByUsername()과 PasswordEncoder.matches()가 내부적으로 호출됩니다.
+            Authentication authentication = authenticationManager.authenticate(authenticationToken);
+            log.info("인증 성공: 사용자명 = {}", authentication.getName());
+
+            // 3. 인증 정보로 JWT 토큰 생성
+            TokenInfo tokenInfo = jwtTokenProvider.generateToken(authentication);
+            log.info("JWT 토큰 생성 완료");
+
+            // 4. 리프레시 토큰 레디스에 저장 (선택 사항, Redis 설정이 올바른지 확인 필요)
+            redisTemplate.opsForValue().set("RT:" + authentication.getName(),
+                    tokenInfo.getRefreshToken(),
+                    jwtTokenProvider.getRefreshTokenExpirationMillis(),
+                    TimeUnit.MILLISECONDS);
+            log.info("리프레시 토큰 Redis에 저장 완료");
+
+            return tokenInfo;
+
+        } catch (Exception e) {
+            // BadCredentialsException, UsernameNotFoundException 등 AuthenticationManager.authenticate()에서
+            // 발생할 수 있는 예외를 여기서 잡아서 로그를 남깁니다.
+            // 이 예외는 GlobalExceptionHandler에서 처리될 것입니다.
+            log.error("로그인 인증 실패: {}", e.getMessage());
+            throw e; // 예외를 다시 던져 GlobalExceptionHandler가 잡도록 합니다.
+        }
+    }
 }
