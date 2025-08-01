@@ -99,6 +99,21 @@ public class User {
     @Column(nullable = false)
     private RoleType role;
 
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
+        this.onUpdate(); // updatedAt 자동 업데이트를 위해 호출
+    }
+
+    public void updateEmail(String email) {
+        this.email = email;
+        this.onUpdate();
+    }
+
+    public void updateProfileImageIndex(Integer profileImageIndex) {
+        this.profileImageIndex = profileImageIndex;
+        this.onUpdate();
+    }
+
     public String getPassword() {
         return password; // User 엔티티의 password 필드 반환
     }

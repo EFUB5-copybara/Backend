@@ -45,11 +45,17 @@ public enum ErrorCode {
     UNSUPPORTED_TOKEN(401, "지원되지 않는 토큰입니다."),
     FORBIDDEN(403, "접근 권한이 없습니다."),
 
+    // 마이페이지 관련
+    DUPLICATE_NICKNAME(409, "이미 사용 중인 닉네임입니다."),
+    DUPLICATE_EMAIL(409, "이미 사용 중인 이메일입니다."),
+
     // 사용자 및 회원가입 관련
     PASSWORD_NOT_MATCH(400, "비밀번호와 비밀번호 확인이 일치하지 않습니다."),
     USERNAME_ALREADY_EXISTS(409, "이미 존재하는 아이디입니다."),
     EMAIL_ALREADY_EXISTS(409, "이미 가입된 이메일입니다."),
     NICKNAME_ALREADY_EXISTS(409, "이미 사용 중인 닉네임입니다.");
+
+
 
     private final int status;
     private final String message;
