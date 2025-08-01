@@ -27,8 +27,8 @@ public class AuthController {
     }
 
     // 로그인 API
-//    @PostMapping("/login")
-//    public TokenInfo login(@Valid @RequestBody LoginRequestDto request) {
-//        return authService.login(request);
-//    }
+    @PostMapping("/login")
+    public TokenInfo login(@Valid @RequestBody LoginRequestDto request) {
+        return authService.login(request);
+    }
 }

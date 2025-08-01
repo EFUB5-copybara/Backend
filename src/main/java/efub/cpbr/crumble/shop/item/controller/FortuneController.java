@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,8 +35,7 @@ public class FortuneController {
             @ApiResponse(responseCode = "404", description = "과거의 답변 존재하지 않음")
     })
     @GetMapping
-    public ResponseEntity<FortuneAnswerResponse> getFortune(//@AuthenticationPrincipal
-                                                            User user) {
+    public ResponseEntity<FortuneAnswerResponse> getFortune(@AuthenticationPrincipal User user) {
         return ResponseEntity.ok(fortuneService.getFortune(user));
     }
 
@@ -49,8 +49,7 @@ public class FortuneController {
             @ApiResponse(responseCode = "401", description = "인증 정보 없음")
     })
     @GetMapping("/used")
-    public ResponseEntity<FortuneUseCheckResponse> checkTodayUse(//@AuthenticationPrincipal
-                                                                 User user) {
+    public ResponseEntity<FortuneUseCheckResponse> checkTodayUse(@AuthenticationPrincipal User user) {
         return ResponseEntity.ok(fortuneService.checkTodayUse(user));
     }
 

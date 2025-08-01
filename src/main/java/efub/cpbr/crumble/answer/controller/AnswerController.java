@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -35,8 +36,7 @@ public class AnswerController {
             @ApiResponse(responseCode = "404", description = "질문 또는 유저 없음")
     })
     @PostMapping
-    public ResponseEntity<Void> createAnswer(//@AuthenticationPrincipal
-                                             User user,
+    public ResponseEntity<Void> createAnswer(@AuthenticationPrincipal User user,
                                              @Parameter(description = "질문 날짜", example = "2024-07-17") @PathVariable LocalDate date,
                                              @Valid @RequestBody AnswerRequest request) {
         Long answerId = answerService.createAnswer(user, date,request);
@@ -52,8 +52,7 @@ public class AnswerController {
             @ApiResponse(responseCode = "404", description = "답변 없음")
     })
     @GetMapping
-    public ResponseEntity<AnswerResponse> getAnswer(//@AuthenticationPrincipal
-                                                    User user,
+    public ResponseEntity<AnswerResponse> getAnswer(@AuthenticationPrincipal User user,
                                                     @Parameter(description = "질문 날짜", example = "2024-07-17") @PathVariable LocalDate date){
         return ResponseEntity.ok(answerService.getAnswer(user,date));
     }

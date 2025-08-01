@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,8 +37,7 @@ public class CalendarController {
             @ApiResponse(responseCode = "401", description = "인증 정보 없음")
     })
     @GetMapping("/calendar/answers")
-    public ResponseEntity<AnsweredDatesResponse> getAnsweredDates(//@AuthenticationPrincipal
-                                                                  User user,
+    public ResponseEntity<AnsweredDatesResponse> getAnsweredDates(@AuthenticationPrincipal User user,
                                                                   @Parameter(description = "조회 연도", example = "2025")
                                                                       @RequestParam int year,
                                                                   @Parameter(description = "조회 월", example = "3")
@@ -55,8 +55,7 @@ public class CalendarController {
             @ApiResponse(responseCode = "401", description = "인증 정보 없음")
     })
     @GetMapping("/answers/me")
-    public ResponseEntity<List<AnswerDto>> getMonthlyAnswers(//@AuthenticationPrincipal
-                                                             User user,
+    public ResponseEntity<List<AnswerDto>> getMonthlyAnswers(@AuthenticationPrincipal User user,
                                                              @Parameter(description = "조회 연도", example = "2025")
                                                                  @RequestParam int year,
                                                              @Parameter(description = "조회 월", example = "3")
@@ -76,8 +75,7 @@ public class CalendarController {
             @ApiResponse(responseCode = "401", description = "인증 정보 없음")
     })
     @GetMapping("/answers/streak")
-    public ResponseEntity<Integer> getStreak(//@AuthenticationPrincipal
-                                             User user) {
+    public ResponseEntity<Integer> getStreak(@AuthenticationPrincipal User user) {
         int streak = calendarService.getStreak(user);
         return ResponseEntity.ok(streak);
     }
@@ -92,8 +90,7 @@ public class CalendarController {
             @ApiResponse(responseCode = "401", description = "인증 정보 없음")
     })
     @GetMapping("/cookies")
-    public ResponseEntity<Integer> getMonthlyCookieCount(//@AuthenticationPrincipal
-                                                         User user,
+    public ResponseEntity<Integer> getMonthlyCookieCount(@AuthenticationPrincipal User user,
                                                          @Parameter(description = "조회 연도", example = "2025")
                                                              @RequestParam int year,
                                                          @Parameter(description = "조회 월", example = "3")
