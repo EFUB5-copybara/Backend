@@ -40,6 +40,14 @@ public class QuestionController {
         return ResponseEntity.ok(questionService.getQuestion(date));
     }
 
+    @Operation(
+            summary = "오늘의 질문 조회",
+            description = "사용자 ID에 기반해 오늘 날짜에 해당하는 질문을 조회합니다."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "오늘 질문 조회 성공"),
+            @ApiResponse(responseCode = "404", description = "오늘 질문이 존재하지 않음")
+    })
     @GetMapping("/today")
     public ResponseEntity<TodayQuestionResponse> getTodayQuestion(
             @AuthenticationPrincipal CustomUserDetails userDetails) {
