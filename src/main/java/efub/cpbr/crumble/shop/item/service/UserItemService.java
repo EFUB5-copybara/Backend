@@ -24,6 +24,9 @@ public class UserItemService {
 
     // 아이템 사용
     public void useItem(User user, ItemType type) {
+        if (user == null) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
         // 유저가 해당 타입의 아이템을 보유 중인지 확인
         UserItem userItem = userItemRepository.findByUserAndItemType(user, type)
                 .orElseThrow(() -> new CustomException(ErrorCode.ITEM_NOT_OWNED));
@@ -52,6 +55,9 @@ public class UserItemService {
 
     // 보유 아이템 개수 조회
     public List<ItemCountResponse> getUserItemCounts(User user) {
+        if (user == null) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
         // 유저가 가진 UserItem들 조회
         List<UserItem> userItems = userItemRepository.findByUser(user);
 

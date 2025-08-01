@@ -31,8 +31,7 @@ public class CalendarService {
         if (user == null) {
             throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
-        //Long userId = user.getId();
-        Long userId = 1L; //임시
+        Long userId = user.getUserId();
 
         LocalDateTime[] range = getMonthDateTimeRange(year, month); //월의 시작 시간, 끝 시간
         List<LocalDateTime> answerTimes = calendarRepository.findAnsweredDatesInMonth(userId, range[0], range[1]);
@@ -50,8 +49,7 @@ public class CalendarService {
         if (user == null) {
             throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
-        //Long userId = user.getId();
-        Long userId = 1L; //임시
+        Long userId = user.getUserId();
 
         LocalDateTime[] range = getMonthDateTimeRange(year, month);
         return calendarRepository.findMonthlyAnswers(userId, range[0], range[1]);
@@ -62,8 +60,7 @@ public class CalendarService {
         if (user == null) {
             throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
-        //Long userId = user.getId();
-        Long userId = 1L; //임시
+        Long userId = user.getUserId();
 
         // 모든 답변 날짜 조회
         Set<LocalDate> dateSet = calendarRepository.findAllAnswerDates(userId).stream()
@@ -86,8 +83,7 @@ public class CalendarService {
         if (user == null) {
             throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
-        //Long userId = user.getId();
-        Long userId = 1L; //임시
+        Long userId = user.getUserId();
 
         LocalDateTime[] range = getMonthDateTimeRange(year, month);
 
@@ -124,7 +120,5 @@ public class CalendarService {
                 end.atTime(LocalTime.MAX)
         };
     }
-
-
 
 }
