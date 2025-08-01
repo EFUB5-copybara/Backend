@@ -32,9 +32,8 @@ public class ItemController {
     // 아이템 구매
     @PostMapping("/{itemId}/purchasing")
     public ResponseEntity<String> purchaseItem(@AuthenticationPrincipal User user,
-                                               @PathVariable Long itemId,
-                                               @RequestParam Long userId) {
-        itemService.purchaseItem(user.getUserId(), itemId);
+                                               @PathVariable Long itemId) {
+        itemService.purchaseItem(user, itemId);
         return ResponseEntity.ok("아이템 구매가 완료되었습니다.");
     }
 }

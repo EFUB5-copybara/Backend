@@ -6,6 +6,7 @@ import efub.cpbr.crumble.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 
@@ -27,12 +28,8 @@ public class UserItem {
     @JoinColumn(name = "item_id")
     private Item item;
 
+    @CreatedDate
     private LocalDateTime createdAt;
-
-    // 구매일 setter
-    public void setCreatedAt(LocalDateTime now) {
-        this.createdAt = now;
-    }
 
     private int quantity;      // 보유 수량
 
@@ -54,9 +51,10 @@ public class UserItem {
         this.quantity += 1;
     }
 
-    public UserItem(User user, efub.cpbr.crumble.shop.item.entity.Item item) {
+    public UserItem(User user, Item item, int quantity) {
         this.user = user;
         this.item = item;
+        this.quantity = quantity;
     }
 }
 
