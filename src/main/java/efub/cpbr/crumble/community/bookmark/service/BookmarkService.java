@@ -36,26 +36,26 @@ public class BookmarkService {
         }
 
         Bookmark newBookmark = new Bookmark(post, user);
-        bookmarkRepository.save(newBookmark);
 
-        post.updateBookmarkCount();
-        postRepository.save(post);
+        post.increaseBookmarkCount();
+        bookmarkRepository.save(newBookmark);
 
         return BookmarkResponseDto.from(newBookmark);
     }
 
     // 북마크 삭제
     @Transactional
-    public void deleteBookmark(Long bookmarkId) {
+    public void deleteBookmark(Long bookmarkId, Long userId) {
         Bookmark bookmark = bookmarkRepository.findById(bookmarkId)
                 .orElseThrow(() -> new CustomException(ErrorCode.BOOKMARK_NOT_FOUND));
 
-        Post post = postRepository.findById(bookmark.getPost().getId())
-                .orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_FOUND));
+        if (!bookmark.getBookmarker().getUserId().equals(userId)) {
+            throw new CustomException(ErrorCode.FORBIDDEN);
+        }
 
-        post.getBookmarkList().remove(bookmark);
+        Post post = bookmark.getPost();
+
+        post.decreaseBookmarkCount();
         bookmarkRepository.delete(bookmark);
-        post.updateBookmarkCount();
-        postRepository.save(post);
     }
 }
