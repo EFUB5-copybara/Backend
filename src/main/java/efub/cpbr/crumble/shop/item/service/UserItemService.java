@@ -48,8 +48,6 @@ public class UserItemService {
 
         if (userItem.getQuantity() == 0) {
             userItemRepository.delete(userItem);
-        } else {
-            userItemRepository.save(userItem);
         }
     }
 
