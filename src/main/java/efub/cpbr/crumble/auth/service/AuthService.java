@@ -57,8 +57,6 @@ public class AuthService {
                 .role(RoleType.USER) // 기본 역할 USER로 설정
                 .point(0) // 초기 포인트 0으로 설정
                 .isActive(true) // 계정 활성화 상태로 설정
-                .createdAt(LocalDateTime.now()) // 현재 시간으로 생성 시간 설정
-                .updatedAt(LocalDateTime.now()) // 현재 시간으로 업데이트 시간 설정
                 .build();
 
         // 사용자 정보 저장

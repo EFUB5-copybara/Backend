@@ -1,6 +1,7 @@
 package efub.cpbr.crumble.user.entity;
 
 import efub.cpbr.crumble.community.comment.domain.Comment;
+import efub.cpbr.crumble.global.domain.BaseEntity;
 import efub.cpbr.crumble.shop.font.entity.UserFont;
 import efub.cpbr.crumble.shop.item.entity.UserItem;
 import efub.cpbr.crumble.shop.paper.entity.UserPaper;
@@ -15,19 +16,13 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails; // import 추가
 
 @Entity
 @Getter
 @Table(name = "users")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User {
+public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="user_id")
@@ -53,22 +48,9 @@ public class User {
     @Column(nullable = false)
     private boolean isActive = true;
 
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt;
-
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private LocalDateTime updatedAt;
-
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = this.createdAt;
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        this.updatedAt = LocalDateTime.now();
-    }
+    private RoleType role;
 
     public void addPoint(Long point) {
         this.point += point;
@@ -84,31 +66,12 @@ public class User {
         this.nickname = nickname;
         this.point = (point == 0) ? 0 : point; // 기본값 처리
         this.isActive = isActive;
-        this.createdAt = (createdAt == null) ? LocalDateTime.now() : createdAt; // 기본값 처리
-        this.updatedAt = (updatedAt == null) ? LocalDateTime.now() : updatedAt; // 기본값 처리
         this.role = (role == null) ? RoleType.USER : role; // 기본 역할 처리
     }
 
     /*public void deactivate() { // 사용자 탈퇴
         this.isActive = false;
     }*/
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private RoleType role;
-
-    public String getPassword() {
-        return password; // User 엔티티의 password 필드 반환
-    }
-
-    public String getUsername() {
-        return username; // User 엔티티의 username 필드 반환 (로그인 ID)
-    }
-
-    public boolean isEnabled() {
-        return isActive; // User 엔티티의 isActive 필드 반환 (계정 활성화 여부)
-    }
-
 
     // 댓글 작성자
     @OneToMany(mappedBy = "commentator", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -125,4 +88,5 @@ public class User {
     // 보유 테마
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserPaper> userPapers = new ArrayList<>();
+
 }
