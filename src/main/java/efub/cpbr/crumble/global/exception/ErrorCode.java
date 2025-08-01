@@ -17,6 +17,9 @@ public enum ErrorCode {
     HINT_NOT_FOUND(404, "해당 날짜의 질문에 대한 힌트가 존재하지 않습니다."),
     // Answer 관련 에러
     ANSWER_NOT_FOUND(404, "해당 답변이 존재하지 않습니다."),
+    // Grammar 관련 에러
+    GRAMMAR_TEXT_EMPTY(400, "검사할 텍스트가 비어있습니다."),
+    GRAMMAR_PARSE_FAILED(500, "문법 검사 결과 파싱에 실패했습니다."),
 
     // community
     ALREADY_LIKED(400, "이미 좋아요를 누른 게시글입니다."),
