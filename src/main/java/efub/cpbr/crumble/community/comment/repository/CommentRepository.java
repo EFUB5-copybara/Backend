@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     Optional<Comment> findById(Long commentId);
     List<Comment> findAllByPostIdOrderByCreatedAt(Long postId);
+    int countByCommentator_UserId(Long userId); // 특정 유저가 작성한 '댓글'의 총 개수
 }

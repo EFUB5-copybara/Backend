@@ -55,6 +55,9 @@ public class User {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
+    @Column(nullable = false) // 프로필 이미지는 기본값 1로 설정
+    private int profileImageIndex = 1; // 1부터 9까지의 값 중 하나
+
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();

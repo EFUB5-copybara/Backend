@@ -9,4 +9,5 @@ import java.util.Optional;
 
 public interface AnswerRepository extends JpaRepository<Answer, Long> {
     Optional<Answer> findByUserAndQuestion_Date(User user, LocalDate date);
+    int countByUser_UserId(Long userId); // 특정 유저가 작성한 '일기'의 총 개수
 }
