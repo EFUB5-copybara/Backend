@@ -46,11 +46,9 @@ public class PostService {
     // 게시글 상세 조회
     @Transactional
     public PostResponseDto getPost(Long postId) {
-        postRepository.updatePostViewCount(postId);
-        //Post post = findByPostId(postId);
-        //return PostResponseDto.from(post);
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_FOUND));
+        post.increaseViewCount();
         List<Comment> comments = commentRepository.findAllByPostIdOrderByCreatedAt(postId);
         PostCommentDto postCommentDto = PostCommentDto.from(postId, comments);
         return PostResponseDto.from(post, postCommentDto);

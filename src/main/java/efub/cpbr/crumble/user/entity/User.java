@@ -2,6 +2,9 @@ package efub.cpbr.crumble.user.entity;
 
 import efub.cpbr.crumble.community.comment.domain.Comment;
 import efub.cpbr.crumble.global.domain.BaseEntity;
+import efub.cpbr.crumble.shop.font.entity.UserFont;
+import efub.cpbr.crumble.shop.item.entity.UserItem;
+import efub.cpbr.crumble.shop.paper.entity.UserPaper;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
@@ -9,10 +12,11 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
+
 import java.util.ArrayList;
 import java.util.List;
-
 
 @Entity
 @Getter
@@ -48,6 +52,10 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private RoleType role;
 
+    public void addPoint(Long point) {
+        this.point += point;
+    }
+
     @Builder
     public User(Long userId, String username, String password, String email, String nickname,
                 int point, boolean isActive, LocalDateTime createdAt, LocalDateTime updatedAt, RoleType role) {
@@ -65,11 +73,20 @@ public class User extends BaseEntity {
         this.isActive = false;
     }*/
 
+    // 댓글 작성자
     @OneToMany(mappedBy = "commentator", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> commentList = new ArrayList<>();
 
-    public void addPoint(Long point) {
-        this.point += point;
-    }
+    // 보유 폰트
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserFont> userFonts = new ArrayList<>();
+
+    // 보유 아이템
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserItem> userItems = new ArrayList<>();
+
+    // 보유 테마
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserPaper> userPapers = new ArrayList<>();
 
 }

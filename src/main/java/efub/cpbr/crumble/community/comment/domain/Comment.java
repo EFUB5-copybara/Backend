@@ -24,7 +24,7 @@ public class Comment extends BaseEntity {
     @JoinColumn(name = "user_id", updatable = false)
     private User commentator;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id", updatable = false)
     private Post post;
 
