@@ -1,6 +1,7 @@
 package efub.cpbr.crumble.mypage.controller;
 
 
+import efub.cpbr.crumble.mypage.dto.MyInfoResponse;
 import efub.cpbr.crumble.mypage.dto.MyPageInfoDto;
 import efub.cpbr.crumble.mypage.dto.MyPageUpdateRequest;
 import efub.cpbr.crumble.mypage.service.MyPageService;
@@ -27,6 +28,15 @@ public class MyPageController {
         Long memberId = user.getUserId();
         MyPageInfoDto myPageInfo = myPageService.getMyPageInfo(memberId);
         return ResponseEntity.ok(myPageInfo);
+    }
+
+    // 내 정보 페이지 화면 조회 api
+    @GetMapping("/my-info") // 새로운 엔드포인트
+    public ResponseEntity<MyInfoResponse> getMyProfileInfo( // 반환 타입에서 ApiResponse 제거
+                                                               @AuthenticationPrincipal User user) { // 현재 로그인된 사용자 정보 주입
+
+        MyInfoResponse profileInfo = myPageService.getMyProfileInfo(user.getUserId());
+        return ResponseEntity.ok(profileInfo); // 직접 DTO 반환
     }
 
     // 멤버 프로필 수정 api

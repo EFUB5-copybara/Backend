@@ -5,6 +5,7 @@ import efub.cpbr.crumble.community.comment.repository.CommentRepository;
 import efub.cpbr.crumble.community.like.repository.LikeRepository;
 import efub.cpbr.crumble.global.exception.CustomException;
 import efub.cpbr.crumble.global.exception.ErrorCode;
+import efub.cpbr.crumble.mypage.dto.MyInfoResponse;
 import efub.cpbr.crumble.mypage.dto.MyPageInfoDto;
 import efub.cpbr.crumble.mypage.dto.MyPageUpdateRequest;
 import efub.cpbr.crumble.user.entity.User;
@@ -49,6 +50,14 @@ public class MyPageService {
                 .build();
     }
 
+    // 내 정보 화면 조회 로직
+    @Transactional(readOnly = true)
+    public MyInfoResponse getMyProfileInfo(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+        return MyInfoResponse.from(user); // User 엔티티를 DTO로 변환
+    }
+
     // 마이페이지 프로필 수정 로직 (닉네임, 이메일, 프사 중에서 요청한 것만 업데이트. +중복검사)
     @Transactional
     public Map<String, Object> updateMyInfo(Long userId, MyPageUpdateRequest request) { // 반환 타입을 Map<String, Object>로 변경
@@ -90,5 +99,4 @@ public class MyPageService {
         }
         return updatedFields;
     }
-
 }
