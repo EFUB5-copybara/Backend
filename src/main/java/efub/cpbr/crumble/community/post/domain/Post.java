@@ -48,16 +48,32 @@ public class Post extends BaseEntity {
         }
     }
 
-    public void updateLikeCount() {
-        this.likeCount = (long) this.likeList.size();
+    public void increaseLikeCount() {
+        this.likeCount++;
     }
 
-    public void updateCommentCount() {
-        this.commentCount = (long) this.commentList.size();
+    public void increaseCommentCount() {
+        this.commentCount++;
     }
 
-    public void updateBookmarkCount() {
-        this.bookmarkCount = (long) this.bookmarkList.size();
+    public void increaseBookmarkCount() {
+        this.bookmarkCount++;
+    }
+
+    public void increaseViewCount() {
+        this.viewCount++;
+    }
+
+    public void decreaseLikeCount() {
+        if (this.likeCount > 0) this.likeCount--;
+    }
+
+    public void decreaseCommentCount() {
+        if (this.commentCount > 0) this.commentCount--;
+    }
+
+    public void decreaseBookmarkCount() {
+        if (this.bookmarkCount > 0) this.bookmarkCount--;
     }
 
 }

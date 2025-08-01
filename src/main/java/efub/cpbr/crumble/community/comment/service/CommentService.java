@@ -32,29 +32,30 @@ public class CommentService {
                 .orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_FOUND));
 
         Comment newComment = requestDto.toEntity(commentator, post);
-        commentRepository.save(newComment);
 
-        post.updateCommentCount();
-        postRepository.save(post);
+        post.increaseCommentCount();
+        commentRepository.save(newComment);
 
         // ⭐ 포인트 +2
         commentator.addPoint(2L);
-        userRepository.save(commentator);
 
         return CommentResponseDto.from(newComment);
     }
 
     // 댓글 삭제
     @Transactional
-    public void deleteComment(Long commentId) {
+    public void deleteComment(Long commentId, Long userId) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new CustomException(ErrorCode.COMMENT_NOT_FOUND));
 
+        if (!comment.getCommentator().getUserId().equals(userId)) {
+            throw new CustomException(ErrorCode.FORBIDDEN);
+        }
+
         Post post = comment.getPost();
 
+        post.decreaseCommentCount();
         commentRepository.delete(comment);
-
-        post.updateCommentCount();
     }
 
 }
