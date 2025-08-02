@@ -19,10 +19,5 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     // 최신순
     List<Post> findAllByOrderByCreatedAtDesc();
 
-    // 조회수 증가
-    @Modifying(clearAutomatically = true)
-    @Query("UPDATE Post p SET p.viewCount = p.viewCount + 1 WHERE p.id = :postId")
-    void updatePostViewCount(@Param("postId") Long postId);
-
     Optional<Post> findById(Long id);
 }

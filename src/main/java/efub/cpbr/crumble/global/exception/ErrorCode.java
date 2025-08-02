@@ -10,11 +10,15 @@ public enum ErrorCode {
     UNAUTHORIZED_ACCESS(401, "인증되지 않은 사용자입니다."),
 
     // Question 관련 에러
+    AI_QUESTION_GENERATION_FAILED(500, "AI 질문 생성 중 오류가 발생했습니다."),
     QUESTION_NOT_FOUND(404, "해당 날짜의 질문이 존재하지 않습니다."),
+    // Hint 관련 에러
+    AI_HINT_GENERATION_FAILED(500,"AI 힌트 생성 중 오류가 발생했습니다."),
+    HINT_NOT_FOUND(404, "해당 날짜의 질문에 대한 힌트가 존재하지 않습니다."),
     // Answer 관련 에러
     ANSWER_NOT_FOUND(404, "해당 답변이 존재하지 않습니다."),
 
-    // community
+    // community 관련
     ALREADY_LIKED(400, "이미 좋아요를 누른 게시글입니다."),
     ALREADY_BOOKMARKED(400, "이미 북마크한 게시글입니다."),
     POST_NOT_FOUND(404, "존재하지 않는 게시글입니다."),
@@ -23,9 +27,37 @@ public enum ErrorCode {
     LIKE_NOT_FOUND(404, "존재하지 않는 좋아요입니다."),
     BOOKMARK_NOT_FOUND(404, "존재하지 않는 북마크입니다."),
 
+    // shop 관련
+    ITEM_NOT_FOUND(404, "존재하지 않는 아이템입니다."),
+    INSUFFICIENT_POINTS(400, "보유 포인트가 부족합니다."),
+    FONT_NOT_FOUND(404, "존재하지 않는 폰트입니다."),
+    ALREADY_PURCHASED(400, "이미 구매하였습니다."),
+    FONT_NOT_OWNED(400, "보유하지 않은 폰트입니다."),
+    PAPER_NOT_FOUND(400, "존재하지 않는 종이 테마입니다."),
+
     // Fortune Cookie 관련
     FORTUNE_ALREADY_USED(403, "오늘은 이미 포춘쿠키를 사용했습니다."),
-    FORTUNE_NO_PREVIOUS_ANSWER(404, "조회할 수 있는 과거 답변이 없습니다.");
+    FORTUNE_NO_PREVIOUS_ANSWER(404, "조회할 수 있는 과거 답변이 없습니다."),
+
+    // Item 관련 에러
+    ITEM_NOT_FOUND(404, "아이템을 찾을 수 없습니다."),
+    ITEM_NOT_OWNED(404, "해당 아이템을 보유하고 있지 않습니다."),
+    ITEM_QUANTITY_ZERO(409, "현재 아이템 보유 개수가 0입니다."),
+    UNSUPPORTED_ITEM_TYPE(400, "존재하지 않는 아이템 타입입니다."),
+
+    // 인증/인가 관련 예외
+    UNAUTHORIZED(401, "인증되지 않은 사용자입니다."),
+    BAD_CREDENTIALS(401, "아이디 또는 비밀번호가 올바르지 않습니다."),
+    INVALID_TOKEN(401, "유효하지 않은 토큰입니다."),
+    EXPIRED_TOKEN(401, "토큰이 만료되었습니다."),
+    UNSUPPORTED_TOKEN(401, "지원되지 않는 토큰입니다."),
+    FORBIDDEN(403, "접근 권한이 없습니다."),
+
+    // 사용자 및 회원가입 관련
+    PASSWORD_NOT_MATCH(400, "비밀번호와 비밀번호 확인이 일치하지 않습니다."),
+    USERNAME_ALREADY_EXISTS(409, "이미 존재하는 아이디입니다."),
+    EMAIL_ALREADY_EXISTS(409, "이미 가입된 이메일입니다."),
+    NICKNAME_ALREADY_EXISTS(409, "이미 사용 중인 닉네임입니다.");
 
     private final int status;
     private final String message;

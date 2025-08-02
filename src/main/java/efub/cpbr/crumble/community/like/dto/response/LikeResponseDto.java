@@ -17,7 +17,7 @@ public class LikeResponseDto {
     public static LikeResponseDto from(Like like) {
         return LikeResponseDto.builder()
                 .likeId(like.getId())
-                .likerId(like.getLiker().getId())
+                .likerId(like.getLiker().getUserId())
                 .postId(like.getPost().getId())
                 .createdAt(like.getCreatedAt())
                 .build();

@@ -1,4 +1,4 @@
-package efub.cpbr.crumble.item.repository;
+package efub.cpbr.crumble.shop.item.repository;
 
 import efub.cpbr.crumble.answer.entity.Answer;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,7 +10,7 @@ import java.util.List;
 public interface FortuneRepository extends JpaRepository<Answer, Long>{
     //user의 모든 답변을 조회
     //List<Answer> findByUserId(Long userId);
-    @Query("SELECT a FROM Answer a WHERE a.user.id = :userId")
+    @Query("SELECT a FROM Answer a WHERE a.user.userId = :userId")
     List<Answer> findByUserId(@Param("userId") Long userId);
 
 }

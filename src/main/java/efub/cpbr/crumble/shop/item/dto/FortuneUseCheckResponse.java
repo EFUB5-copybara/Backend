@@ -1,4 +1,4 @@
-package efub.cpbr.crumble.item.dto;
+package efub.cpbr.crumble.shop.item.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
