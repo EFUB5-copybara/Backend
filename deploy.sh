@@ -53,6 +53,8 @@ logging:
     efub.cpbr.crumble: DEBUG
 EOL
 
+./gradlew build -x test
+
 echo "Docker Compose 빌드 및 실행"
 docker-compose down
 docker-compose up -d --build
@@ -62,5 +64,3 @@ kill $HEARTBEAT_PID
 # 기존 실행 중인 프로세스 종료
 pkill -f 'java -jar' || true
 
-# 애플리케이션 실행 (환경변수 주입된 상태로)
-nohup java -jar build/libs/crumble-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod > app.log 2>&1 &
