@@ -45,7 +45,7 @@ public class QuestionService {
         Question question = Question.builder()
                         .category(category)
                         .content(questionContent)
-                        .date(LocalDate.now())
+                        .date(LocalDate.now().plusDays(1))
                         .build();
         questionRepository.save(question);
         return question;
