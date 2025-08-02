@@ -53,6 +53,7 @@ logging:
     efub.cpbr.crumble: DEBUG
 EOL
 
+chmod +x ./gradlew
 ./gradlew build -x test
 
 echo "Docker Compose 빌드 및 실행"
