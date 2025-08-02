@@ -9,6 +9,7 @@ services:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - app
+    restart: always
       
   app:
     build: .
@@ -23,6 +24,7 @@ services:
 
   redis:
     image: redis:latest
+    restart: always
     container_name: redis
     ports:
       - "6379:6379"
