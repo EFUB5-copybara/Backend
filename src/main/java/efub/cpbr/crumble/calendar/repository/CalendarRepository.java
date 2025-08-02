@@ -13,7 +13,7 @@ public interface CalendarRepository extends JpaRepository<Answer, Long> {
 
     // 월별 답변한 날짜를 가져오는 쿼리
     @Query("select a.createdAt From Answer a" +
-            " where a.user.id = :userId" +
+            " where a.user.userId = :userId" +
             " and a.createdAt between :start and :end")
     List<LocalDateTime> findAnsweredDatesInMonth(@Param("userId") Long userId,
                                            @Param("start") LocalDateTime start,
@@ -27,7 +27,7 @@ public interface CalendarRepository extends JpaRepository<Answer, Long> {
             "FROM Answer a " +
             "JOIN a.question q " +
             "LEFT JOIN a.post p " + //post가 없는 경우에도 answer 조회
-            "WHERE a.user.id = :userId " +
+            "WHERE a.user.userId = :userId " +
             "AND a.createdAt BETWEEN :start AND :end " +
             "ORDER BY a.createdAt ASC")
     List<AnswerDto> findMonthlyAnswers(
@@ -37,7 +37,7 @@ public interface CalendarRepository extends JpaRepository<Answer, Long> {
     );
 
     // user의 모든 답변의 date를 조회하는 쿼리
-    @Query("SELECT DISTINCT a.createdAt FROM Answer a WHERE a.user.id = :userId")
+    @Query("SELECT DISTINCT a.createdAt FROM Answer a WHERE a.user.userId = :userId")
     List<LocalDateTime> findAllAnswerDates(@Param("userId") Long userId);
 
 

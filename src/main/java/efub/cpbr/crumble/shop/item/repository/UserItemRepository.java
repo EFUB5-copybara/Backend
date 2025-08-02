@@ -4,10 +4,12 @@ import efub.cpbr.crumble.shop.item.entity.Item;
 import efub.cpbr.crumble.shop.item.entity.ItemType;
 import efub.cpbr.crumble.shop.item.entity.UserItem;
 import efub.cpbr.crumble.user.entity.User;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,4 +22,23 @@ public interface UserItemRepository extends JpaRepository<UserItem, Long> {
     Optional<UserItem> findByUserAndItemType(@Param("user") User user, @Param("type") ItemType type);
 
     Optional<UserItem> findByUserAndItem(User user, Item item);
+
+    // 유저가 과거의 답변하지 않은 날
+    @Query("""
+    SELECT q.date
+    FROM Question q
+    WHERE q.date < CURRENT_DATE
+      AND q.date >= :joinedDate
+      AND NOT EXISTS (
+        SELECT a
+        FROM Answer a
+        WHERE a.question = q AND a.user.id = :userId
+      )
+    ORDER BY q.date DESC
+""")
+    List<LocalDate> findMostRecentMissingDate(
+            @Param("userId") Long userId,
+            @Param("joinedDate") LocalDate joinedDate,
+            Pageable pageable
+    );
 }

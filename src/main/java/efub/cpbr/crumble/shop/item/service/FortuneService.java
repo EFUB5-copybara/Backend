@@ -6,7 +6,6 @@ import efub.cpbr.crumble.global.exception.ErrorCode;
 import efub.cpbr.crumble.shop.item.dto.FortuneAnswerResponse;
 import efub.cpbr.crumble.shop.item.dto.FortuneUseCheckResponse;
 import efub.cpbr.crumble.shop.item.repository.FortuneRepository;
-import efub.cpbr.crumble.user.repository.UserRepository;
 import efub.cpbr.crumble.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -21,7 +20,6 @@ import java.util.Random;
 public class FortuneService {
 
     private final FortuneRepository fortuneRepository;
-    private final UserRepository userRepository;
     private final RedisTemplate<String, String> redisTemplate;
 
     private static final Duration TTL = Duration.ofDays(1);
@@ -31,8 +29,8 @@ public class FortuneService {
         if (user == null) {
             throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
-        //Long userId = user.getId();
-        Long userId = 1L; //임시
+
+        Long userId = user.getUserId();
 
         String redisKey = "fortune:" + userId;
 
@@ -69,8 +67,7 @@ public class FortuneService {
         if (user == null) {
             throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
-        //Long userId = user.getId();
-        Long userId = 1L; //임시
+        Long userId = user.getUserId();
 
         String redisKey = "fortune:" + userId;
         boolean isUsed = Boolean.TRUE.equals(redisTemplate.hasKey(redisKey));
