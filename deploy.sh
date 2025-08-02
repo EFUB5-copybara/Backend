@@ -26,6 +26,7 @@ spring:
   redis:
     host: "${REDIS_HOST}"
     port: "${REDIS_PORT}"
+    database: ${REDIS_DATABASE}
     
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
@@ -45,6 +46,9 @@ cors:
   allow-origins:
     - ${CORS_ALLOWED_ORIGIN_1}
     - ${CORS_ALLOWED_ORIGIN_2}
+
+openai:
+  api-key: ${API_KEY}
 
 logging:
   level:
