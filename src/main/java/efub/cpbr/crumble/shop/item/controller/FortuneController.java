@@ -1,5 +1,6 @@
 package efub.cpbr.crumble.shop.item.controller;
 
+import efub.cpbr.crumble.auth.service.CustomUserDetails;
 import efub.cpbr.crumble.shop.item.dto.FortuneAnswerResponse;
 import efub.cpbr.crumble.shop.item.dto.FortuneUseCheckResponse;
 import efub.cpbr.crumble.shop.item.service.FortuneService;
@@ -35,7 +36,8 @@ public class FortuneController {
             @ApiResponse(responseCode = "404", description = "과거의 답변 존재하지 않음")
     })
     @GetMapping
-    public ResponseEntity<FortuneAnswerResponse> getFortune(@AuthenticationPrincipal User user) {
+    public ResponseEntity<FortuneAnswerResponse> getFortune(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        User user = userDetails.getUser();
         return ResponseEntity.ok(fortuneService.getFortune(user));
     }
 
@@ -49,7 +51,8 @@ public class FortuneController {
             @ApiResponse(responseCode = "401", description = "인증 정보 없음")
     })
     @GetMapping("/used")
-    public ResponseEntity<FortuneUseCheckResponse> checkTodayUse(@AuthenticationPrincipal User user) {
+    public ResponseEntity<FortuneUseCheckResponse> checkTodayUse(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        User user = userDetails.getUser();
         return ResponseEntity.ok(fortuneService.checkTodayUse(user));
     }
 

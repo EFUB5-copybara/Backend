@@ -1,5 +1,6 @@
 package efub.cpbr.crumble.shop.item.controller;
 
+import efub.cpbr.crumble.auth.service.CustomUserDetails;
 import efub.cpbr.crumble.shop.item.dto.ItemCountResponse;
 import efub.cpbr.crumble.shop.item.entity.ItemType;
 import efub.cpbr.crumble.shop.item.service.UserItemService;
@@ -36,10 +37,11 @@ public class UserItemController {
     })
     @PostMapping("/use")
     public ResponseEntity<Void> useItem(
-            @AuthenticationPrincipal User user,
+            @AuthenticationPrincipal CustomUserDetails userDetails,
             @Parameter(description = "아이템 타입", example = "SHIELD")
                 @RequestParam ItemType type
     ) {
+        User user = userDetails.getUser();
         itemService.useItem(user, type);
         return ResponseEntity.ok().build();
     }
@@ -54,8 +56,9 @@ public class UserItemController {
             @ApiResponse(responseCode = "401", description = "인증 정보 없음"),
     })
     @GetMapping("/count")
-    public ResponseEntity<List<ItemCountResponse>> getMyItems(@AuthenticationPrincipal User user
+    public ResponseEntity<List<ItemCountResponse>> getMyItems(@AuthenticationPrincipal CustomUserDetails userDetails
     ) {
+        User user = userDetails.getUser();
         List<ItemCountResponse> items = itemService.getUserItemCounts(user);
         return ResponseEntity.ok(items);
     }

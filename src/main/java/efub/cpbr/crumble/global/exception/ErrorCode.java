@@ -40,10 +40,10 @@ public enum ErrorCode {
     FORTUNE_NO_PREVIOUS_ANSWER(404, "조회할 수 있는 과거 답변이 없습니다."),
 
     // Item 관련 에러
-    ITEM_NOT_FOUND(404, "아이템을 찾을 수 없습니다."),
     ITEM_NOT_OWNED(404, "해당 아이템을 보유하고 있지 않습니다."),
     ITEM_QUANTITY_ZERO(409, "현재 아이템 보유 개수가 0입니다."),
     UNSUPPORTED_ITEM_TYPE(400, "존재하지 않는 아이템 타입입니다."),
+    NO_MISSING_DATE_FOUND(404, "답변하지 않은 날짜가 없습니다."),
 
     // 인증/인가 관련 예외
     UNAUTHORIZED(401, "인증되지 않은 사용자입니다."),
