@@ -1,24 +1,23 @@
 package efub.cpbr.crumble.global.config;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
 import java.util.List;
 
 @Configuration
-@ConfigurationProperties(prefix = "cors")
+@RequiredArgsConstructor
 public class CorsConfig {
-
-    private List<String> allowOrigins;
+    private final CorsProperties corsProperties;
 
     @Bean
-    public CorsFilter corsFilter() {
+    public CorsConfigurationSource corsConfigurationSource()  {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(allowOrigins);
+        configuration.setAllowedOrigins(corsProperties.getAllowOrigins());
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.addAllowedHeader("*");
         configuration.setAllowCredentials(true);
@@ -26,14 +25,6 @@ public class CorsConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
 
-        return new CorsFilter(source);
-    }
-
-    public List<String> getAllowOrigins() {
-        return allowOrigins;
-    }
-
-    public void setAllowOrigins(List<String> allowOrigins) {
-        this.allowOrigins = allowOrigins;
+        return source;
     }
 }
