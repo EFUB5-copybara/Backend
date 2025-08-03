@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
 public class PostSummaryDto {
     private Long id;
     private String username;
+    private int profileImageId;
+    private String title;
     private String content;
     private Long viewCount;
     private Long likeCount;
@@ -23,6 +25,8 @@ public class PostSummaryDto {
         return PostSummaryDto.builder()
                 .id(post.getId())
                 .username(post.getAnswer().getUser().getUsername())
+                .profileImageId(post.getAnswer().getUser().getProfileImageId())
+                .title(post.getAnswer().getQuestion().getContent())
                 .content(post.getContent())
                 .viewCount(post.getViewCount())
                 .likeCount(post.getLikeCount())

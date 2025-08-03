@@ -12,6 +12,8 @@ import java.util.List;
 public class PostResponseDto {
     private Long id;
     private String username;
+    private int profileImageId;
+    private String title;
     private String content;
     private Long viewCount;
     private Long likeCount;
@@ -26,6 +28,8 @@ public class PostResponseDto {
         return PostResponseDto.builder()
                 .id(post.getId())
                 .username(post.getAnswer().getUser().getUsername())
+                .profileImageId(post.getAnswer().getUser().getProfileImageId())
+                .title(post.getAnswer().getQuestion().getContent())
                 .content(post.getContent())
                 .viewCount(post.getViewCount())
                 .likeCount(post.getLikeCount())
