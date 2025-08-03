@@ -62,15 +62,12 @@ logging:
     efub.cpbr.crumble: DEBUG
 EOL
 
-chmod +x ./gradlew
-./gradlew build -x test
+# chmod +x ./gradlew
+# ./gradlew build -x test
 
-echo "Docker Compose 빌드 및 실행"
-docker-compose down
-docker-compose up -d --build
+# echo "Docker Compose 빌드 및 실행"
+# docker-compose down
+# docker-compose up -d --build
 
-kill $HEARTBEAT_PID
-
-# 기존 실행 중인 프로세스 종료
-pkill -f 'java -jar' || true
+# kill $HEARTBEAT_PID
 
