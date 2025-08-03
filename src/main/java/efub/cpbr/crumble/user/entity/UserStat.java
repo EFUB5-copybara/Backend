@@ -2,6 +2,7 @@ package efub.cpbr.crumble.user.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -32,6 +33,21 @@ public class UserStat {
 
     @Column(nullable = false)
     private int totalCommentsReceived;
+
+    @Builder
+    public UserStat(Long userStatId, User user, int totalAnswers, int currentStreak, int longestStreak, int totalLikesReceived, int totalCommentsReceived) {
+        this.userStatId = userStatId;
+        this.user = user;
+        this.totalAnswers = totalAnswers;
+        this.currentStreak = currentStreak;
+        this.longestStreak = longestStreak;
+        this.totalLikesReceived = totalLikesReceived;
+        this.totalCommentsReceived = totalCommentsReceived;
+    }
+
+    public void increaseTotalAnswers() {
+        this.totalAnswers ++;
+    }
 
     public void increaseLikeCount() {
         this.totalLikesReceived++;
