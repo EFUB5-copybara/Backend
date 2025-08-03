@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 로그 유지용 heartbeat
-(while true; do echo "building..."; sleep 10; done) &
+(while true; do echo "create application-prod.yml..."; sleep 10; done) &
 HEARTBEAT_PID=$!
 
 cd ~/app
@@ -62,12 +62,5 @@ logging:
     efub.cpbr.crumble: DEBUG
 EOL
 
-# chmod +x ./gradlew
-# ./gradlew build -x test
-
-# echo "Docker Compose 빌드 및 실행"
-# docker-compose down
-# docker-compose up -d --build
-
-# kill $HEARTBEAT_PID
+kill $HEARTBEAT_PID
 
