@@ -2,7 +2,9 @@ package efub.cpbr.crumble.question.service;
 
 import efub.cpbr.crumble.global.exception.CustomException;
 import efub.cpbr.crumble.global.exception.ErrorCode;
+import efub.cpbr.crumble.grammar.service.GrammarCheckRedisService;
 import efub.cpbr.crumble.question.dto.res.QuestionResponse;
+import efub.cpbr.crumble.question.dto.res.TodayQuestionResponse;
 import efub.cpbr.crumble.question.entity.Question;
 import efub.cpbr.crumble.question.entity.QuestionCategory;
 import efub.cpbr.crumble.question.repository.QuestionRepository;
@@ -16,11 +18,19 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class QuestionService {
     private final QuestionRepository questionRepository;
+    private final GrammarCheckRedisService grammarCheckRedisService;
     //private final EmbeddingStore<Document> vectorStore;
 
     @Transactional(readOnly = true)
     public QuestionResponse getQuestion(LocalDate date) {
         return QuestionResponse.from(findQuestionByDateOrThrow(date));
+    }
+
+    @Transactional(readOnly = true)
+    public TodayQuestionResponse getTodayQuestion(Long userId) {
+        Question question = findQuestionByDateOrThrow(LocalDate.now());
+        boolean grammarChecked = grammarCheckRedisService.isCheckedToday(userId);
+        return TodayQuestionResponse.from(question, grammarChecked);
     }
 
     @Transactional(readOnly = true)
