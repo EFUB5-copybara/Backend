@@ -22,6 +22,11 @@ spring:
     username: "${DB_USERNAME}"
     password: "${DB_PASSWORD}"
     driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      connection-timeout: 10000
+      validation-timeout: 3000
+      initialization-fail-timeout: 15000
+      maximum-pool-size: 10
     
   redis:
     host: "${REDIS_HOST}"
