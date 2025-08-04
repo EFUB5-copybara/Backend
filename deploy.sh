@@ -51,6 +51,7 @@ cors:
   allow-origins:
     - ${CORS_ALLOWED_ORIGIN_1}
     - ${CORS_ALLOWED_ORIGIN_2}
+    - ${CORS_ALLOWED_ORIGIN_3}
 
 openai:
   api-key: ${API_KEY}
