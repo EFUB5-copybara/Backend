@@ -41,6 +41,7 @@ public class WebSecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 사용 안함
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/signup").permitAll()
                         .requestMatchers(
                                 "/auth/signup", // 회원가입 허용
                                 "/auth/login",  // 로그인 허용
