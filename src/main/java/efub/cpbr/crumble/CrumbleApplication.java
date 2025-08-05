@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableScheduling
 @EnableJpaAuditing
+@EnableConfigurationProperties(CorsProperties.class)
 public class CrumbleApplication {
 
     public static void main(String[] args) {
