@@ -72,7 +72,7 @@ docker pull hanrann6/yourapp:latest
 docker-compose down
 
 # 새 컨테이너 실행
-docker-compose up -d
+docker-compose up -d --build
 
 echo "배포 완료"
 
