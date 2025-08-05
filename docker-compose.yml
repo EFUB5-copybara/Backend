@@ -17,7 +17,7 @@ services:
       - TZ=Asia/Seoul
       
   app:
-    build: .
+    image: hanrann/yourapp:latest
     container_name: myapp
     ports:
       - "8080:8080"
