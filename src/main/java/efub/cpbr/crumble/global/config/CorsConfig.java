@@ -19,6 +19,7 @@ public class CorsConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource()  {
         CorsConfiguration configuration = new CorsConfiguration();
+        System.out.println("CORS 허용 Origin 목록: " + corsProperties.getAllowOrigins());
         //configuration.setAllowedOrigins(corsProperties.getAllowOrigins());
         configuration.setAllowedOriginPatterns(corsProperties.getAllowOrigins());
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
