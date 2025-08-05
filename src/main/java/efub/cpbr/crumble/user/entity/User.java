@@ -52,13 +52,15 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private RoleType role;
 
+    private int profileImageId;
+
     public void addPoint(Long point) {
         this.point += point;
     }
 
     @Builder
     public User(Long userId, String username, String password, String email, String nickname,
-                int point, boolean isActive, LocalDateTime createdAt, LocalDateTime updatedAt, RoleType role) {
+                int point, boolean isActive, LocalDateTime createdAt, LocalDateTime updatedAt, RoleType role, int profileImageId) {
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -67,6 +69,7 @@ public class User extends BaseEntity {
         this.point = (point == 0) ? 0 : point; // 기본값 처리
         this.isActive = isActive;
         this.role = (role == null) ? RoleType.USER : role; // 기본 역할 처리
+        this.profileImageId = profileImageId;
     }
 
     /*public void deactivate() { // 사용자 탈퇴
@@ -88,5 +91,9 @@ public class User extends BaseEntity {
     // 보유 테마
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserPaper> userPapers = new ArrayList<>();
+
+    // 유저 활동
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private UserStat userStat;
 
 }

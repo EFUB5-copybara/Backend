@@ -34,6 +34,7 @@ public class CommentService {
         Comment newComment = requestDto.toEntity(commentator, post);
 
         post.increaseCommentCount();
+        post.getAnswer().getUser().getUserStat().increaseCommentCount();
         commentRepository.save(newComment);
 
         // ⭐ 포인트 +2
@@ -55,6 +56,7 @@ public class CommentService {
         Post post = comment.getPost();
 
         post.decreaseCommentCount();
+        post.getAnswer().getUser().getUserStat().decreaseCommentCount();
         commentRepository.delete(comment);
     }
 
