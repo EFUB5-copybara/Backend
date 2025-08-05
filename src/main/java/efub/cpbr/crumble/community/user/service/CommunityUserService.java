@@ -1,13 +1,12 @@
-package efub.cpbr.crumble.user.service;
+package efub.cpbr.crumble.community.user.service;
 
 import efub.cpbr.crumble.answer.repository.AnswerRepository;
-import efub.cpbr.crumble.community.post.repository.PostRepository;
 import efub.cpbr.crumble.global.exception.CustomException;
 import efub.cpbr.crumble.global.exception.ErrorCode;
-import efub.cpbr.crumble.user.dto.response.CommunityUserResponseDto;
-import efub.cpbr.crumble.user.dto.response.DiaryPreviewDto;
-import efub.cpbr.crumble.user.dto.response.StatsDto;
-import efub.cpbr.crumble.user.dto.response.UserProfileDto;
+import efub.cpbr.crumble.community.user.dto.response.CommunityUserResponseDto;
+import efub.cpbr.crumble.community.user.dto.response.DiaryPreviewDto;
+import efub.cpbr.crumble.community.user.dto.response.StatsDto;
+import efub.cpbr.crumble.community.user.dto.response.UserProfileDto;
 import efub.cpbr.crumble.user.entity.User;
 import efub.cpbr.crumble.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

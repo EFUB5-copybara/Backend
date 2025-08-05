@@ -1,8 +1,8 @@
-package efub.cpbr.crumble.user.controller;
+package efub.cpbr.crumble.community.user.controller;
 
-import efub.cpbr.crumble.user.dto.response.CommunityUserResponseDto;
+import efub.cpbr.crumble.community.user.dto.response.CommunityUserResponseDto;
 import efub.cpbr.crumble.user.entity.User;
-import efub.cpbr.crumble.user.service.CommunityUserService;
+import efub.cpbr.crumble.community.user.service.CommunityUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/community/members")
 @RequiredArgsConstructor
-public class CommunityUser {
+public class CommunityUserController {
 
     private final CommunityUserService communityUserService;
 

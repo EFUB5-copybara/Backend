@@ -1,0 +1,26 @@
+[
+  {
+    "name": "작은 새싹",
+    "description": "귀여운 새싹들이 그려져 있는 빈티지 종이",
+    "imgUrl": "https://copybara-qrumble.s3.ap-northeast-2.amazonaws.com/PaperTheme1-brown.png",
+    "price": 100
+  },
+  {
+    "name": "바다의 종이",
+    "description": "시원한 바다가 돋보이는 종이",
+    "imgUrl": "https://copybara-qrumble.s3.ap-northeast-2.amazonaws.com/PaperTheme2-ocean.png",
+    "price": 100
+  },
+  {
+    "name": "복숭아 향기",
+    "description": "잘 익은 복숭아의 분홍색이 들어있는 종이",
+    "imgUrl": "https://copybara-qrumble.s3.ap-northeast-2.amazonaws.com/PaperTheme3-pink.png",
+    "price": 100
+  },
+  {
+    "name": "파랑 비행기",
+    "description": "파란 종이 비행기가 구름 사이를 지나가는 종이",
+    "imgUrl": "https://copybara-qrumble.s3.ap-northeast-2.amazonaws.com/PaperTheme4-sky.png",
+    "price": 100
+  }
+]

@@ -1,5 +1,6 @@
 package efub.cpbr.crumble.community.post.service;
 
+import efub.cpbr.crumble.answer.service.AnswerService;
 import efub.cpbr.crumble.community.comment.domain.Comment;
 import efub.cpbr.crumble.community.comment.repository.CommentRepository;
 import efub.cpbr.crumble.community.post.domain.Post;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -22,11 +24,14 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
+    private final AnswerService answerService;
 
     // 인기순 조회
     @Transactional(readOnly = true)
-    public PostListResponseDto getPopularPosts() {
-        List<Post> posts = postRepository.findPopularPosts();
+    public PostListResponseDto getPopularPosts(Long userId, LocalDate date) {
+        answerService.validateAnswered(userId, date);
+
+        List<Post> posts = postRepository.findPopularPosts(date);
         List<PostSummaryDto> postSummaryDtos = posts.stream()
                 .map(PostSummaryDto::from)
                 .toList();
@@ -35,8 +40,10 @@ public class PostService {
 
     // 최신순 조회
     @Transactional(readOnly = true)
-    public PostListResponseDto getNewPosts() {
-        List<Post> posts = postRepository.findAllByOrderByCreatedAtDesc();
+    public PostListResponseDto getNewPosts(Long userId, LocalDate date) {
+        answerService.validateAnswered(userId, date);
+
+        List<Post> posts = postRepository.findAllByOrderByCreatedAtDesc(date);
         List<PostSummaryDto> postSummaryDtos = posts.stream()
                 .map(PostSummaryDto::from)
                 .toList();
@@ -45,9 +52,13 @@ public class PostService {
 
     // 게시글 상세 조회
     @Transactional
-    public PostResponseDto getPost(Long postId) {
+    public PostResponseDto getPost(Long userId, Long postId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_FOUND));
+
+        LocalDate postDate = post.getCreatedAt().toLocalDate();
+        answerService.validateAnswered(userId, postDate);
+
         post.increaseViewCount();
         List<Comment> comments = commentRepository.findAllByPostIdOrderByCreatedAt(postId);
         PostCommentDto postCommentDto = PostCommentDto.from(postId, comments);

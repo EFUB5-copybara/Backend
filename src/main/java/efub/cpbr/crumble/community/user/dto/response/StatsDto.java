@@ -1,6 +1,5 @@
-package efub.cpbr.crumble.user.dto.response;
+package efub.cpbr.crumble.community.user.dto.response;
 
-import efub.cpbr.crumble.user.entity.User;
 import efub.cpbr.crumble.user.entity.UserStat;
 import lombok.Builder;
 

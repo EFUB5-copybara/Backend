@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Font extends BaseEntity {
+public class Font {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
