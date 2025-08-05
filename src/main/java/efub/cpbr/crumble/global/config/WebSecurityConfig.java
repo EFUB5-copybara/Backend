@@ -1,5 +1,6 @@
 package efub.cpbr.crumble.global.config;
 
+import org.springframework.http.HttpMethod;
 import efub.cpbr.crumble.jwt.JwtAuthenticationFilter; // JWT 필터 (지금은 주석 처리)
 import efub.cpbr.crumble.jwt.JwtTokenProvider; // JWT 토큰 생성/검증 도구
 import lombok.RequiredArgsConstructor;
@@ -39,6 +40,8 @@ public class WebSecurityConfig {
                 .csrf(csrf -> csrf.disable()) // CSRF 보호 비활성화
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 사용 안함
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
                         .requestMatchers(
                                 "/auth/signup", // 회원가입 허용
                                 "/auth/login",  // 로그인 허용
