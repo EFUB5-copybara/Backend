@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 public class PostSummaryDto {
     private Long id;
+    private Long userId;
     private String username;
     private int profileImageId;
     private String title;
@@ -24,6 +25,7 @@ public class PostSummaryDto {
     public static PostSummaryDto from(Post post) {
         return PostSummaryDto.builder()
                 .id(post.getId())
+                .userId(post.getAnswer().getUser().getUserId())
                 .username(post.getAnswer().getUser().getUsername())
                 .profileImageId(post.getAnswer().getUser().getProfileImageId())
                 .title(post.getAnswer().getQuestion().getContent())

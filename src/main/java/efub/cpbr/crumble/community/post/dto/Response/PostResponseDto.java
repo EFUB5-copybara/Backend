@@ -11,6 +11,7 @@ import java.util.List;
 @Getter
 public class PostResponseDto {
     private Long id;
+    private Long userId;
     private String username;
     private int profileImageId;
     private String title;
@@ -27,6 +28,7 @@ public class PostResponseDto {
     public static PostResponseDto from(Post post, PostCommentDto comments) {
         return PostResponseDto.builder()
                 .id(post.getId())
+                .userId(post.getAnswer().getUser().getUserId())
                 .username(post.getAnswer().getUser().getUsername())
                 .profileImageId(post.getAnswer().getUser().getProfileImageId())
                 .title(post.getAnswer().getQuestion().getContent())
