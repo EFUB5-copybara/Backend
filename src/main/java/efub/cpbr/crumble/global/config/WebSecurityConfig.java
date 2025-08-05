@@ -51,7 +51,7 @@ public class WebSecurityConfig {
                                 "/v3/api-docs/**",
                                 "/swagger-resources/**",
                                 "/webjars/**",
-                                "/shops/**" // 개발용, 로그인 개발 후 삭제
+                                "/shops/**", "/community/**" // 개발용, 로그인 개발 후 삭제
                         ).permitAll() // 위에 명시된 경로들은 인증 없이 접근 허용
                         .anyRequest().authenticated() // 그 외 모든 요청은 인증 필요
                 )

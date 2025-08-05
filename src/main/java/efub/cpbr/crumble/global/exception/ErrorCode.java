@@ -22,6 +22,7 @@ public enum ErrorCode {
     GRAMMAR_PARSE_FAILED(500, "문법 검사 결과 파싱에 실패했습니다."),
 
     // community 관련
+    ANSWER_REQUIRED(400, "질문에 답변하지 않았습니다."),
     ALREADY_LIKED(400, "이미 좋아요를 누른 게시글입니다."),
     ALREADY_BOOKMARKED(400, "이미 북마크한 게시글입니다."),
     POST_NOT_FOUND(404, "존재하지 않는 게시글입니다."),
