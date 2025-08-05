@@ -11,10 +11,15 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.List;
 
 @Configuration
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @EnableConfigurationProperties(CorsProperties.class)
 public class CorsConfig {
     private final CorsProperties corsProperties;
+
+    public CorsConfig(CorsProperties corsProperties) {
+        this.corsProperties = corsProperties;
+        System.out.println("CorsConfig 생성자 실행됨 ");
+    }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource()  {
