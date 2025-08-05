@@ -42,6 +42,7 @@ public class LikeService {
         Like newLike = new Like(post, user);
 
         post.increaseLikeCount();
+        post.getAnswer().getUser().getUserStat().increaseLikeCount();
         likeRepository.save(newLike);
 
         // ⭐ 포인트 +2
@@ -62,6 +63,7 @@ public class LikeService {
 
         Post post = like.getPost();
         post.decreaseLikeCount();
+        post.getAnswer().getUser().getUserStat().decreaseLikeCount();
 
         likeRepository.delete(like);
     }

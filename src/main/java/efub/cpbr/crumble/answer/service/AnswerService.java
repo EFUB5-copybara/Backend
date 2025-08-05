@@ -26,6 +26,8 @@ public class AnswerService {
         Question question = questionService.findQuestionByDateOrThrow(date);
 
         Answer answer = request.toEntity(question,user);
+        answer.getUser().getUserStat().increaseTotalAnswers();
+
         return answerRepository.save(answer).getId();
     }
 

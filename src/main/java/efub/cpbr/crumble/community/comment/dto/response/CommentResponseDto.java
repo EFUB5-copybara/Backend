@@ -12,6 +12,7 @@ public class CommentResponseDto {
     private Long commentId;
     private String commentator;
     private Long commentatorId;
+    private int profileImageId;
     private String content;
     private LocalDateTime createdAt;
 
@@ -20,6 +21,7 @@ public class CommentResponseDto {
                 .commentId(comment.getId())
                 .commentator(comment.getCommentator().getUsername())
                 .commentatorId(comment.getCommentator().getUserId())
+                .profileImageId(comment.getCommentator().getProfileImageId())
                 .content(comment.getContent())
                 .createdAt(comment.getCreatedAt())
                 .build();
