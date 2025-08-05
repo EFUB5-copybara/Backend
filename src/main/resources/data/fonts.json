@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Como",
+    "description": "동글동글하고 귀여운 느낌의 스타일리쉬한 폰트",
+    "imgUrl": "https://use.typekit.net/xdb8olx.css",
+    "price": 100
+  },
+  {
+    "name": "MuseoModerno",
+    "description": "단단하고 굵은 현대적인 폰트",
+    "imgUrl": "https://use.typekit.net/xdb8olx.css",
+    "price": 100
+  },
+  {
+    "name": "The Seasons",
+    "description": "고전적이고 감성적인 세리프 폰트",
+    "imgUrl": "https://use.typekit.net/xdb8olx.css",
+    "price": 100
+  },
+  {
+    "name": "Tangier Medium",
+    "description": "손글씨와 같은 감성적인 폰트",
+    "imgUrl": "https://use.typekit.net/xdb8olx.css",
+    "price": 100
+  }
+]
