@@ -7,19 +7,30 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
+@Slf4j
 @Configuration
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @EnableConfigurationProperties(CorsProperties.class)
 public class CorsConfig {
     private final CorsProperties corsProperties;
 
+    public CorsConfig(CorsProperties corsProperties) {
+        this.corsProperties = corsProperties;
+        System.out.println("CorsConfig 생성자 실행됨 ");
+        log.info("CorsConfig 생성자 실행됨");
+    }
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource()  {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(corsProperties.getAllowOrigins());
+        System.out.println("CORS 허용 Origin 목록: " + corsProperties.getAllowOrigins());
+        log.info("CORS 허용 Origin 목록: {}", corsProperties.getAllowOrigins());
+        //configuration.setAllowedOrigins(corsProperties.getAllowOrigins());
+        configuration.setAllowedOriginPatterns(corsProperties.getAllowOrigins());
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.addAllowedHeader("*");
         configuration.setAllowCredentials(true);

@@ -1,0 +1,39 @@
+version: "3.8"
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf 
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+    depends_on:
+      - app
+    restart: always
+    environment:
+      - TZ=Asia/Seoul
+      
+  app:
+    build: .
+    container_name: myapp
+    ports:
+      - "8080:8080"
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      - redis
+    environment:
+      - TZ=Asia/Seoul
+
+  redis:
+    image: redis:latest
+    restart: always
+    container_name: redis
+    ports:
+      - "6379:6379"
+    environment:
+      - TZ=Asia/Seoul
