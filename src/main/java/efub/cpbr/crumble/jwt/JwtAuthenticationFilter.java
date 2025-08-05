@@ -23,6 +23,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
         throws ServletException, IOException {
 
+        String path = request.getRequestURI();
+
+        // 인증이 필요 없는 API 경로들을 건너뜀.
+        if (path.startsWith("/auth/login") || path.startsWith("/auth/signup") || path.startsWith("/auth/token")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         try {
         String token = resolveToken(request);
 
