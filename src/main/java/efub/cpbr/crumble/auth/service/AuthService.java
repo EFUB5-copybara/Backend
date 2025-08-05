@@ -57,9 +57,9 @@ public class AuthService {
                 .password(encodedPassword)
                 .email(signUpRequestDto.getEmail())
                 .nickname(signUpRequestDto.getNickname())
-                .role(RoleType.USER) // 기본 역할 USER로 설정
-                .point(0) // 초기 포인트 0으로 설정
-                .isActive(true) // 계정 활성화 상태로 설정
+                .role(RoleType.USER)
+                .point(0)
+                .isActive(true)
                 .build();
 
         User savedUser = userRepository.save(newUser);

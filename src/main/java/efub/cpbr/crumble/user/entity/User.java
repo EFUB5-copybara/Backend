@@ -60,7 +60,7 @@ public class User extends BaseEntity {
 
     @Builder
     public User(Long userId, String username, String password, String email, String nickname,
-                int point, boolean isActive, LocalDateTime createdAt, LocalDateTime updatedAt, RoleType role, int profileImageId) {
+                int point, boolean isActive, RoleType role, Integer profileImageId) {
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -69,7 +69,7 @@ public class User extends BaseEntity {
         this.point = (point == 0) ? 0 : point; // 기본값 처리
         this.isActive = isActive;
         this.role = (role == null) ? RoleType.USER : role; // 기본 역할 처리
-        this.profileImageId = profileImageId;
+        this.profileImageId = (profileImageId == null) ? 1 : profileImageId;  // 기본값 1로
     }
 
     /*public void deactivate() { // 사용자 탈퇴
