@@ -23,7 +23,7 @@ public class QuestionGenerateScheduler {
     private final HintService hintService;
     private final HintAIService hintAIService;
 
-    //@Scheduled(cron = "0 00 23 * * ?", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 20 00 * * ?", zone = "Asia/Seoul")
     //@Scheduled(cron = "0 * * * * ?", zone = "Asia/Seoul")
     public void createRandomCategoryQuestion(){
         log.info("질문 생성 스케줄 시작");

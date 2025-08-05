@@ -1,4 +1,4 @@
-package efub.cpbr.crumble.user.dto.response;
+package efub.cpbr.crumble.community.user.dto.response;
 
 import efub.cpbr.crumble.answer.entity.Answer;
 import efub.cpbr.crumble.question.entity.Question;

@@ -1,0 +1,24 @@
+[
+  {
+    "name": "지우개",
+    "price": 300,
+    "imgUrl": "https://copybara-qrumble.s3.ap-northeast-2.amazonaws.com/Item3-eraser.png",
+    "description": "이미 작성한 답변을 새로 쓸 수 있는 아이템",
+    "type": "ERASER"
+  },
+  {
+    "name": "방패",
+    "price": 500,
+    "imgUrl": "https://copybara-qrumble.s3.ap-northeast-2.amazonaws.com/Item2-shield.png",
+    "description": "연속일수가 깨지지 않도록 방어해주는 아이템",
+    "type": "SHIELD"
+  },
+  {
+    "name": "열쇠",
+    "price": 200,
+    "imgUrl": "https://copybara-qrumble.s3.ap-northeast-2.amazonaws.com/Item1-key.png",
+    "description": "사용 시 다른 사람들의 답변을 볼 수 있는 아이템",
+    "type": "KEY"
+  }
+]
+

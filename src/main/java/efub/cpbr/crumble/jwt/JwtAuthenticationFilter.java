@@ -23,13 +23,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
         throws ServletException, IOException {
 
+        try {
         String token = resolveToken(request);
 
-        // 토큰 유효성 확인
-        if(token != null && jwtTokenProvider.validateToken(token)) {
+        if (token != null && jwtTokenProvider.validateToken(token)) {
             Authentication authentication = jwtTokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
+        } catch (Exception e) {
+            // JWT 관련 에러만 로깅하거나 무시
+            System.out.println("JWT 처리 중 예외: " + e.getMessage());
+        }
+
 
         filterChain.doFilter(request, response);
     }
