@@ -3,6 +3,7 @@ package efub.cpbr.crumble.answer.controller;
 import efub.cpbr.crumble.answer.dto.req.AnswerRequest;
 import efub.cpbr.crumble.answer.dto.res.AnswerResponse;
 import efub.cpbr.crumble.answer.service.AnswerService;
+import efub.cpbr.crumble.auth.service.CustomUserDetails;
 import efub.cpbr.crumble.user.entity.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -36,9 +37,10 @@ public class AnswerController {
             @ApiResponse(responseCode = "404", description = "질문 또는 유저 없음")
     })
     @PostMapping
-    public ResponseEntity<Void> createAnswer(@AuthenticationPrincipal User user,
+    public ResponseEntity<Void> createAnswer(@AuthenticationPrincipal CustomUserDetails userDetails,
                                              @Parameter(description = "질문 날짜", example = "2024-07-17") @PathVariable LocalDate date,
                                              @Valid @RequestBody AnswerRequest request) {
+        User user = userDetails.getUser();
         Long answerId = answerService.createAnswer(user, date,request);
         return ResponseEntity.created(URI.create("/question/"+date+"/answer/"+answerId)).build();
     }
@@ -52,8 +54,9 @@ public class AnswerController {
             @ApiResponse(responseCode = "404", description = "답변 없음")
     })
     @GetMapping
-    public ResponseEntity<AnswerResponse> getAnswer(@AuthenticationPrincipal User user,
+    public ResponseEntity<AnswerResponse> getAnswer(@AuthenticationPrincipal CustomUserDetails userDetails,
                                                     @Parameter(description = "질문 날짜", example = "2024-07-17") @PathVariable LocalDate date){
+        User user = userDetails.getUser();
         return ResponseEntity.ok(answerService.getAnswer(user,date));
     }
 }

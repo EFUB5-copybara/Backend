@@ -1,5 +1,6 @@
 package efub.cpbr.crumble.calendar.controller;
 
+import efub.cpbr.crumble.auth.service.CustomUserDetails;
 import efub.cpbr.crumble.calendar.dto.AnswerDto;
 import efub.cpbr.crumble.calendar.dto.AnsweredDatesResponse;
 import efub.cpbr.crumble.calendar.service.CalendarService;
@@ -37,11 +38,12 @@ public class CalendarController {
             @ApiResponse(responseCode = "401", description = "인증 정보 없음")
     })
     @GetMapping("/calendar/answers")
-    public ResponseEntity<AnsweredDatesResponse> getAnsweredDates(@AuthenticationPrincipal User user,
+    public ResponseEntity<AnsweredDatesResponse> getAnsweredDates(@AuthenticationPrincipal CustomUserDetails userDetails,
                                                                   @Parameter(description = "조회 연도", example = "2025")
                                                                       @RequestParam int year,
                                                                   @Parameter(description = "조회 월", example = "3")
                                                                       @RequestParam int month){
+        User user = userDetails.getUser();
         return ResponseEntity.ok(calendarService.getAnsweredDates(user, year, month));
     }
 
@@ -55,12 +57,13 @@ public class CalendarController {
             @ApiResponse(responseCode = "401", description = "인증 정보 없음")
     })
     @GetMapping("/answers/me")
-    public ResponseEntity<List<AnswerDto>> getMonthlyAnswers(@AuthenticationPrincipal User user,
+    public ResponseEntity<List<AnswerDto>> getMonthlyAnswers(@AuthenticationPrincipal CustomUserDetails userDetails,
                                                              @Parameter(description = "조회 연도", example = "2025")
                                                                  @RequestParam int year,
                                                              @Parameter(description = "조회 월", example = "3")
                                                                  @RequestParam int month
     ) {
+        User user = userDetails.getUser();
         List<AnswerDto> answerList = calendarService.getMonthlyAnswers(user, year, month);
         return ResponseEntity.ok(answerList);
     }
@@ -75,7 +78,8 @@ public class CalendarController {
             @ApiResponse(responseCode = "401", description = "인증 정보 없음")
     })
     @GetMapping("/answers/streak")
-    public ResponseEntity<Integer> getStreak(@AuthenticationPrincipal User user) {
+    public ResponseEntity<Integer> getStreak(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        User user = userDetails.getUser();
         int streak = calendarService.getStreak(user);
         return ResponseEntity.ok(streak);
     }
@@ -90,12 +94,13 @@ public class CalendarController {
             @ApiResponse(responseCode = "401", description = "인증 정보 없음")
     })
     @GetMapping("/cookies")
-    public ResponseEntity<Integer> getMonthlyCookieCount(@AuthenticationPrincipal User user,
+    public ResponseEntity<Integer> getMonthlyCookieCount(@AuthenticationPrincipal CustomUserDetails userDetails,
                                                          @Parameter(description = "조회 연도", example = "2025")
                                                              @RequestParam int year,
                                                          @Parameter(description = "조회 월", example = "3")
                                                              @RequestParam int month
     ) {
+        User user = userDetails.getUser();
         int cookieCount = calendarService.getMonthlyCookieCount(user, year, month);
         return ResponseEntity.ok(cookieCount);
     }

@@ -40,31 +40,32 @@ public class LikeService {
         }
 
         Like newLike = new Like(post, user);
-        likeRepository.save(newLike);
 
-        post.updateLikeCount();
-        postRepository.save(post);
+        post.increaseLikeCount();
+        post.getAnswer().getUser().getUserStat().increaseLikeCount();
+        likeRepository.save(newLike);
 
         // ⭐ 포인트 +2
         user.addPoint(2L);
-        userRepository.save(user);
 
         return LikeResponseDto.from(newLike);
     }
 
     // 좋아요 삭제
     @Transactional
-    public void deleteLike(Long likeId) {
+    public void deleteLike(Long likeId, Long userId) {
         Like like = likeRepository.findById(likeId)
                         .orElseThrow(() -> new CustomException(ErrorCode.LIKE_NOT_FOUND));
 
-        Post post = postRepository.findById(like.getPost().getId())
-                        .orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_FOUND));
+        if (!like.getLiker().getUserId().equals(userId)) {
+            throw new CustomException(ErrorCode.FORBIDDEN);
+        }
 
-        post.getLikeList().remove(like);
+        Post post = like.getPost();
+        post.decreaseLikeCount();
+        post.getAnswer().getUser().getUserStat().decreaseLikeCount();
+
         likeRepository.delete(like);
-        post.updateLikeCount();
-        postRepository.save(post);
     }
 
 }

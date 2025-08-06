@@ -7,22 +7,19 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
     // 인기순 복합 기준 정렬(조회수+좋아요+댓글+북마크)
-    @Query("SELECT p FROM Post p ORDER BY (p.viewCount * 0.5 + p.likeCount * 1.5 + p.commentCount * 1.0 + p.bookmarkCount * 2.0) DESC")
-    List<Post> findPopularPosts();
+    @Query("SELECT p FROM Post p WHERE DATE(p.createdAt) = :date  ORDER BY (p.viewCount * 0.5 + p.likeCount * 1.5 + p.commentCount * 1.0 + p.bookmarkCount * 2.0) DESC")
+    List<Post> findPopularPosts(@Param("date") LocalDate date);
 
+    @Query("SELECT p FROM Post p WHERE DATE(p.createdAt) = :date ORDER BY p.createdAt DESC")
     // 최신순
-    List<Post> findAllByOrderByCreatedAtDesc();
-
-    // 조회수 증가
-    @Modifying(clearAutomatically = true)
-    @Query("UPDATE Post p SET p.viewCount = p.viewCount + 1 WHERE p.id = :postId")
-    void updatePostViewCount(@Param("postId") Long postId);
+    List<Post> findAllByOrderByCreatedAtDesc(@Param("date") LocalDate date);
 
     Optional<Post> findById(Long id);
 }

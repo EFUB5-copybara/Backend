@@ -17,8 +17,12 @@ public enum ErrorCode {
     HINT_NOT_FOUND(404, "해당 날짜의 질문에 대한 힌트가 존재하지 않습니다."),
     // Answer 관련 에러
     ANSWER_NOT_FOUND(404, "해당 답변이 존재하지 않습니다."),
+    // Grammar 관련 에러
+    GRAMMAR_TEXT_EMPTY(400, "검사할 텍스트가 비어있습니다."),
+    GRAMMAR_PARSE_FAILED(500, "문법 검사 결과 파싱에 실패했습니다."),
 
-    // community
+    // community 관련
+    ANSWER_REQUIRED(400, "질문에 답변하지 않았습니다."),
     ALREADY_LIKED(400, "이미 좋아요를 누른 게시글입니다."),
     ALREADY_BOOKMARKED(400, "이미 북마크한 게시글입니다."),
     POST_NOT_FOUND(404, "존재하지 않는 게시글입니다."),
@@ -27,15 +31,23 @@ public enum ErrorCode {
     LIKE_NOT_FOUND(404, "존재하지 않는 좋아요입니다."),
     BOOKMARK_NOT_FOUND(404, "존재하지 않는 북마크입니다."),
 
+    // shop 관련
+    ITEM_NOT_FOUND(404, "존재하지 않는 아이템입니다."),
+    INSUFFICIENT_POINTS(400, "보유 포인트가 부족합니다."),
+    FONT_NOT_FOUND(404, "존재하지 않는 폰트입니다."),
+    ALREADY_PURCHASED(400, "이미 구매하였습니다."),
+    FONT_NOT_OWNED(400, "보유하지 않은 폰트입니다."),
+    PAPER_NOT_FOUND(400, "존재하지 않는 종이 테마입니다."),
+
     // Fortune Cookie 관련
     FORTUNE_ALREADY_USED(403, "오늘은 이미 포춘쿠키를 사용했습니다."),
     FORTUNE_NO_PREVIOUS_ANSWER(404, "조회할 수 있는 과거 답변이 없습니다."),
 
     // Item 관련 에러
-    ITEM_NOT_FOUND(404, "아이템을 찾을 수 없습니다."),
     ITEM_NOT_OWNED(404, "해당 아이템을 보유하고 있지 않습니다."),
     ITEM_QUANTITY_ZERO(409, "현재 아이템 보유 개수가 0입니다."),
     UNSUPPORTED_ITEM_TYPE(400, "존재하지 않는 아이템 타입입니다."),
+    NO_MISSING_DATE_FOUND(404, "답변하지 않은 날짜가 없습니다."),
 
     // 인증/인가 관련 예외
     UNAUTHORIZED(401, "인증되지 않은 사용자입니다."),

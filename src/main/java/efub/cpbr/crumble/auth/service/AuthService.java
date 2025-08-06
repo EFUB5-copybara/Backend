@@ -8,7 +8,9 @@ import efub.cpbr.crumble.jwt.JwtTokenProvider;
 import efub.cpbr.crumble.jwt.TokenInfo;
 import efub.cpbr.crumble.user.entity.RoleType;
 import efub.cpbr.crumble.user.entity.User;
+import efub.cpbr.crumble.user.entity.UserStat;
 import efub.cpbr.crumble.user.repository.UserRepository;
+import efub.cpbr.crumble.user.repository.UserStatRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -31,6 +33,7 @@ public class AuthService {
     private final JwtTokenProvider jwtTokenProvider;
     private final RedisTemplate<String, String> redisTemplate;
     private final PasswordEncoder passwordEncoder;
+    private final UserStatRepository userStatRepository;
 
     // 회원가입 로직
     public User signup(SignUpRequestDto signUpRequestDto) {
@@ -57,12 +60,24 @@ public class AuthService {
                 .role(RoleType.USER) // 기본 역할 USER로 설정
                 .point(0) // 초기 포인트 0으로 설정
                 .isActive(true) // 계정 활성화 상태로 설정
-                .createdAt(LocalDateTime.now()) // 현재 시간으로 생성 시간 설정
-                .updatedAt(LocalDateTime.now()) // 현재 시간으로 업데이트 시간 설정
                 .build();
 
+        User savedUser = userRepository.save(newUser);
+
+        // UserStat 생성 및 저장 (초기값 0으로 세팅)
+        UserStat userStat = UserStat.builder()
+                .user(savedUser)
+                .totalAnswers(0)
+                .currentStreak(0)
+                .longestStreak(0)
+                .totalLikesReceived(0)
+                .totalCommentsReceived(0)
+                .build();
+
+        userStatRepository.save(userStat);
+
         // 사용자 정보 저장
-        return userRepository.save(newUser);
+        return savedUser;
     }
 
 

@@ -26,6 +26,8 @@ public class AnswerService {
         Question question = questionService.findQuestionByDateOrThrow(date);
 
         Answer answer = request.toEntity(question,user);
+        answer.getUser().getUserStat().increaseTotalAnswers();
+
         return answerRepository.save(answer).getId();
     }
 
@@ -34,5 +36,12 @@ public class AnswerService {
         Answer answer=answerRepository.findByUserAndQuestion_Date(user,date)
                 .orElseThrow(()->new CustomException(ErrorCode.ANSWER_NOT_FOUND));
         return AnswerResponse.of(answer);
+    }
+
+    public void validateAnswered(Long userId, LocalDate date) {
+        boolean hasAnswered = answerRepository.existsByUser_UserIdAndQuestion_Date(userId, date);
+        if (!hasAnswered) {
+            throw new CustomException(ErrorCode.ANSWER_REQUIRED);
+        }
     }
 }
