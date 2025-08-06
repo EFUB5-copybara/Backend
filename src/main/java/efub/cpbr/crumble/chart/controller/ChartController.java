@@ -21,12 +21,12 @@ public class ChartController {
     // 월간 리포트 API
     @GetMapping
     public ResponseEntity<?> getMonthlyReport(@AuthenticationPrincipal User user) {
-        // user 객체가 null인지 확인
+        // 인증된 사용자 정보가 없는 경우 (예: 유효하지 않은 토큰)
         if (user == null) {
-            // 적절한 에러 메시지나 상태 코드를 반환
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
         }
 
+        // 인증된 사용자 ID를 사용하여 서비스 호출
         MonthlyReportResponse response = chartService.getMonthlyReport(user.getUserId());
         return ResponseEntity.ok(response);
     }
