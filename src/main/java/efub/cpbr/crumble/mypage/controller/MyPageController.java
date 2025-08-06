@@ -1,10 +1,8 @@
 package efub.cpbr.crumble.mypage.controller;
 
 
-import efub.cpbr.crumble.mypage.dto.MyInfoResponse;
-import efub.cpbr.crumble.mypage.dto.MyPageInfoDto;
-import efub.cpbr.crumble.mypage.dto.MyPageUpdateRequest;
-import efub.cpbr.crumble.mypage.dto.MyRecordsResponse;
+import efub.cpbr.crumble.global.exception.CustomException;
+import efub.cpbr.crumble.mypage.dto.*;
 import efub.cpbr.crumble.mypage.service.MyPageService;
 import efub.cpbr.crumble.user.entity.User;
 import jakarta.validation.Valid;
@@ -13,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import efub.cpbr.crumble.global.exception.ErrorCode;
 
 
 import java.util.Map;
@@ -69,4 +68,19 @@ public class MyPageController {
     }
 
     // 북마크한 게시글 리스트 api
+    @GetMapping("/bookmarks")
+    public ResponseEntity<BookmarkedAnswersResponse> getBookmarkedAnswers(
+            @AuthenticationPrincipal User user,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "recent") String sortBy
+    ) {
+        // 유효성 검사: sortBy 값 (GlobalExceptionHandler에서 CustomException으로 처리하는 것이 더 좋습니다.)
+        if (!sortBy.equals("recent") && !sortBy.equals("popular")) {
+            throw new CustomException(ErrorCode.INVALID_SORT_BY); // 🟢 새로운 에러 코드 사용
+        }
+
+        BookmarkedAnswersResponse response = myPageService.getBookmarkedAnswers(user.getUserId(), page, size, sortBy);
+        return ResponseEntity.ok(response);
+    }
 }

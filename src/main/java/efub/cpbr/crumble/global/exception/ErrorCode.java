@@ -48,6 +48,7 @@ public enum ErrorCode {
     // 마이페이지 관련
     DUPLICATE_NICKNAME(409, "이미 사용 중인 닉네임입니다."),
     DUPLICATE_EMAIL(409, "이미 사용 중인 이메일입니다."),
+    INVALID_SORT_BY(400, "정렬 기준이 유효하지 않습니다. 'recent' 또는 'popular'여야 합니다."),
 
     // 사용자 및 회원가입 관련
     PASSWORD_NOT_MATCH(400, "비밀번호와 비밀번호 확인이 일치하지 않습니다."),

@@ -37,4 +37,10 @@ public class Answer extends BaseEntity {
     @OneToOne(mappedBy = "answer", fetch = FetchType.LAZY)
     private Post post;
 
+    @Column(nullable = false)
+    private int likesCount; // 좋아요 수
+
+    @Column(nullable = false)
+    private int commentsCount; // 댓글 수
+
 }

@@ -1,17 +1,19 @@
 package efub.cpbr.crumble.mypage.service;
 
 import efub.cpbr.crumble.answer.repository.AnswerRepository;
+import efub.cpbr.crumble.community.bookmark.domain.Bookmark;
+import efub.cpbr.crumble.community.bookmark.repository.BookmarkRepository;
 import efub.cpbr.crumble.community.comment.repository.CommentRepository;
 import efub.cpbr.crumble.community.like.repository.LikeRepository;
 import efub.cpbr.crumble.global.exception.CustomException;
 import efub.cpbr.crumble.global.exception.ErrorCode;
-import efub.cpbr.crumble.mypage.dto.MyInfoResponse;
-import efub.cpbr.crumble.mypage.dto.MyPageInfoDto;
-import efub.cpbr.crumble.mypage.dto.MyPageUpdateRequest;
-import efub.cpbr.crumble.mypage.dto.MyRecordsResponse;
+import efub.cpbr.crumble.mypage.dto.*;
 import efub.cpbr.crumble.user.entity.User;
 import efub.cpbr.crumble.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +29,7 @@ public class MyPageService {
     private final LikeRepository likeRepository;
     private final CommentRepository commentRepository;
     private final AnswerRepository answerRepository;
+    private final BookmarkRepository bookmarkRepository;
 
     // 마이페이지 초기 화면 조회 로직
     @Transactional(readOnly = true)
@@ -121,4 +124,34 @@ public class MyPageService {
                 .build();
     }
 
+    // 북마크한 게시물 리스트
+    @Transactional(readOnly = true)
+    public BookmarkedAnswersResponse getBookmarkedAnswers(Long userId, int page, int size, String sortBy) {
+        userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+
+        Sort sort;
+        if ("popular".equals(sortBy)) {
+            // 정렬 기준을 'post'를 거쳐 'answer'의 'likesCount'로 수정
+            sort = Sort.by(Sort.Direction.DESC, "post.answer.likesCount");
+        } else {
+            // 북마크 생성일 기준 최신순
+            sort = Sort.by(Sort.Direction.DESC, "createdAt");
+        }
+        PageRequest pageable = PageRequest.of(page, size, sort);
+
+        Page<Bookmark> bookmarkPage = bookmarkRepository.findByBookmarker_UserId(userId, pageable);
+
+        // DTO 변환 로직 수정: bookmark -> post -> answer 순서로 접근
+        Page<BookmarkedAnswerDto> bookmarkedDtoPage = bookmarkPage.map(bookmark -> BookmarkedAnswerDto.from(bookmark.getPost().getAnswer()));
+
+        return BookmarkedAnswersResponse.builder()
+                .totalCount(bookmarkPage.getTotalElements())
+                .totalPages(bookmarkPage.getTotalPages())
+                .currentPage(bookmarkPage.getNumber())
+                .pageSize(bookmarkPage.getSize())
+                .sortBy(sortBy)
+                .bookmarkedAnswers(bookmarkedDtoPage.getContent())
+                .build();
+    }
 }
