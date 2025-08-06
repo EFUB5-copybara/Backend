@@ -8,6 +8,7 @@ import efub.cpbr.crumble.global.exception.ErrorCode;
 import efub.cpbr.crumble.mypage.dto.MyInfoResponse;
 import efub.cpbr.crumble.mypage.dto.MyPageInfoDto;
 import efub.cpbr.crumble.mypage.dto.MyPageUpdateRequest;
+import efub.cpbr.crumble.mypage.dto.MyRecordsResponse;
 import efub.cpbr.crumble.user.entity.User;
 import efub.cpbr.crumble.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -35,9 +36,9 @@ public class MyPageService {
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         //통계 정보 조회
-        int totalLikes = likeRepository.countByLiker_UserId(memberId);
-        int totalComments = commentRepository.countByCommentator_UserId(memberId);
-        int totalWrittenAnswers = answerRepository.countByUser_UserId(memberId);
+        Long totalLikes = likeRepository.countByLiker_UserId(memberId);
+        Long totalComments = commentRepository.countByCommentator_UserId(memberId);
+        Long totalWrittenAnswers = answerRepository.countByUser_UserId(memberId);
 
         // DTO 빌드 및 반환
         return MyPageInfoDto.builder()
@@ -99,4 +100,25 @@ public class MyPageService {
         }
         return updatedFields;
     }
+
+    // 내 기록 - 작성한 답변, 글자수 조회 로직
+    @Transactional(readOnly = true)
+    public MyRecordsResponse getMyRecords(Long userId) {
+        // 사용자 정보는 이미 인증되었으므로 별도 조회는 생략 가능하지만,
+        // 혹시 모를 에러 방지를 위해 Optional로 감싸는 것이 좋습니다.
+        userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+
+        // 작성한 답변 총 개수 조회
+        Long totalAnswersCount = answerRepository.countByUser_UserId(userId);
+
+        // 작성한 답변들의 글자수 총합 조회
+        Long totalCharacterCount = answerRepository.sumCharacterCountByUserId(userId);
+
+        return MyRecordsResponse.builder()
+                .totalAnswersCount(totalAnswersCount)
+                .totalCharacterCount(totalCharacterCount)
+                .build();
+    }
+
 }

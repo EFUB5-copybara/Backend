@@ -11,7 +11,7 @@ public class MyPageInfoDto {
     private int profileImageIndex; // 기본프로필들 중 몇 번인지.
 
     // 내 정보들
-    private int totalLikes;         // "좋아요" 수
-    private int totalComments;      // "댓글 수"
-    private int totalWrittenAnswers; // "작성한 답변" 수
+    private Long totalLikes;         // "좋아요" 수
+    private Long totalComments;      // "댓글 수"
+    private Long totalWrittenAnswers; // "작성한 답변" 수
 }

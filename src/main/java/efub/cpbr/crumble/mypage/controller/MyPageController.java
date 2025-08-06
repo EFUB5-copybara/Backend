@@ -4,6 +4,7 @@ package efub.cpbr.crumble.mypage.controller;
 import efub.cpbr.crumble.mypage.dto.MyInfoResponse;
 import efub.cpbr.crumble.mypage.dto.MyPageInfoDto;
 import efub.cpbr.crumble.mypage.dto.MyPageUpdateRequest;
+import efub.cpbr.crumble.mypage.dto.MyRecordsResponse;
 import efub.cpbr.crumble.mypage.service.MyPageService;
 import efub.cpbr.crumble.user.entity.User;
 import jakarta.validation.Valid;
@@ -59,4 +60,13 @@ public class MyPageController {
         // 성공 응답 생성
         return ResponseEntity.ok(updatedFields);
     }
+    // 내 기록 - 작성한 게시글, 글자수
+    @GetMapping("/records")
+    public ResponseEntity<MyRecordsResponse> getMyRecords(@AuthenticationPrincipal User user) {
+        Long userId = user.getUserId();
+        MyRecordsResponse myRecords = myPageService.getMyRecords(userId);
+        return ResponseEntity.ok(myRecords);
+    }
+
+    // 북마크한 게시글 리스트 api
 }
