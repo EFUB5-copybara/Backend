@@ -77,6 +77,7 @@ public class PaperService {
         }
 
         user.addPoint(-paper.getPrice());
+        userRepository.save(user);
         userPaperRepository.save(new UserPaper(user, paper, false));
     }
 
