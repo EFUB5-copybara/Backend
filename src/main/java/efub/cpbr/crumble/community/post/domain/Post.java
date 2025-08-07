@@ -7,6 +7,7 @@ import efub.cpbr.crumble.community.like.domain.Like;
 import efub.cpbr.crumble.global.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -28,10 +29,10 @@ public class Post extends BaseEntity {
 
     private String content;
 
-    private Long viewCount = 0L;
-    private Long likeCount = 0L;
-    private Long commentCount = 0L;
-    private Long bookmarkCount = 0L;
+    private Long viewCount;
+    private Long likeCount;
+    private Long commentCount;
+    private Long bookmarkCount;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> commentList = new ArrayList<>();
@@ -74,6 +75,18 @@ public class Post extends BaseEntity {
 
     public void decreaseBookmarkCount() {
         if (this.bookmarkCount > 0) this.bookmarkCount--;
+    }
+
+    @Builder
+    public Post(Answer answer, String content,
+                Long viewCount, Long likeCount,
+                Long commentCount, Long bookmarkCount) {
+        this.answer = answer;
+        this.content = content;
+        this.viewCount = viewCount != null ? viewCount : 0L;
+        this.likeCount = likeCount != null ? likeCount : 0L;
+        this.commentCount = commentCount != null ? commentCount : 0L;
+        this.bookmarkCount = bookmarkCount != null ? bookmarkCount : 0L;
     }
 
 }
