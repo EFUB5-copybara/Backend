@@ -47,6 +47,10 @@ public class ItemService {
         Item item = itemRepository.findById(itemId)
                 .orElseThrow(() -> new CustomException(ErrorCode.ITEM_NOT_FOUND));
 
+        if (user.getPoint() < item.getPrice()) {
+            throw new CustomException(ErrorCode.INSUFFICIENT_POINTS);
+        }
+
         // 해당 유저가 이미 아이템을 갖고 있으면 수량 +1
         Optional<UserItem> optionalUserItem = userItemRepository.findByUserAndItem(user, item);
 
