@@ -17,8 +17,8 @@ public class BookmarkedAnswerDto {
     private String content;
     private String writerUsername;
     private LocalDateTime createdAt;
-    private int likesCount;
-    private int commentsCount;
+    private Long likesCount;
+    private Long commentsCount;
 
     public static BookmarkedAnswerDto from(Answer answer) {
         return BookmarkedAnswerDto.builder()
@@ -27,8 +27,8 @@ public class BookmarkedAnswerDto {
                 .content(answer.getContent())
                 .writerUsername(answer.getUser().getNickname())
                 .createdAt(answer.getCreatedAt())
-                .likesCount(answer.getLikesCount())
-                .commentsCount(answer.getCommentsCount())
+                .likesCount((long) answer.getPost().getLikeList().size())
+                .createdAt(answer.getCreatedAt())
                 .build();
     }
 }
