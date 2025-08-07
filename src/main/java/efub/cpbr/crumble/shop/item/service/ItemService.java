@@ -59,6 +59,7 @@ public class ItemService {
         }
 
         user.addPoint(-item.getPrice());
+        userRepository.save(user);
     }
 }
 
