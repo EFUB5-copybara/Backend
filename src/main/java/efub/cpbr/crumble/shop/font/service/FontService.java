@@ -77,6 +77,7 @@ public class FontService {
         }
 
         user.addPoint(-font.getPrice());
+        userRepository.save(user);
         userFontRepository.save(new UserFont(user, font, false));
     }
 
