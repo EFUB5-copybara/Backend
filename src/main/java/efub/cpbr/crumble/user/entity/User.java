@@ -67,9 +67,9 @@ public class User extends BaseEntity {
         this.password = password;
         this.email = email;
         this.nickname = nickname;
-        this.point = (point == 0) ? 0 : point; // 기본값 처리
+        this.point = (point == 0) ? 0 : point;
         this.isActive = isActive;
-        this.role = (role == null) ? RoleType.USER : role; // 기본 역할 처리
+        this.role = (role == null) ? RoleType.USER : role;
         this.profileImageIndex = profileImageIndex;
     }
 
