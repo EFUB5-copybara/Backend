@@ -36,5 +36,4 @@ public class Answer extends BaseEntity {
 
     @OneToOne(mappedBy = "answer", fetch = FetchType.LAZY)
     private Post post;
-
 }

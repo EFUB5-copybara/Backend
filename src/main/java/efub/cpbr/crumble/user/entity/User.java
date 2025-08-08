@@ -52,7 +52,8 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private RoleType role;
 
-    private int profileImageId;
+    @Column(nullable = false) // 프로필 이미지는 기본값 1로 설정
+    private int profileImageIndex = 1; // 1부터 9까지의 값 중 하나
 
     public void addPoint(Long point) {
         this.point += point;
@@ -60,7 +61,7 @@ public class User extends BaseEntity {
 
     @Builder
     public User(Long userId, String username, String password, String email, String nickname,
-                int point, boolean isActive, RoleType role, Integer profileImageId) {
+                int point, boolean isActive, RoleType role, int profileImageIndex) {
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -69,7 +70,7 @@ public class User extends BaseEntity {
         this.point = (point == 0) ? 0 : point; // 기본값 처리
         this.isActive = isActive;
         this.role = (role == null) ? RoleType.USER : role; // 기본 역할 처리
-        this.profileImageId = (profileImageId == null) ? 1 : profileImageId;  // 기본값 1로
+        this.profileImageIndex = profileImageIndex; // 이 부분 유지
     }
 
     /*public void deactivate() { // 사용자 탈퇴
@@ -87,6 +88,22 @@ public class User extends BaseEntity {
     // 보유 아이템
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserItem> userItems = new ArrayList<>();
+
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void updateEmail(String email) {
+        this.email = email;
+    }
+
+    public void updateProfileImageIndex(Integer profileImageIndex) {
+        this.profileImageIndex = profileImageIndex;
+    }
+
+    public String getPassword() {
+        return password; // User 엔티티의 password 필드 반환
+    }
 
     // 보유 테마
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
