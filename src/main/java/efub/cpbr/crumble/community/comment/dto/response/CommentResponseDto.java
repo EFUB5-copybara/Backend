@@ -21,7 +21,7 @@ public class CommentResponseDto {
                 .commentId(comment.getId())
                 .commentator(comment.getCommentator().getUsername())
                 .commentatorId(comment.getCommentator().getUserId())
-                .profileImageId(comment.getCommentator().getProfileImageId())
+                .profileImageId(comment.getCommentator().getProfileImageIndex())
                 .content(comment.getContent())
                 .createdAt(comment.getCreatedAt())
                 .build();

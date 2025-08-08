@@ -55,19 +55,13 @@ public class User extends BaseEntity {
     @Column(nullable = false) // 프로필 이미지는 기본값 1로 설정
     private int profileImageIndex = 1; // 1부터 9까지의 값 중 하나
 
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = this.createdAt;
-    }
-
     public void addPoint(Long point) {
         this.point += point;
     }
 
     @Builder
     public User(Long userId, String username, String password, String email, String nickname,
-                int point, boolean isActive, LocalDateTime createdAt, LocalDateTime updatedAt, RoleType role, int profileImageId) {
+                int point, boolean isActive, RoleType role, int profileImageIndex) {
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -76,7 +70,7 @@ public class User extends BaseEntity {
         this.point = (point == 0) ? 0 : point; // 기본값 처리
         this.isActive = isActive;
         this.role = (role == null) ? RoleType.USER : role; // 기본 역할 처리
-        this.profileImageId = profileImageId;
+        this.profileImageIndex = profileImageIndex;
     }
 
     /*public void deactivate() { // 사용자 탈퇴
@@ -97,17 +91,14 @@ public class User extends BaseEntity {
 
     public void updateNickname(String nickname) {
         this.nickname = nickname;
-        this.onUpdate(); // updatedAt 자동 업데이트를 위해 호출
     }
 
     public void updateEmail(String email) {
         this.email = email;
-        this.onUpdate();
     }
 
     public void updateProfileImageIndex(Integer profileImageIndex) {
         this.profileImageIndex = profileImageIndex;
-        this.onUpdate();
     }
 
     public String getPassword() {
