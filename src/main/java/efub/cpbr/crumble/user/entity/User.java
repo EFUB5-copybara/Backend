@@ -70,7 +70,7 @@ public class User extends BaseEntity {
         this.point = (point == 0) ? 0 : point; // 기본값 처리
         this.isActive = isActive;
         this.role = (role == null) ? RoleType.USER : role; // 기본 역할 처리
-        this.profileImageIndex = profileImageIndex;
+        this.profileImageIndex = profileImageIndex; // 이 부분 유지
     }
 
     /*public void deactivate() { // 사용자 탈퇴
