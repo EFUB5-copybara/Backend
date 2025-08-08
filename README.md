@@ -9,10 +9,9 @@
 ## 🗓️ 개발 기간
 - 2025.07.07 ~ 2025-08.08
 
-## 💡 주요 기능
-
 ## 🔧 서버 아키텍처
 
+<img width="590" height="252" alt="image" src="https://github.com/user-attachments/assets/8fe94949-f061-4780-9026-fc0b8b648700" />
 
 
 ## 🔨 기술 스택
@@ -22,7 +21,7 @@
 
 **Deploy**
 
-<img src="https://img.shields.io/badge/AWS EC2-FF9900?style=for-the-badge&logo=amazonec2&logoColor=white"> <img src="https://img.shields.io/badge/AWS RDS-527FFF?style=for-the-badge&logo=amazonrds&logoColor=white"> ![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white) <img src="https://img.shields.io/badge/github%20actions-181717?style=for-the-badge&logo=github%20actions&logoColor=white">
+<img src="https://img.shields.io/badge/AWS EC2-FF9900?style=for-the-badge&logo=amazonec2&logoColor=white"> <img src="https://img.shields.io/badge/AWS RDS-527FFF?style=for-the-badge&logo=amazonrds&logoColor=white">  <img src="https://img.shields.io/badge/Amazon%20S3-FF9900?style=for-the-badge&logo=amazons3&logoColor=white"> <img src ="https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white"> <img src="https://img.shields.io/badge/github%20actions-181717?style=for-the-badge&logo=github%20actions&logoColor=white"> <img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white">
 
 ## 📑 ERD
 <img width="3598" height="2160" alt="image" src="https://github.com/user-attachments/assets/6aebe888-a115-462a-b1eb-7804a9104df2" />
@@ -49,10 +48,10 @@
     <td align="center">소현아</td>
   </tr>
   <tr>
-    <td align="center"></td>
-    <td align="center"></td>
-    <td align="center"></td>
-    <td align="center"></td>
+    <td align="center"> auth / mypage API </td>
+    <td align="center"> community / post / shop API </td>
+    <td align="center"> calender / item API & deploy </td>
+    <td align="center"> question / answer / hint API </td>
   </tr>
 </table>
 
@@ -69,33 +68,83 @@
 │   ├── workflows / deploy.yml
 │   └── PULL_REQUEST_TEMPLATE.md
 │
-├── deploy.sh
-├── docker-compose.yml
+├── nginx/
+│   ├── default.conf
+│   └── nginx.conf
 │
-├── src/main/
-│   ├── java/efub/cpbr/crumble/
-│   │   ├── MavveApplication.java
-│   │
-│   │   ├── auth/                     # 🔐 인증 도메인
-│   │   │   ├── controller/
-│   │   │   ├── service/
-│   │   │   ├── repository/
-│   │   │   ├── dto/
-│   │   │   └── entity/
-│   │   │
-│   │   │   └── global/
-│   │   │       ├── config/
-│   │   │       ├── convertor/                          
-│   │   │       ├── exception/           
-│   │   │       ├── response/             
-│   │   │       └── handler/                 
-│   │   │
+├── src/
+│   ├── main/
+│   │   ├── java/efub/cpbr/crumble/
+│   │   │   ├── answer/                     # ✳️ 답변 도메인
+│   │   │   │   ├── controller/
+│   │   │   │   ├── dto/
+│   │   │   │   ├── entity/
+│   │   │   │   ├── repository/
+│   │   │   │   └── service/
+│   │   │   ├── auth/                       # 🔐 인증 도메인
+│   │   │   │   ├── controller/
+│   │   │   │   ├── dto/
+│   │   │   │   └── service/
+│   │   │   ├── calender/                   # 📆 캘린더 도메인
+│   │   │   │   ├── controller/
+│   │   │   │   ├── dto/
+│   │   │   │   ├── repository/
+│   │   │   │   └── service/
+│   │   │   ├── chart/                      # 📊 차트 도메인
+│   │   │   │   ├── controller/
+│   │   │   │   ├── dto/
+│   │   │   │   └── service/
+│   │   │   ├── community/                  # 📮 커뮤니티 도메인
+│   │   │   │   ├── bookmark/
+│   │   │   │   ├── comment/
+│   │   │   │   ├── like/
+│   │   │   │   ├── post/
+│   │   │   │   └── user/
+│   │   │   ├── global/                     
+│   │   │   │   ├── config/
+│   │   │   │   ├── domain/
+│   │   │   │   └── exception/
+│   │   │   ├── grammar/                    # 🔤 문법 도메인
+│   │   │   │   ├── controller/
+│   │   │   │   ├── dto/
+│   │   │   │   └── service/
+│   │   │   ├── hint/                       # ➕ 힌트 도메인
+│   │   │   │   ├── controller/
+│   │   │   │   ├── dto/
+│   │   │   │   ├── entity/
+│   │   │   │   ├── repository/
+│   │   │   │   └── service/
+│   │   │   ├── jwt/                        # 🔐 jwt 도메인
+│   │   │   ├── mypage/                     # 🙂 마이페이지 도메인
+│   │   │   │   ├── controller/
+│   │   │   │   ├── dto/
+│   │   │   │   └── service/
+│   │   │   ├── question/                   # ❔ 질문 도메인
+│   │   │   │   ├── controller/
+│   │   │   │   ├── dto/
+│   │   │   │   ├── entity/
+│   │   │   │   ├── repository/
+│   │   │   │   └── service/
+│   │   │   ├── shop/                       # 🛍️ 상점 도메인
+│   │   │   │   ├── font/
+│   │   │   │   ├── item/
+│   │   │   │   ├── paper/
+│   │   │   │   └── font/
+│   │   │   ├── user/                       # 🔐 유 도메인
+│   │   │   │   ├── entity/
+│   │   │   │   ├── repository/
+│   │   │   │   └── service/           
+│   │   │   └── CrumbleApplication.java
+│   │   │  
 │   │   └── resources/
 │   │       ├── application.yml
 │   │       └── data/
 │   └── test/
 │       └── java/efub/cpbr/crumble
-│           └── ...                      
+│           └── ...
+├── deploy.sh
+├── docker-compose.yml
+│                
 └── README.md
 
 ```
