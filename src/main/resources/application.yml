@@ -25,7 +25,7 @@ spring:
 
 jwt:
   secret: ${JWT_KEY}
-  access-token-expiration-millis: 3600000 # 1시간
+  access-token-expiration-millis: 604800000 # 개발 편의를 위해 7일로 수정.
   refresh-token-expiration-millis: 604800000 # 7일
 
 cors:
