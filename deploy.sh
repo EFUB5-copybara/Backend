@@ -66,13 +66,13 @@ export $(cat .env | xargs)
 # echo "설정 파일 생성 완료"
 
 # 최신 이미지 pull
-docker pull hanrann6/yourapp:latest
+docker pull hanrann/yourapp:latest
 
 # 기존 컨테이너 중지 및 삭제
 docker-compose down
 
 # 새 컨테이너 실행
-docker-compose up -d
+docker-compose up -d --build
 
 echo "배포 완료"
 
