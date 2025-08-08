@@ -1,6 +1,7 @@
 package efub.cpbr.crumble.mypage.controller;
 
 
+import efub.cpbr.crumble.auth.service.CustomUserDetails;
 import efub.cpbr.crumble.global.exception.CustomException;
 import efub.cpbr.crumble.mypage.dto.*;
 import efub.cpbr.crumble.mypage.service.MyPageService;
@@ -24,7 +25,8 @@ public class MyPageController {
 
     // 마이페이지 초기 화면 조회 api
     @GetMapping
-    public ResponseEntity<MyPageInfoDto> getMyPageInfo(@AuthenticationPrincipal User user) {
+    public ResponseEntity<MyPageInfoDto> getMyPageInfo(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        User user = userDetails.getUser();
         Long userId = user.getUserId();
         MyPageInfoDto myPageInfo = myPageService.getMyPageInfo(userId);
         return ResponseEntity.ok(myPageInfo);
@@ -32,18 +34,17 @@ public class MyPageController {
 
     // 내 정보 페이지 화면 조회 api
     @GetMapping("/my-info") // 새로운 엔드포인트
-    public ResponseEntity<MyInfoResponse> getMyProfileInfo( // 반환 타입에서 ApiResponse 제거
-                                                               @AuthenticationPrincipal User user) { // 현재 로그인된 사용자 정보 주입
-
+    public ResponseEntity<MyInfoResponse> getMyProfileInfo(@AuthenticationPrincipal CustomUserDetails userDetails) { // 현재 로그인된 사용자 정보 주입
+        User user = userDetails.getUser();
         MyInfoResponse profileInfo = myPageService.getMyProfileInfo(user.getUserId());
         return ResponseEntity.ok(profileInfo); // 직접 DTO 반환
     }
 
     // 멤버 프로필 수정 api
     @PatchMapping("/my-info")
-    public ResponseEntity<Map<String, Object>> updateMyInfo( @AuthenticationPrincipal User user,
+    public ResponseEntity<Map<String, Object>> updateMyInfo(@AuthenticationPrincipal CustomUserDetails userDetails,
                                                              @Valid @RequestBody MyPageUpdateRequest request) {
-
+        User user = userDetails.getUser();
         // 요청 DTO에 모든 필드가 비어있음. 즉 수정사항 없는 경우,
         if ((request.getNickname() == null || request.getNickname().isEmpty()) &&
                 (request.getEmail() == null || request.getEmail().isEmpty()) &&
@@ -61,7 +62,8 @@ public class MyPageController {
     }
     // 내 기록 - 작성한 게시글, 글자수
     @GetMapping("/records")
-    public ResponseEntity<MyRecordsResponse> getMyRecords(@AuthenticationPrincipal User user) {
+    public ResponseEntity<MyRecordsResponse> getMyRecords(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        User user = userDetails.getUser();
         Long userId = user.getUserId();
         MyRecordsResponse myRecords = myPageService.getMyRecords(userId);
         return ResponseEntity.ok(myRecords);
@@ -70,11 +72,13 @@ public class MyPageController {
     // 북마크한 게시글 리스트 api
     @GetMapping("/bookmarks")
     public ResponseEntity<BookmarkedAnswersResponse> getBookmarkedAnswers(
-            @AuthenticationPrincipal User user,
+            @AuthenticationPrincipal CustomUserDetails userDetails,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "recent") String sortBy
     ) {
+        User user = userDetails.getUser();
+
         // 유효성 검사: sortBy 값 (GlobalExceptionHandler에서 CustomException으로 처리하는 것이 더 좋습니다.)
         if (!sortBy.equals("recent") && !sortBy.equals("popular")) {
             throw new CustomException(ErrorCode.INVALID_SORT_BY); // 🟢 새로운 에러 코드 사용
