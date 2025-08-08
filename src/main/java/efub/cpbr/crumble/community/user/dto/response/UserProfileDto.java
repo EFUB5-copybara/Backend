@@ -11,7 +11,7 @@ public record UserProfileDto(String username,
         return UserProfileDto.builder()
                 .username(user.getUsername())
                 .email(user.getEmail())
-                .profileImageId(user.getProfileImageId())
+                .profileImageId(user.getProfileImageIndex())
                 .build();
     }
 }

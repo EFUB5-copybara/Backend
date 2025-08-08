@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LikeRepository extends JpaRepository<Like, Long> {
     boolean existsByPostAndLiker(Post post, User liker);
+    Long countByLiker_UserId(Long userId); // 특정 유저가 누른 '좋아요'의 총 개수
 }
