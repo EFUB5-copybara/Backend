@@ -33,15 +33,15 @@ public class MyPageService {
 
     // 마이페이지 초기 화면 조회 로직
     @Transactional(readOnly = true)
-    public MyPageInfoDto getMyPageInfo(Long memberId) {
+    public MyPageInfoDto getMyPageInfo(Long userId) {
         // 사용자 정보 조회
-        User user = userRepository.findById(memberId)
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         //통계 정보 조회
-        Long totalLikes = likeRepository.countByLiker_UserId(memberId);
-        Long totalComments = commentRepository.countByCommentator_UserId(memberId);
-        Long totalWrittenAnswers = answerRepository.countByUser_UserId(memberId);
+        Long totalLikes = likeRepository.countByLiker_UserId(userId);
+        Long totalComments = commentRepository.countByCommentator_UserId(userId);
+        Long totalWrittenAnswers = answerRepository.countByUser_UserId(userId);
 
         // DTO 빌드 및 반환
         return MyPageInfoDto.builder()

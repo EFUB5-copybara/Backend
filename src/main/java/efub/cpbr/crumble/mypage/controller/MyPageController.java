@@ -25,8 +25,8 @@ public class MyPageController {
     // 마이페이지 초기 화면 조회 api
     @GetMapping
     public ResponseEntity<MyPageInfoDto> getMyPageInfo(@AuthenticationPrincipal User user) {
-        Long memberId = user.getUserId();
-        MyPageInfoDto myPageInfo = myPageService.getMyPageInfo(memberId);
+        Long userId = user.getUserId();
+        MyPageInfoDto myPageInfo = myPageService.getMyPageInfo(userId);
         return ResponseEntity.ok(myPageInfo);
     }
 
