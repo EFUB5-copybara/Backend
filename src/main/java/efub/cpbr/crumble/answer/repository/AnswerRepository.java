@@ -20,7 +20,7 @@ public interface AnswerRepository extends JpaRepository<Answer, Long> {
 
     // 특정 사용자의 특정 월에 작성된 모든 답변 조회
     @Query("SELECT a FROM Answer a WHERE a.user = :user AND a.createdAt BETWEEN :startOfMonth AND :endOfMonth")
-    List<Answer> findByUserAndCreatedAtBetween(@Param("user") User user, @Param("startOfMonth") LocalDate startOfMonth, @Param("endOfMonth") LocalDate endOfMonth);
+    List<Answer> findByUserAndCreatedAtBetween(@Param("user") User user, @Param("startOfMonth") LocalDateTime startOfMonth, @Param("endOfMonth") LocalDateTime endOfMonth);
 
     // 연속 작성일 계산
     @Query(value = "SELECT COUNT(DISTINCT DATE(a.created_at)) " + // MySQL의 DATE 함수 직접 사용

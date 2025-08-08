@@ -40,19 +40,16 @@ public class ChartService {
         LocalDate startOfMonth = now.withDayOfMonth(1);
         LocalDate endOfMonth = now.withDayOfMonth(now.lengthOfMonth());
 
-        // startOfMonth와 endOfMonth를 LocalDateTime으로 변환
-        LocalDateTime startOfMonthTime = startOfMonth.atStartOfDay();
-        LocalDateTime endOfMonthTime = endOfMonth.atTime(23, 59, 59);
+        LocalDateTime startOfMonthTime = startOfMonth.atStartOfDay(); // 월의 첫째 날 00시 00분 00초
+        LocalDateTime endOfMonthTime = endOfMonth.atTime(23, 59, 59); // 월의 마지막 날 23시 59분 59초
 
         // 1. 좋아요, 연속 작성 일수, 받은 댓글 수 계산
         Long totalLikes = likeRepository.countByPost_Answer_User_UserIdAndCreatedAtBetween(userId, startOfMonthTime, endOfMonthTime);
-        // LocalDateTime 타입으로 변환한 변수를 전달
         Long streak = answerRepository.countDailyStreakByUserAndMonth(userId, startOfMonthTime, endOfMonthTime);
         Long totalReceivedComments = commentRepository.countByPost_Answer_User_UserIdAndCreatedAtBetween(userId, startOfMonthTime, endOfMonthTime);
 
-        // 해당 월에 작성된 모든 답변 조회 (복잡한 통계 계산에 필요)
-        // LocalDateTime 타입으로 변환한 변수를 전달
-        List<Answer> monthlyAnswers = answerRepository.findByUserAndCreatedAtBetween(user, startOfMonth, endOfMonth);
+        // 해당 월에 작성된 모든 답변 조회
+        List<Answer> monthlyAnswers = answerRepository.findByUserAndCreatedAtBetween(user, startOfMonthTime, endOfMonthTime);
 
         // 2. 주차별 글자수 통계
         List<WordCountByWeekDto> wordCountByWeek = calculateWordCountByWeek(monthlyAnswers, startOfMonth);
