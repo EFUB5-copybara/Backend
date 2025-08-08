@@ -31,7 +31,106 @@
 <table>
   <tr>
     <td align="center"><img src="https://github.com/kimeunsom.png" width="100" /></td>
-    <td align="center"><img src="https://github.com/저 도메인
+    <td align="center"><img src="https://github.com/oooooming.png" width="100" /></td>
+    <td align="center"><img src="https://github.com/Hanrann6.png" width="100" /></td>
+    <td align="center"><img src="https://github.com/sohyu-na.png" width="100" /></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/kimeunsom"><strong>@kimeunsom</strong></a></td>
+    <td align="center"><a href="https://github.com/oooooming"><strong>@oooooming</strong></a></td>
+    <td align="center"><a href="https://github.com/Hanrann6"><strong>@Hanrann6</strong></a></td>
+    <td align="center"><a href="https://github.com/sohyu-na"><strong>@sohyu-na</strong></a></td>
+  </tr>
+  <tr>
+    <td align="center">김은솜</td>
+    <td align="center">오민지</td>
+    <td align="center">육란</td>
+    <td align="center">소현아</td>
+  </tr>
+  <tr>
+    <td align="center"> auth / mypage API </td>
+    <td align="center"> community / post / shop API </td>
+    <td align="center"> calender / item API & deploy </td>
+    <td align="center"> question / answer / hint API </td>
+  </tr>
+</table>
+
+
+
+## 📁 프로젝트 구조
+```
+📂
+├── .github/
+│   ├── ISSUE_TEMPLATE
+|   │   ├── bug_report.md
+|   │   ├── chore-issue-template.md
+|   │   └── feature_request.md
+│   ├── workflows / deploy.yml
+│   └── PULL_REQUEST_TEMPLATE.md
+│
+├── nginx/
+│   ├── default.conf
+│   └── nginx.conf
+│
+├── src/
+│   ├── main/
+│   │   ├── java/efub/cpbr/crumble/
+│   │   │   ├── answer/                     # ✳️ 답변 도메인
+│   │   │   │   ├── controller/
+│   │   │   │   ├── dto/
+│   │   │   │   ├── entity/
+│   │   │   │   ├── repository/
+│   │   │   │   └── service/
+│   │   │   ├── auth/                       # 🔐 인증 도메인
+│   │   │   │   ├── controller/
+│   │   │   │   ├── dto/
+│   │   │   │   └── service/
+│   │   │   ├── calender/                   # 📆 캘린더 도메인
+│   │   │   │   ├── controller/
+│   │   │   │   ├── dto/
+│   │   │   │   ├── repository/
+│   │   │   │   └── service/
+│   │   │   ├── chart/                      # 📊 차트 도메인
+│   │   │   │   ├── controller/
+│   │   │   │   ├── dto/
+│   │   │   │   └── service/
+│   │   │   ├── community/                  # 📮 커뮤니티 도메인
+│   │   │   │   ├── bookmark/
+│   │   │   │   ├── comment/
+│   │   │   │   ├── like/
+│   │   │   │   ├── post/
+│   │   │   │   └── user/
+│   │   │   ├── global/                     
+│   │   │   │   ├── config/
+│   │   │   │   ├── domain/
+│   │   │   │   └── exception/
+│   │   │   ├── grammar/                    # 🔤 문법 도메인
+│   │   │   │   ├── controller/
+│   │   │   │   ├── dto/
+│   │   │   │   └── service/
+│   │   │   ├── hint/                       # ➕ 힌트 도메인
+│   │   │   │   ├── controller/
+│   │   │   │   ├── dto/
+│   │   │   │   ├── entity/
+│   │   │   │   ├── repository/
+│   │   │   │   └── service/
+│   │   │   ├── jwt/                        # 🔐 jwt 도메인
+│   │   │   ├── mypage/                     # 🙂 마이페이지 도메인
+│   │   │   │   ├── controller/
+│   │   │   │   ├── dto/
+│   │   │   │   └── service/
+│   │   │   ├── question/                   # ❔ 질문 도메인
+│   │   │   │   ├── controller/
+│   │   │   │   ├── dto/
+│   │   │   │   ├── entity/
+│   │   │   │   ├── repository/
+│   │   │   │   └── service/
+│   │   │   ├── shop/                       # 🛍️ 상점 도메인
+│   │   │   │   ├── font/
+│   │   │   │   ├── item/
+│   │   │   │   ├── paper/
+│   │   │   │   └── font/
+│   │   │   ├── user/                       # 🔐 유저 도메인
 │   │   │   │   ├── entity/
 │   │   │   │   ├── repository/
 │   │   │   │   └── service/           
