@@ -57,9 +57,11 @@ public class ItemService {
         if (optionalUserItem.isPresent()) {
             UserItem userItem = optionalUserItem.get();
             userItem.increaseQuantity(); // 수량 +1
+            //System.out.println(userItem.getQuantity());
         } else { // 갖고 있지 않으면 수량 1로 구매 생성
             UserItem userItem = new UserItem(user, item, 1);  // 수량 1로 생성자 초기화
             userItemRepository.save(userItem);
+            //System.out.println(userItem.getQuantity());
         }
 
         user.addPoint(-item.getPrice());

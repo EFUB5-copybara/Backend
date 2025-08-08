@@ -64,7 +64,7 @@ public class ItemController {
     @PostMapping("/{itemId}/purchasing")
     public ResponseEntity<String> purchaseItem(@AuthenticationPrincipal CustomUserDetails userDetails,
                                                @PathVariable Long itemId) {
-        User  user = userDetails.getUser();
+        User user = userDetails.getUser();
         itemService.purchaseItem(user, itemId);
         return ResponseEntity.ok("아이템 구매가 완료되었습니다.");
     }
