@@ -1,5 +1,6 @@
 package efub.cpbr.crumble.chart.controller;
 
+import efub.cpbr.crumble.auth.service.CustomUserDetails;
 import efub.cpbr.crumble.chart.dto.MonthlyReportResponse;
 import efub.cpbr.crumble.chart.service.ChartService;
 import efub.cpbr.crumble.user.entity.User;
@@ -20,7 +21,9 @@ public class ChartController {
 
     // 월간 리포트 API
     @GetMapping
-    public ResponseEntity<?> getMonthlyReport(@AuthenticationPrincipal User user) {
+    public ResponseEntity<?> getMonthlyReport(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        User user = userDetails.getUser();
+
         // 인증된 사용자 정보가 없는 경우 (예: 유효하지 않은 토큰)
         if (user == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
