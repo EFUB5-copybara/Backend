@@ -11,6 +11,8 @@ import efub.cpbr.crumble.global.exception.ErrorCode;
 import efub.cpbr.crumble.question.entity.Question;
 import efub.cpbr.crumble.question.service.QuestionService;
 import efub.cpbr.crumble.user.entity.User;
+import efub.cpbr.crumble.user.entity.UserStat;
+import efub.cpbr.crumble.user.repository.UserStatRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,15 +25,18 @@ public class AnswerService {
     private final AnswerRepository answerRepository;
     private final QuestionService questionService;
     private final PostRepository postRepository;
+    private final UserStatRepository userStatRepository;
 
     @Transactional
     public Long createAnswer(User user, LocalDate date, AnswerRequest request){
         Question question = questionService.findQuestionByDateOrThrow(date);
 
         Answer answer = request.toEntity(question,user);
-        answer.getUser().getUserStat().increaseTotalAnswers();
-
         Answer savedAnswer = answerRepository.save(answer);
+
+        UserStat userStat = answer.getUser().getUserStat();
+        userStat.increaseTotalAnswers();
+        userStatRepository.save(userStat);
 
         if (savedAnswer.getIsPublic()) {
             Post post = Post.builder()

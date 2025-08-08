@@ -17,5 +17,5 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     Long countByPost_Answer_User_UserIdAndCreatedAtBetween(Long userId, LocalDateTime start, LocalDateTime end);
 
     // 특정 유저가 작성한 '댓글'의 총 개수
-    Long countByCommentator_UserId(Long userId)
+    Long countByCommentator_UserId(Long userId);
 }
