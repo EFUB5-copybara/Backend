@@ -30,7 +30,7 @@ public class PostResponseDto {
                 .id(post.getId())
                 .userId(post.getAnswer().getUser().getUserId())
                 .username(post.getAnswer().getUser().getUsername())
-                .profileImageId(post.getAnswer().getUser().getProfileImageId())
+                .profileImageId(post.getAnswer().getUser().getProfileImageIndex())
                 .title(post.getAnswer().getQuestion().getContent())
                 .content(post.getContent())
                 .viewCount(post.getViewCount())
