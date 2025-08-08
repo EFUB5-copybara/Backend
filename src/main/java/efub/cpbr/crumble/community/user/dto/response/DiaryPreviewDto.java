@@ -7,9 +7,9 @@ import lombok.Builder;
 import java.time.LocalDateTime;
 
 @Builder
-public record DiaryPreviewDto(Long diaryId,
-                              String question,
-                              String answer,
+public record DiaryPreviewDto(Long id,
+                              String title,
+                              String content,
                               Long likeCount,
                               Long commentCount,
                               Long bookmarkCount,
@@ -17,9 +17,9 @@ public record DiaryPreviewDto(Long diaryId,
                               boolean isPublic) {
     public static DiaryPreviewDto from(Answer diary) {
         return DiaryPreviewDto.builder()
-                .diaryId(diary.getId())
-                .question(diary.getQuestion().getContent())
-                .answer(diary.getContent())
+                .id(diary.getId())
+                .title(diary.getQuestion().getContent())
+                .content(diary.getContent())
                 .likeCount(diary.getPost().getLikeCount())
                 .commentCount(diary.getPost().getCommentCount())
                 .bookmarkCount(diary.getPost().getBookmarkCount())
